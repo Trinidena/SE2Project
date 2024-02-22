@@ -89,7 +89,7 @@ public class ShirtCreatorCodeBehind {
 	private BufferedImage canvas;
 	
 	@FXML
-	   void handleLoad(ActionEvent event) throws IOException
+	   void handleLoadButton(ActionEvent event) throws IOException
 	   {
 	      FileChooser fc = new FileChooser();
 	      Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -103,20 +103,30 @@ public class ShirtCreatorCodeBehind {
 	   }
 	
 	@FXML
-	void onDelete(ActionEvent event) {
+	void onRequestButtonClick(ActionEvent event) {
 	    Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
-	    confirmationDialog.setTitle("Delete Confirmation");
-	    confirmationDialog.setHeaderText("Delete Shirt Design");
-	    confirmationDialog.setContentText("Are you sure you want to delete this shirt design?");
+	    confirmationDialog.setTitle("Request Confirmation");
+	    confirmationDialog.setHeaderText("Request Shirt Design");
+	    confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
 
 	    Optional<ButtonType> result = confirmationDialog.showAndWait();
 	    if (result.isPresent() && result.get() == ButtonType.OK) {
 	        // User chose OK
-	        // Place your delete logic here
-	        System.out.println("Shirt design deleted.");
+	        // Place your request logic here
+
+	        Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
+	        requestConfirmationDialog.setTitle("Request Successful");
+	        requestConfirmationDialog.setHeaderText(null); // No header text
+	        requestConfirmationDialog.setContentText("Shirt design requested successfully.");
+	        requestConfirmationDialog.showAndWait(); // Show the dialog and wait
 	    } else {
 	        // User chose Cancel or closed the dialog
-	        System.out.println("Delete operation cancelled.");
+
+	        Alert noConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
+	        noConfirmationDialog.setTitle("Request Cancelled");
+	        noConfirmationDialog.setHeaderText(null); // No header text
+	        noConfirmationDialog.setContentText("Shirt design request cancelled.");
+	        noConfirmationDialog.showAndWait(); // Show the dialog and wait
 	    }
 	}
 

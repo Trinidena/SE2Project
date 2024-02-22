@@ -19,7 +19,7 @@
 				<Menu mnemonicParsing="false" text="File">
 					<items>
 						<MenuItem mnemonicParsing="false" text="Close" />
-                  <MenuItem fx:id="loadChoice" mnemonicParsing="false" onAction="#handleLoad" text="Load" />
+                  <MenuItem fx:id="loadChoice" mnemonicParsing="false" onAction="#handleLoadButton" text="Load" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="About">
@@ -96,7 +96,7 @@
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="requestButton" layoutX="268.0" layoutY="384.0" mnemonicParsing="false" text="Request">
+		<Button fx:id="requestButton" layoutX="268.0" layoutY="384.0" mnemonicParsing="false" text="Request" onAction="#onRequestButtonClick">
 			<font>
 				<Font size="24.0" />
 			</font>
