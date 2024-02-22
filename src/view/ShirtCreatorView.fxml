@@ -91,7 +91,7 @@
 				<Font size="24.0" />
 			</font>
 		</Button>
-		<Button fx:id="viewButton" layoutX="403.0" layoutY="384.0" mnemonicParsing="false" text="View">
+		<Button fx:id="viewButton" layoutX="403.0" layoutY="384.0" mnemonicParsing="false" text="View" onAction="#onShowRequestsButtonClick">
 			<font>
 				<Font size="24.0" />
 			</font>
