@@ -3,30 +3,35 @@ package model;
 public class ShirtAttributes {
     private Size size;
     private Material material;
-    private String color;
+    private Color color;
     private String design;
     private NeckStyle neckStyle;
-    private String sleeveLength;
+    private double sleeveLength;
     private double price;
     private int quantity;
     private String brand;
     private String description;
+	private double shoulderWidth;
+	private double backLength;
+	private Object chestWidth;
+	private Object shirtLength;
 
-    // Constructor
-    public ShirtAttributes(Size size, Material material, String color, String design, NeckStyle neckStyle, String sleeveLength, double price, int quantity, String brand, String description) {
-        this.size = size;
-        this.material = material;
-        this.color = color;
-        this.design = design;
-        this.neckStyle = neckStyle;
-        this.sleeveLength = sleeveLength;
-        this.price = price;
-        this.quantity = quantity;
-        this.brand = brand;
-        this.description = description;
-    }
+	public ShirtAttributes(Size size, double shoulderWidth, double backLength) {
+		this.size = size;
+        this.shoulderWidth = shoulderWidth;
+        this.backLength = backLength;
+	}
 
-    // Getters and setters for all fields
+    public ShirtAttributes(Size size, Material material, Color color, double sleeveLength, double backLength, double chestWidth, double shoulderWidth) {
+    	 this.size = size;
+         this.material = material;
+         this.color = color;
+         this.shoulderWidth = shoulderWidth;
+         this.chestWidth = chestWidth;
+         this.backLength = backLength;
+         this.sleeveLength = sleeveLength;
+	}
+
     public Size getSize() {
         return size;
     }
@@ -43,11 +48,11 @@ public class ShirtAttributes {
         this.material = material;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -67,11 +72,11 @@ public class ShirtAttributes {
         this.neckStyle = neckStyle;
     }
 
-    public String getSleeveLength() {
+    public double getSleeveLength() {
         return sleeveLength;
     }
 
-    public void setSleeveLength(String sleeveLength) {
+    public void setSleeveLength(double sleeveLength) {
         this.sleeveLength = sleeveLength;
     }
 
@@ -106,5 +111,39 @@ public class ShirtAttributes {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public static ShirtAttributes createPresetForSize(Size size) {
+        switch (size) {
+            case XS:
+                return new ShirtAttributes(Size.XS, 17.0, 28.0);
+            case S:
+                return new ShirtAttributes(Size.S, 18.0, 29.0);
+            case M:
+                return new ShirtAttributes(Size.M, 19.0, 30.0);
+            case L:
+                return new ShirtAttributes(Size.L, 20.0, 31.0);
+            case XL:
+                return new ShirtAttributes(Size.XL, 21.0, 32.0);
+            case XXL:
+                return new ShirtAttributes(Size.XXL, 22.0, 33.0);
+            case XXXL:
+                return new ShirtAttributes(Size.XXXL, 23.0, 34.0);
+            default:
+                throw new IllegalArgumentException("No Valid Shirt Size"); // Or throw an exception, based on your error handling strategy
+        }
+    }
+
+
+	public double getShoulderWidth() {
+		return shoulderWidth;
+	}
+
+	public boolean hasPocket() {
+		return false;
+	}
+
+	public double getBackLength() {
+		return backLength;
+	}
 }
 
