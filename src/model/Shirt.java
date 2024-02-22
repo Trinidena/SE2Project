@@ -4,17 +4,15 @@ public abstract class Shirt {
     // Class fields
     protected Size size;
     protected Material material;
-    protected String color;
+    protected Color color;
     protected String design;
     protected NeckStyle neckStyle;
-    protected String sleeveLength;
+    protected double sleeveLength;
     protected double price;
     protected int quantity;
     protected String brand;
     protected String description;
 
-    // Constructor and other methods...
- // Constructor now accepts a ShirtAttributes object
     public Shirt(ShirtAttributes attributes) {
         this.size = attributes.getSize();
         this.material = attributes.getMaterial();
@@ -28,11 +26,9 @@ public abstract class Shirt {
         this.description = attributes.getDescription();
     }
 
-    // Abstract methods that subclasses must implement
     public abstract void customizeDesign(String design);
     public abstract double calculatePrice();
 
-    // Concrete method to display shirt information
     public void displayInformation() {
         System.out.println("Shirt Information:");
         System.out.println("Size: " + size);
@@ -46,7 +42,6 @@ public abstract class Shirt {
         System.out.println("Brand: " + brand);
         System.out.println("Description: " + description);
     }
-    // Getters
     public Size getSize() {
         return size;
     }
@@ -55,7 +50,7 @@ public abstract class Shirt {
         return material;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -67,7 +62,7 @@ public abstract class Shirt {
         return neckStyle;
     }
 
-    public String getSleeveLength() {
+    public double getSleeveLength() {
         return sleeveLength;
     }
 
@@ -87,7 +82,6 @@ public abstract class Shirt {
         return description;
     }
 
-    // Setters
     public void setSize(Size size) {
         this.size = size;
     }
@@ -96,7 +90,7 @@ public abstract class Shirt {
         this.material = material;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -108,7 +102,7 @@ public abstract class Shirt {
         this.neckStyle = neckStyle;
     }
 
-    public void setSleeveLength(String sleeveLength) {
+    public void setSleeveLength(double sleeveLength) {
         this.sleeveLength = sleeveLength;
     }
 
