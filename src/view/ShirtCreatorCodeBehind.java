@@ -99,7 +99,7 @@ public class ShirtCreatorCodeBehind {
 	@FXML
 	void handleLoadButton(ActionEvent event) throws IOException {
 	   FileChooser fc = new FileChooser();
-	      Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+	   Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 	   File selectedFile = fc.showOpenDialog(stage);
 	   BufferedImage img = ImageIO.read(selectedFile);
 	   
