@@ -1,61 +1,41 @@
 package view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import java.util.Optional;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import model.Color;
 import model.Material;
 import model.NeckStyle;
-import model.ShirtAttributes;
 import model.Size;
+import model.TShirt;
+import viewmodel.ShirtCreatorViewModel;
 
 public class ShirtCreatorCodeBehind {
 
 	@FXML
-	private ComboBox<Double> backLengthComboBox;
+	private ComboBox<Integer> quantityComboBox;
 
 	@FXML
-	private ComboBox<Color> colorComboBox;
+	private ComboBox<String> colorComboBox;
 
 	@FXML
-	private Button deleteButton;
+	private ComboBox<String> designComboBox;
 
 	@FXML
-	private TextArea designedTextArea;
+	private ComboBox<Size> sizeComboBox;
 
 	@FXML
-	private Button editButton;
+	private ComboBox<NeckStyle> styleCombobox;
 
 	@FXML
 	private ComboBox<Material> materialComboBox;
 
 	@FXML
-	private TextField nameTextField;
-
-	@FXML
-	private ComboBox<String> pocketComboBox;
-
-	@FXML
-	private TextArea presetsTextArea;
+	private Button deleteButton;
 
 	@FXML
 	private Button requestButton;
@@ -64,19 +44,7 @@ public class ShirtCreatorCodeBehind {
 	private Button saveButton;
 
 	@FXML
-	private ImageView shirtImageView;
-
-	@FXML
-	private MenuBar shirtMenubar;
-
-	@FXML
-	private ComboBox<Double> shoulderLengthComboBox;
-
-	@FXML
-	private ComboBox<Size> sizeComboBox;
-
-	@FXML
-	private ComboBox<?> styleCombobox;
+	private Button editButton;
 
 	@FXML
 	private Button submitButton;
@@ -84,78 +52,69 @@ public class ShirtCreatorCodeBehind {
 	@FXML
 	private Button viewButton;
 
-	private GraphicsContext graphicsContext;
-
-	private BufferedImage canvas;
-	
 	@FXML
-	   void handleLoadButton(ActionEvent event) throws IOException
-	   {
-	      FileChooser fc = new FileChooser();
-	      Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-	      File selectedFile = fc.showOpenDialog(stage);
-	      BufferedImage img = ImageIO.read(selectedFile);
-	      
-	      Image image = new Image(selectedFile.toURI().toString());
+	private ListView<TShirt> designedListView;
 
-	      graphicsContext.drawImage(image, 0, 0, (canvas.getWidth()), (canvas.getHeight()));
-
-	   }
-	
 	@FXML
-	void onRequestButtonClick(ActionEvent event) {
-	    Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
-	    confirmationDialog.setTitle("Request Confirmation");
-	    confirmationDialog.setHeaderText("Request Shirt Design");
-	    confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
+	private ListView<TShirt> presetsListView;
 
-	    Optional<ButtonType> result = confirmationDialog.showAndWait();
-	    if (result.isPresent() && result.get() == ButtonType.OK) {
-	        // User chose OK
-	        // Place your request logic here
+	@FXML
+	private TextField nameTextField;
 
-	        Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
-	        requestConfirmationDialog.setTitle("Request Successful");
-	        requestConfirmationDialog.setHeaderText(null); // No header text
-	        requestConfirmationDialog.setContentText("Shirt design requested successfully.");
-	        requestConfirmationDialog.showAndWait(); // Show the dialog and wait
-	    } else {
-	        // User chose Cancel or closed the dialog
+	@FXML
+	private ImageView shirtImageView;
 
-	        Alert noConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
-	        noConfirmationDialog.setTitle("Request Cancelled");
-	        noConfirmationDialog.setHeaderText(null); // No header text
-	        noConfirmationDialog.setContentText("Shirt design request cancelled.");
-	        noConfirmationDialog.showAndWait(); // Show the dialog and wait
-	    }
+	@FXML
+	private MenuBar shirtMenubar;
+
+	private ShirtCreatorViewModel viewModel;
+
+	public ShirtCreatorCodeBehind() {
+		this.viewModel = new ShirtCreatorViewModel();
 	}
 
-	
-	private void updateUIBasedOnSize(Size size) {
-        ShirtAttributes shirtAttributes = ShirtAttributes.createPresetForSize(size);
-
-        // Now update other UI components based on the preset
-        materialComboBox.setValue(shirtAttributes.getMaterial());
-        colorComboBox.setValue(shirtAttributes.getColor());
-        backLengthComboBox.setValue(shirtAttributes.getBackLength());
-        shoulderLengthComboBox.setValue(shirtAttributes.getShoulderWidth());
-        pocketComboBox.setValue(shirtAttributes.hasPocket() ? "Yes" : "No");
-        // Update other fields as necessary, such as text fields for measurements
-    }
-	
 	public void initialize() {
-	    sizeComboBox.getItems().setAll(Size.values());
-	    materialComboBox.getItems().setAll(Material.values());
-	    //neckStyleComboBox.getItems().addAll(NeckStyle.values());
-	    colorComboBox.getItems().setAll(Color.values());
-	    pocketComboBox.getItems().addAll("Yes", "No");
-	    sizeComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                updateUIBasedOnSize(newSelection);
-            }
-	});
+
+		this.bindToViewModel();
+	}
+
+	@FXML
+	void handleAdd(ActionEvent event) {
+
+	}
+
+	@FXML
+	void handleDelete(ActionEvent event) {
+
+	}
+
+	@FXML
+	void handleEdit(ActionEvent event) {
+
+	}
+
+	@FXML
+	void handleRequest(ActionEvent event) {
+
+	}
+
+	@FXML
+	void handleViewRequests(ActionEvent event) {
+
+	}
+
+	private void bindToViewModel() {
+		this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
+
+		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
+
+		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
+		this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
+		this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
+		this.designComboBox.valueProperty().bindBidirectional(this.viewModel.designProperty());
+		this.styleCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
+		this.sizeComboBox.valueProperty().bindBidirectional(this.viewModel.sizeProperty());
+
+	}
 
 }
-	}
-	
-
