@@ -10,17 +10,23 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Color;
 import model.Material;
@@ -30,6 +36,8 @@ import model.Size;
 
 public class ShirtCreatorCodeBehind {
 
+	private ObservableList<String> items = FXCollections.observableArrayList();
+	
 	@FXML
 	private ComboBox<Double> backLengthComboBox;
 
@@ -89,19 +97,40 @@ public class ShirtCreatorCodeBehind {
 	private BufferedImage canvas;
 	
 	@FXML
-	   void handleLoadButton(ActionEvent event) throws IOException
-	   {
-	      FileChooser fc = new FileChooser();
-	      Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-	      File selectedFile = fc.showOpenDialog(stage);
-	      BufferedImage img = ImageIO.read(selectedFile);
-	      
-	      Image image = new Image(selectedFile.toURI().toString());
-
-	      graphicsContext.drawImage(image, 0, 0, (canvas.getWidth()), (canvas.getHeight()));
-
-	   }
+	void handleLoadButton(ActionEvent event) throws IOException {
+	   FileChooser fc = new FileChooser();
+	   Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+	   File selectedFile = fc.showOpenDialog(stage);
+	   BufferedImage img = ImageIO.read(selectedFile);
+	   
+    Image image = new Image(selectedFile.toURI().toString());
+    graphicsContext.drawImage(image, 0, 0, (canvas.getWidth()), (canvas.getHeight()));
+	}
 	
+	public void addRequest(String request) {
+	    items.add(request);
+	}
+	
+	public void clearRequests() {
+	    items.clear();
+	}
+	
+	@FXML
+	void onShowRequestsButtonClick(ActionEvent event) {
+	    Stage stage = new Stage(); // Create a new stage (window)
+	    stage.setTitle("List of Requests");
+	    VBox layout = new VBox(10);
+	    ListView<String> listView = new ListView<>();
+	    listView.setItems(items); // Use the items field
+
+	    layout.getChildren().add(listView);
+
+	    Scene scene = new Scene(layout, 300, 250);
+	    stage.setScene(scene);
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.show();
+	    }
+
 	@FXML
 	void onRequestButtonClick(ActionEvent event) {
 	    Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
@@ -113,7 +142,7 @@ public class ShirtCreatorCodeBehind {
 	    if (result.isPresent() && result.get() == ButtonType.OK) {
 	        // User chose OK
 	        // Place your request logic here
-
+	    	//addRequest();
 	        Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
 	        requestConfirmationDialog.setTitle("Request Successful");
 	        requestConfirmationDialog.setHeaderText(null); // No header text
