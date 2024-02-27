@@ -8,7 +8,11 @@ import javax.imageio.ImageIO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +40,12 @@ import model.Size;
 
 public class ShirtCreatorCodeBehind {
 
-	private ObservableList<String> items = FXCollections.observableArrayList();
+	@FXML
+	private ObservableList<ShirtAttributes> requests;
+	
+	ShirtAttributes shirtAttributes;
+	
+	Random random = new Random();
 	
 	@FXML
 	private ComboBox<Double> backLengthComboBox;
@@ -95,6 +104,8 @@ public class ShirtCreatorCodeBehind {
 	private GraphicsContext graphicsContext;
 
 	private BufferedImage canvas;
+
+	private ListView<ShirtAttributes> listView;
 	
 	@FXML
 	void handleLoadButton(ActionEvent event) throws IOException {
@@ -107,12 +118,12 @@ public class ShirtCreatorCodeBehind {
     graphicsContext.drawImage(image, 0, 0, (canvas.getWidth()), (canvas.getHeight()));
 	}
 	
-	public void addRequest(String request) {
-	    items.add(request);
+	public void addRequest(ShirtAttributes requestedShirt) {
+	   requests.add(requestedShirt);
 	}
 	
 	public void clearRequests() {
-	    items.clear();
+	    requests.clear();
 	}
 	
 	@FXML
@@ -120,8 +131,7 @@ public class ShirtCreatorCodeBehind {
 	    Stage stage = new Stage(); // Create a new stage (window)
 	    stage.setTitle("List of Requests");
 	    VBox layout = new VBox(10);
-	    ListView<String> listView = new ListView<>();
-	    listView.setItems(items); // Use the items field
+	    listView.setItems(requests); // Use the items field
 
 	    layout.getChildren().add(listView);
 
@@ -142,7 +152,10 @@ public class ShirtCreatorCodeBehind {
 	    if (result.isPresent() && result.get() == ButtonType.OK) {
 	        // User chose OK
 	        // Place your request logic here
-	    	//addRequest();
+	    	addRequest(new ShirtAttributes(random.nextInt(), shirtAttributes.getSize(), 
+	    								   shirtAttributes.getMaterial(), shirtAttributes.getColor(), 
+	    								   shirtAttributes.getBackLength(), shirtAttributes.getShoulderWidth(), 
+	    								   shirtAttributes.hasPocket()));
 	        Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION Alert for feedback
 	        requestConfirmationDialog.setTitle("Request Successful");
 	        requestConfirmationDialog.setHeaderText(null); // No header text
@@ -161,7 +174,7 @@ public class ShirtCreatorCodeBehind {
 
 	
 	private void updateUIBasedOnSize(Size size) {
-        ShirtAttributes shirtAttributes = ShirtAttributes.createPresetForSize(size);
+        shirtAttributes.createPresetForSize(size);
 
         // Now update other UI components based on the preset
         materialComboBox.setValue(shirtAttributes.getMaterial());
@@ -173,11 +186,15 @@ public class ShirtCreatorCodeBehind {
     }
 	
 	public void initialize() {
+		requests = FXCollections.observableArrayList();
 	    sizeComboBox.getItems().setAll(Size.values());
 	    materialComboBox.getItems().setAll(Material.values());
 	    //neckStyleComboBox.getItems().addAll(NeckStyle.values());
 	    colorComboBox.getItems().setAll(Color.values());
 	    pocketComboBox.getItems().addAll("Yes", "No");
+	    
+	    shirtAttributes = new ShirtAttributes();
+	    listView = new ListView<>();
 	    sizeComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 updateUIBasedOnSize(newSelection);
