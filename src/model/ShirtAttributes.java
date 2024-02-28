@@ -15,24 +15,33 @@ public class ShirtAttributes {
 	private double backLength;
 	private Object chestWidth;
 	private Object shirtLength;
+	private int id;
+	private boolean hasPockets;
 
+	public ShirtAttributes() {
+	}
+	
 	public ShirtAttributes(Size size, double shoulderWidth, double backLength) {
 		this.size = size;
         this.shoulderWidth = shoulderWidth;
         this.backLength = backLength;
 	}
 
-    public ShirtAttributes(Size size, Material material, Color color, double sleeveLength, double backLength, double chestWidth, double shoulderWidth) {
-    	 this.size = size;
-         this.material = material;
-         this.color = color;
-         this.shoulderWidth = shoulderWidth;
-         this.chestWidth = chestWidth;
-         this.backLength = backLength;
-         this.sleeveLength = sleeveLength;
+    public ShirtAttributes(Material material, Color color, double sleeveLength, double backLength, double chestWidth, double shoulderWidth) {
+		//TODO
 	}
 
-    public Size getSize() {
+	public ShirtAttributes(int id , Size size, Material material, Color color, double backLength, double shoulderWidth, boolean pockets) {
+		this.size = size;
+        this.material = material;
+        this.color = color;
+        this.backLength = backLength;
+        this.shoulderWidth = shoulderWidth;
+        this.hasPockets = pockets;
+        this.id = id;
+	}
+
+	public Size getSize() {
         return size;
     }
 
@@ -112,7 +121,7 @@ public class ShirtAttributes {
         this.description = description;
     }
     
-    public static ShirtAttributes createPresetForSize(Size size) {
+    public ShirtAttributes createPresetForSize(Size size) {
         switch (size) {
             case XS:
                 return new ShirtAttributes(Size.XS, 17.0, 28.0);
@@ -144,6 +153,15 @@ public class ShirtAttributes {
 
 	public double getBackLength() {
 		return backLength;
+	}
+
+	public void setID(int id) {
+		this.id = id;
+	}
+	
+	public Size getID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
