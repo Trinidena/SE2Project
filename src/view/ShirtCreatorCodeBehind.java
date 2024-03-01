@@ -35,6 +35,7 @@ import model.Color;
 import model.Material;
 import model.ShirtAttributes;
 import model.Size;
+import viewmodel.ShirtCreatorViewModel;
 
 /**
  * Controller class for the Shirt Creator application.
@@ -90,6 +91,14 @@ public class ShirtCreatorCodeBehind {
     private BufferedImage canvas;
     private ListView<ShirtAttributes> listView;
     private ShirtCreatorViewModel viewModel;
+
+	private ComboBox quantityComboBox;
+
+	private ComboBox sleeveComboBox;
+
+	private ComboBox collarCombobox;
+
+	private ListView designedListView;
 	
 	/**
      * Handles the action of loading a shirt image from the filesystem.
