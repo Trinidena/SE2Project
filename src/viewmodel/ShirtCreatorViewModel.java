@@ -1,19 +1,20 @@
 package viewmodel;
 
-import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.BooleanProperty;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
-
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import model.Color;
 import model.Material;
 import model.NeckStyle;
+import model.ShirtAttributes;
 import model.ShirtCollection;
 import model.Size;
 import model.TShirt;
@@ -25,32 +26,32 @@ public class ShirtCreatorViewModel {
 	private final StringProperty nameProperty;
 
 	private final ObjectProperty<Material> materialProperty;
-	private final StringProperty colorProperty;
+	private final ObjectProperty<Color> colorProperty;
 
-	private final StringProperty designProperty;
+	private final BooleanProperty pocketProperty;
 
 	private final ObjectProperty<NeckStyle> neckStyleProperty;
-	private final StringProperty sleeveLengthProperty;
+	private final ObjectProperty<Size> sleeveLengthProperty;
 
-	private final DoubleProperty priceProperty;
 	private final ObjectProperty<Integer> quantityProperty;
 	private final ObjectProperty<Size> sizeProperty;
 
-	private final StringProperty descriptionProperty;
+	private final StringProperty textProperty;
 
 	private ShirtCollection database;
 
 	public ShirtCreatorViewModel() {
 		this.nameProperty = new SimpleStringProperty();
-		this.colorProperty = new SimpleStringProperty();
-		this.designProperty = new SimpleStringProperty();
-		this.sleeveLengthProperty = new SimpleStringProperty();
-		this.priceProperty = new SimpleDoubleProperty();
+		this.colorProperty = new SimpleObjectProperty<Color>();
+		this.pocketProperty = new SimpleBooleanProperty();
+
+		this.sleeveLengthProperty = new SimpleObjectProperty<Size>();
+
 		this.quantityProperty = new SimpleObjectProperty<Integer>();
 		this.sizeProperty = new SimpleObjectProperty<Size>();
 		this.neckStyleProperty = new SimpleObjectProperty<NeckStyle>();
 		this.materialProperty = new SimpleObjectProperty<Material>();
-		this.descriptionProperty = new SimpleStringProperty();
+		this.textProperty = new SimpleStringProperty();
 
 		this.database = new ShirtCollection();
 
@@ -62,32 +63,24 @@ public class ShirtCreatorViewModel {
 		return materialProperty;
 	}
 
-	public StringProperty colorProperty() {
+	public ObjectProperty<Color> colorProperty() {
 		return colorProperty;
-	}
-
-	public StringProperty designProperty() {
-		return designProperty;
 	}
 
 	public ObjectProperty<NeckStyle> neckStyleProperty() {
 		return neckStyleProperty;
 	}
 
-	public StringProperty sleeveLengthProperty() {
+	public ObjectProperty<Size> sleeveLengthProperty() {
 		return sleeveLengthProperty;
-	}
-
-	public DoubleProperty priceProperty() {
-		return priceProperty;
 	}
 
 	public ObjectProperty<Integer> quantityProperty() {
 		return quantityProperty;
 	}
 
-	public StringProperty descriptionProperty() {
-		return descriptionProperty;
+	public StringProperty textProperty() {
+		return textProperty;
 	}
 
 	public ListProperty<TShirt> listProperty() {
@@ -101,4 +94,55 @@ public class ShirtCreatorViewModel {
 	public ObjectProperty<Size> sizeProperty() {
 		return sizeProperty;
 	}
+
+	public BooleanProperty pocketProperty() {
+		return pocketProperty;
+	}
+
+	public boolean addShirt() {
+		String name = this.nameProperty().get();
+		Size newSize = this.sizeProperty.get();
+		Material newMaterial = this.materialProperty.get();
+		Color newColor = this.colorProperty().get();
+		String newText = this.textProperty.get();
+		NeckStyle newNeckStyle = this.neckStyleProperty.get();
+		int newQuantity = this.quantityProperty.get();
+		boolean newPocket = this.pocketProperty.get();
+		Size newSleeveLength = this.sleeveLengthProperty.get();
+
+		ShirtAttributes newAttributes = new ShirtAttributes(name, newSize, newMaterial, newColor, newText, newNeckStyle,
+				newQuantity, newPocket, newSleeveLength);
+
+		TShirt newShirt = new TShirt(newAttributes);
+		
+		
+
+		if (this.database.put(newShirt)) {
+
+			this.update();
+			this.clearTextFields();
+			return true;
+
+		}
+
+		return false;
+
+	}
+
+	private void update() {
+		this.listProperty.set(FXCollections.observableArrayList(this.database.values()));
+	}
+
+	private void clearTextFields() {
+		this.nameProperty.set("");
+		this.sizeProperty.set(null);
+		this.materialProperty.set(null);
+		this.colorProperty.set(null);
+		this.textProperty.set("");
+		this.neckStyleProperty.set(null);
+		this.quantityProperty.set(1);
+		this.pocketProperty.set(false);
+		this.sleeveLengthProperty.set(null);
+	}
+
 }

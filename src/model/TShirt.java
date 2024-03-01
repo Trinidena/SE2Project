@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class TShirt extends Shirt {
 
     // Constructor that accepts ShirtAttributes object
@@ -40,5 +42,17 @@ public class TShirt extends Shirt {
         super.displayInformation();
         // Add any TShirt-specific information here
         System.out.println("This T-Shirt is ready to make a statement!");
+    }
+    
+    @Override
+    public String toString() {
+		return this.name;
+    	
+    }
+    
+    @Override
+    public int hashCode() {
+		return Objects.hash(this.name, this.pocket, this.quantity, this.size, this.sleeveLength, this.color, this.neckStyle, this.material);
+    	
     }
 }

@@ -1,124 +1,146 @@
 package model;
 
 public abstract class Shirt {
-    // Class fields
-    protected Size size;
-    protected Material material;
-    protected Color color;
-    protected String design;
-    protected NeckStyle neckStyle;
-    protected double sleeveLength;
-    protected double price;
-    protected int quantity;
-    protected String brand;
-    protected String description;
+	// Class fields
+	protected Size size;
+	protected Material material;
+	protected Color color;
+	protected String design;
+	protected NeckStyle neckStyle;
+	protected Size sleeveLength;
+	protected double price;
+	protected int quantity;
+	protected String brand;
+	protected String name;
+	protected String text;
+	protected Boolean pocket;
 
-    public Shirt(ShirtAttributes attributes) {
-        this.size = attributes.getSize();
-        this.material = attributes.getMaterial();
-        this.color = attributes.getColor();
-        this.design = attributes.getDesign();
-        this.neckStyle = attributes.getNeckStyle();
-        this.sleeveLength = attributes.getSleeveLength();
-        this.price = attributes.getPrice();
-        this.quantity = attributes.getQuantity();
-        this.brand = attributes.getBrand();
-        this.description = attributes.getDescription();
-    }
+	public Shirt(ShirtAttributes attributes) {
+		this.size = attributes.getSize();
+		this.material = attributes.getMaterial();
+		this.color = attributes.getColor();
+		this.design = attributes.getDesign();
+		this.neckStyle = attributes.getNeckStyle();
+		this.sleeveLength = attributes.getSleeveLength();
+		this.price = attributes.getPrice();
+		this.quantity = attributes.getQuantity();
+		this.brand = attributes.getBrand();
+		this.name = attributes.getName();
+		this.text = attributes.getText();
+		this.pocket = attributes.hasPocket();
+	}
 
-    public abstract void customizeDesign(String design);
-    public abstract double calculatePrice();
+	public abstract void customizeDesign(String design);
 
-    public void displayInformation() {
-        System.out.println("Shirt Information:");
-        System.out.println("Size: " + size);
-        System.out.println("Material: " + material);
-        System.out.println("Color: " + color);
-        System.out.println("Design: " + design);
-        System.out.println("Neck Style: " + neckStyle);
-        System.out.println("Sleeve Length: " + sleeveLength);
-        System.out.println("Price: $" + price);
-        System.out.println("Quantity: " + quantity);
-        System.out.println("Brand: " + brand);
-        System.out.println("Description: " + description);
-    }
-    public Size getSize() {
-        return size;
-    }
+	public abstract double calculatePrice();
 
-    public Material getMaterial() {
-        return material;
-    }
+	public void displayInformation() {
+		System.out.println("Shirt Information:");
+		System.out.println("Size: " + size);
+		System.out.println("Material: " + material);
+		System.out.println("Color: " + color);
+		System.out.println("Design: " + design);
+		System.out.println("Neck Style: " + neckStyle);
+		System.out.println("Sleeve Length: " + sleeveLength);
+		System.out.println("Price: $" + price);
+		System.out.println("Quantity: " + quantity);
+		System.out.println("Brand: " + brand);
+		System.out.println("Description: " + name);
+	}
 
-    public Color getColor() {
-        return color;
-    }
+	public Size getSize() {
+		return size;
+	}
 
-    public String getDesign() {
-        return design;
-    }
+	public Material getMaterial() {
+		return material;
+	}
 
-    public NeckStyle getNeckStyle() {
-        return neckStyle;
-    }
+	public Color getColor() {
+		return color;
+	}
 
-    public double getSleeveLength() {
-        return sleeveLength;
-    }
+	public String getDesign() {
+		return design;
+	}
 
-    public double getPrice() {
-        return price;
-    }
+	public NeckStyle getNeckStyle() {
+		return neckStyle;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public Size getSleeveLength() {
+		return sleeveLength;
+	}
 
-    public String getBrand() {
-        return brand;
-    }
+	public double getPrice() {
+		return price;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public void setSize(Size size) {
-        this.size = size;
-    }
+	public String getBrand() {
+		return brand;
+	}
 
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
+	public String getText() {
+		return text;
+	}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDesign(String design) {
-        this.design = design;
-    }
+	public void setSize(Size size) {
+		this.size = size;
+	}
 
-    public void setNeckStyle(NeckStyle neckStyle) {
-        this.neckStyle = neckStyle;
-    }
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
 
-    public void setSleeveLength(double sleeveLength) {
-        this.sleeveLength = sleeveLength;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	public void setDesign(String design) {
+		this.design = design;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	public void setNeckStyle(NeckStyle neckStyle) {
+		this.neckStyle = neckStyle;
+	}
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
+	public void setSleeveLength(Size sleeveLength) {
+		this.sleeveLength = sleeveLength;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPocket(Boolean pocket) {
+		this.pocket = pocket;
+	}
+
+	public Boolean hasPocket() {
+		return this.pocket;
+	}
 }
