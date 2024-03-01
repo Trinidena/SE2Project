@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Represents the attributes of a shirt in a clothing model.
+ * This class includes properties such as size, material, color, design, neck style, 
+ * sleeve length, price, quantity, brand, description, shoulder width, back length, chest width,
+ * shirt length, ID, and pocket presence.
+ */
 public class ShirtAttributes {
     private Size size;
     private Material material;
@@ -18,19 +24,43 @@ public class ShirtAttributes {
 	private int id;
 	private boolean hasPockets;
 
+	/**
+     * Default constructor. Initializes a new instance of the ShirtAttributes class without setting any properties.
+     */
 	public ShirtAttributes() {
 	}
 	
+	/**
+     * Initializes a new instance of the ShirtAttributes class with specific size, shoulder width, and back length.
+     *
+     * @param size           The size of the shirt.
+     * @param shoulderWidth  The width of the shirt at the shoulders.
+     * @param backLength     The length of the shirt from the back.
+     */
 	public ShirtAttributes(Size size, double shoulderWidth, double backLength) {
 		this.size = size;
         this.shoulderWidth = shoulderWidth;
         this.backLength = backLength;
 	}
-
+	
+	/**
+     * Constructor not fully implemented (contains TODO). Intended to initialize a new instance with material, color, sleeve length, back length, chest width, and shoulder width.
+     */
     public ShirtAttributes(Material material, Color color, double sleeveLength, double backLength, double chestWidth, double shoulderWidth) {
 		//TODO
 	}
-
+    
+    /**
+     * Initializes a new instance of the ShirtAttributes class with ID, size, material, color, back length, shoulder width, and pocket presence.
+     *
+     * @param id             The unique identifier for the shirt.
+     * @param size           The size of the shirt.
+     * @param material       The material of the shirt.
+     * @param color          The color of the shirt.
+     * @param backLength     The length of the shirt from the back.
+     * @param shoulderWidth  The width of the shirt at the shoulders.
+     * @param pockets        Indicates whether the shirt has pockets.
+     */
 	public ShirtAttributes(int id , Size size, Material material, Color color, double backLength, double shoulderWidth, boolean pockets) {
 		this.size = size;
         this.material = material;
@@ -121,7 +151,17 @@ public class ShirtAttributes {
         this.description = description;
     }
     
+    /**
+     * Creates a preset ShirtAttributes object for a given size, predefining the shoulder width and back length based on the size.
+     * 
+     * @param size The size for which to create a preset.
+     * @return A new instance of ShirtAttributes with predefined measurements for the specified size.
+     * @throws IllegalArgumentException if the provided size is not recognized.
+     */
     public ShirtAttributes createPresetForSize(Size size) {
+    	if(size == null) {
+    		throw new IllegalArgumentException("Size is null");
+    	}
         switch (size) {
             case XS:
                 return new ShirtAttributes(Size.XS, 17.0, 28.0);
@@ -146,10 +186,15 @@ public class ShirtAttributes {
 	public double getShoulderWidth() {
 		return shoulderWidth;
 	}
-
-	public boolean hasPocket() {
-		return false;
-	}
+	
+	/**
+     * Checks if the shirt has pockets.
+     * 
+     * @return Always returns false. Implementation may need to be updated to reflect actual pocket status.
+     */
+    public boolean hasPocket() {
+        return false;
+    }
 
 	public double getBackLength() {
 		return backLength;
@@ -159,9 +204,8 @@ public class ShirtAttributes {
 		this.id = id;
 	}
 	
-	public Size getID() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getID() {
+		return this.id;
 	}
 }
 

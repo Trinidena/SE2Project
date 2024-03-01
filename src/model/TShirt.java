@@ -1,44 +1,56 @@
 package model;
 
+/**
+ * Represents a T-Shirt, extending the Shirt class with specific behaviors tailored for T-Shirts.
+ * This class provides implementations for customizing the design and calculating the price, 
+ * along with any additional T-Shirt specific functionalities.
+ */
 public class TShirt extends Shirt {
 
-    // Constructor that accepts ShirtAttributes object
+    /**
+     * Initializes a new TShirt object using provided shirt attributes.
+     * 
+     * @param attributes The attributes to initialize the TShirt with.
+     */
     public TShirt(ShirtAttributes attributes) {
         super(attributes);
-        // Any TShirt specific initializations can be done here
     }
 
-    // Implement customizeDesign method
+    /**
+     * Updates the design of the T-Shirt.
+     * This method allows for the customization of the T-Shirt's design.
+     * 
+     * @param design The new design for the T-Shirt.
+     */
     @Override
     public void customizeDesign(String design) {
-        // Assume this method updates the design and potentially affects the price
         this.design = design;
-        // For simplicity, we're just updating the design here
-        // In a real scenario, you might also want to adjust the price based on the design complexity
     }
 
-    // Implement calculatePrice method
+    /**
+     * Calculates and returns the price of the T-Shirt.
+     * The price is determined based on material, design, and other relevant attributes.
+     * 
+     * @return The price of the T-Shirt.
+     */
     @Override
     public double calculatePrice() {
-        // Example calculation, adjust logic as necessary
         double basePrice = 20.0; // Base price for a TShirt
         if (this.material == Material.PREMIUM_COTTON) {
-            basePrice += 5.0; // Premium material costs more
+            basePrice += 5.0; // Premium material adjustment
         }
         if (!this.design.isEmpty()) {
-            basePrice += 10.0; // Added cost for custom designs
+            basePrice += 10.0; // Custom design adjustment
         }
-        // Further adjustments can be made based on size, quantity, etc.
-        return basePrice * this.quantity;
+        return basePrice * this.quantity; // Price adjusted by quantity
     }
 
-    // TShirt specific methods can be added here
-
-    // Example: a method to display TShirt-specific information
+    /**
+     * Displays T-Shirt specific information along with the common shirt information.
+     */
     @Override
     public void displayInformation() {
         super.displayInformation();
-        // Add any TShirt-specific information here
         System.out.println("This T-Shirt is ready to make a statement!");
     }
 }

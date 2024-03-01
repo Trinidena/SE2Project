@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Abstract class representing a general shirt.
+ * This class defines common properties and functionalities for shirts, such as size, material, color,
+ * design, neck style, sleeve length, price, quantity, brand, and description.
+ */
 public abstract class Shirt {
     // Class fields
     protected Size size;
@@ -13,6 +18,10 @@ public abstract class Shirt {
     protected String brand;
     protected String description;
 
+    /**
+     * Constructor that initializes a Shirt object with attributes defined in a ShirtAttributes object.
+     * @param attributes ShirtAttributes object containing initialization values for the Shirt object.
+     */
     public Shirt(ShirtAttributes attributes) {
         this.size = attributes.getSize();
         this.material = attributes.getMaterial();
@@ -26,9 +35,24 @@ public abstract class Shirt {
         this.description = attributes.getDescription();
     }
 
+    /**
+     * Abstract method for customizing the design of the shirt.
+     * Implementations should define how the shirt design is customized.
+     * @param design The new design of the shirt.
+     */
     public abstract void customizeDesign(String design);
+    
+    /**
+     * Abstract method to calculate the price of the shirt.
+     * Implementations should define the pricing logic based on shirt properties.
+     * @return The price of the shirt.
+     */
     public abstract double calculatePrice();
 
+    /**
+     * Displays information about the shirt.
+     * Prints details of the shirt's properties to the console.
+     */
     public void displayInformation() {
         System.out.println("Shirt Information:");
         System.out.println("Size: " + size);
@@ -42,6 +66,7 @@ public abstract class Shirt {
         System.out.println("Brand: " + brand);
         System.out.println("Description: " + description);
     }
+    
     public Size getSize() {
         return size;
     }
