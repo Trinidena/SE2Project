@@ -1,13 +1,17 @@
 package view;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import model.Color;
 import model.Material;
 import model.NeckStyle;
 import model.Size;
@@ -20,16 +24,19 @@ public class ShirtCreatorCodeBehind {
 	private ComboBox<Integer> quantityComboBox;
 
 	@FXML
-	private ComboBox<String> colorComboBox;
-
-	@FXML
-	private ComboBox<String> designComboBox;
+	private ComboBox<Color> colorComboBox;
 
 	@FXML
 	private ComboBox<Size> sizeComboBox;
 
 	@FXML
-	private ComboBox<NeckStyle> styleCombobox;
+	private ComboBox<Boolean> pocketComboBox;
+
+	@FXML
+	private ComboBox<Size> sleeveComboBox;
+
+	@FXML
+	private ComboBox<NeckStyle> collarCombobox;
 
 	@FXML
 	private ComboBox<Material> materialComboBox;
@@ -62,6 +69,9 @@ public class ShirtCreatorCodeBehind {
 	private TextField nameTextField;
 
 	@FXML
+	private TextField textTextField;
+
+	@FXML
 	private ImageView shirtImageView;
 
 	@FXML
@@ -76,10 +86,29 @@ public class ShirtCreatorCodeBehind {
 	public void initialize() {
 
 		this.bindToViewModel();
+		this.populateComboBoxes();
+		this.setupSelectionHandlerForListView();
+		this.quantityComboBox.valueProperty().set(1);
 	}
 
 	@FXML
 	void handleAdd(ActionEvent event) {
+		Alert newAlert = new Alert(AlertType.ERROR);
+
+		try {
+			if (!this.viewModel.addShirt()) {
+				newAlert.setContentText("This name already exists");
+				newAlert.showAndWait();
+			}
+		} catch (NullPointerException nPE) {
+			newAlert.setContentText(nPE.getLocalizedMessage());
+
+			newAlert.showAndWait();
+		} catch (IllegalArgumentException iAE) {
+			newAlert.setContentText(iAE.getLocalizedMessage());
+			newAlert.showAndWait();
+
+		}
 
 	}
 
@@ -106,15 +135,50 @@ public class ShirtCreatorCodeBehind {
 	private void bindToViewModel() {
 		this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
 
+		this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
 		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
 
-		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
-		this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
 		this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
-		this.designComboBox.valueProperty().bindBidirectional(this.viewModel.designProperty());
-		this.styleCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
+
 		this.sizeComboBox.valueProperty().bindBidirectional(this.viewModel.sizeProperty());
 
+		this.sleeveComboBox.valueProperty().bindBidirectional(this.viewModel.sleeveLengthProperty());
+		this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
+
+		this.collarCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
+		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
+
+	}
+
+	private void populateComboBoxes() {
+		this.pocketComboBox.getItems().addAll(true, false);
+		this.quantityComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		this.sizeComboBox.getItems().addAll(Size.values());
+		this.sleeveComboBox.getItems().addAll(Size.values());
+		this.colorComboBox.getItems().addAll(Color.values());
+		this.collarCombobox.getItems().addAll(NeckStyle.values());
+		this.materialComboBox.getItems().addAll(Material.values());
+
+	}
+
+	private void setupSelectionHandlerForListView() {
+		this.designedListView.getSelectionModel().selectedItemProperty().addListener(
+
+				(observable, oldValue, newValue) -> {
+					if (newValue != null) {
+						this.nameTextField.setText(newValue.getName());
+
+						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
+						this.quantityComboBox.valueProperty().setValue(newValue.getQuantity());
+						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
+						this.sleeveComboBox.valueProperty().setValue(newValue.getSize());
+						this.colorComboBox.valueProperty().setValue(newValue.getColor());
+						this.collarCombobox.valueProperty().setValue(newValue.getNeckStyle());
+						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
+						this.textTextField.setText(newValue.getText());
+
+					}
+				});
 	}
 
 }
