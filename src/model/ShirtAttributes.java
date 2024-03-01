@@ -43,13 +43,6 @@ public class ShirtAttributes {
         this.backLength = backLength;
 	}
 	
-	/**
-     * Constructor not fully implemented (contains TODO). Intended to initialize a new instance with material, color, sleeve length, back length, chest width, and shoulder width.
-     */
-    public ShirtAttributes(Material material, Color color, double sleeveLength, double backLength, double chestWidth, double shoulderWidth) {
-		//TODO
-	}
-    
     /**
      * Initializes a new instance of the ShirtAttributes class with ID, size, material, color, back length, shoulder width, and pocket presence.
      *
@@ -159,26 +152,22 @@ public class ShirtAttributes {
      * @throws IllegalArgumentException if the provided size is not recognized.
      */
     public ShirtAttributes createPresetForSize(Size size) {
-    	if(size == null) {
-    		throw new IllegalArgumentException("Size is null");
-    	}
-        switch (size) {
-            case XS:
-                return new ShirtAttributes(Size.XS, 17.0, 28.0);
-            case S:
-                return new ShirtAttributes(Size.S, 18.0, 29.0);
-            case M:
-                return new ShirtAttributes(Size.M, 19.0, 30.0);
-            case L:
-                return new ShirtAttributes(Size.L, 20.0, 31.0);
-            case XL:
-                return new ShirtAttributes(Size.XL, 21.0, 32.0);
-            case XXL:
-                return new ShirtAttributes(Size.XXL, 22.0, 33.0);
-            case XXXL:
-                return new ShirtAttributes(Size.XXXL, 23.0, 34.0);
-            default:
-                throw new IllegalArgumentException("No Valid Shirt Size"); // Or throw an exception, based on your error handling strategy
+        if (size == null) {
+            throw new NullPointerException("Size is null");
+        } else if (size == Size.XS) {
+            return new ShirtAttributes(Size.XS, 17.0, 28.0);
+        } else if (size == Size.S) {
+            return new ShirtAttributes(Size.S, 18.0, 29.0);
+        } else if (size == Size.M) {
+            return new ShirtAttributes(Size.M, 19.0, 30.0);
+        } else if (size == Size.L) {
+            return new ShirtAttributes(Size.L, 20.0, 31.0);
+        } else if (size == Size.XL) {
+            return new ShirtAttributes(Size.XL, 21.0, 32.0);
+        } else if (size == Size.XXL) {
+            return new ShirtAttributes(Size.XXL, 22.0, 33.0);
+        } else {
+            return new ShirtAttributes(Size.XXXL, 23.0, 34.0);
         }
     }
 
@@ -193,7 +182,7 @@ public class ShirtAttributes {
      * @return Always returns false. Implementation may need to be updated to reflect actual pocket status.
      */
     public boolean hasPocket() {
-        return false;
+        return this.hasPockets;
     }
 
 	public double getBackLength() {
@@ -206,6 +195,20 @@ public class ShirtAttributes {
 	
 	public int getID() {
 		return this.id;
+	}
+
+	public void setShoulderWidth(double shoulderWidth) {
+		this.shoulderWidth = shoulderWidth;
+		
+	}
+
+	public void setHasPockets(boolean b) {
+		this.hasPockets = b;
+		
+	}
+
+	public void setBackLength(double backLength) {
+		this.backLength = backLength;
 	}
 }
 
