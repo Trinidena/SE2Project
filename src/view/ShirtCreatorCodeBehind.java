@@ -33,8 +33,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Color;
 import model.Material;
+import model.NeckStyle;
 import model.ShirtAttributes;
 import model.Size;
+import model.TShirt;
 import viewmodel.ShirtCreatorViewModel;
 
 /**
@@ -92,13 +94,24 @@ public class ShirtCreatorCodeBehind {
     private ListView<ShirtAttributes> listView;
     private ShirtCreatorViewModel viewModel;
 
-	private ComboBox quantityComboBox;
+    @FXML
+	private ComboBox<Integer> quantityComboBox;
 
-	private ComboBox sleeveComboBox;
+	@FXML
+	private ComboBox<Size> sleeveComboBox;
 
-	private ComboBox collarCombobox;
+	@FXML
+	private ComboBox<NeckStyle> collarCombobox;
 
-	private ListView designedListView;
+	@FXML
+	private ListView<TShirt> designedListView;
+
+	@FXML
+	private ListView<TShirt> presetsListView;
+
+
+	@FXML
+	private TextField textTextField;
 	
 	/**
      * Handles the action of loading a shirt image from the filesystem.
@@ -249,7 +262,7 @@ public class ShirtCreatorCodeBehind {
 		private void bindToViewModel() {
 			this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
 
-			this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
+			//this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
 			this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
 
 			this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
@@ -265,7 +278,7 @@ public class ShirtCreatorCodeBehind {
 		}
 
 		private void populateComboBoxes() {
-			this.pocketComboBox.getItems().addAll(true, false);
+			//this.pocketComboBox.getItems().addAll(true, false);
 			this.quantityComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9);
 			this.sizeComboBox.getItems().addAll(Size.values());
 			this.sleeveComboBox.getItems().addAll(Size.values());
@@ -282,7 +295,7 @@ public class ShirtCreatorCodeBehind {
 						if (newValue != null) {
 							this.nameTextField.setText(newValue.getName());
 
-							this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
+							//this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
 							this.quantityComboBox.valueProperty().setValue(newValue.getQuantity());
 							this.sizeComboBox.valueProperty().setValue(newValue.getSize());
 							this.sleeveComboBox.valueProperty().setValue(newValue.getSize());
