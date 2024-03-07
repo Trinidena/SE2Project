@@ -78,6 +78,10 @@ public class ShirtCreatorCodeBehind {
      * Initializes the controller class, sets up the view model, UI components, and data bindings.
      */
     public void initialize() {
+    	this.designedListView = new ListView<>();
+    	this.quantityComboBox = new ComboBox<>();
+    	this.sleeveComboBox = new ComboBox<>();
+    	this.collarCombobox = new ComboBox<>();
         this.viewModel = new ShirtCreatorViewModel();
         bindToViewModel();
         populateComboBoxes();
