@@ -51,7 +51,7 @@ public class ShirtAttributesTest {
 
     @Test
     void testSetSleeveLength() {
-        double sleeveLength = 25.0;
+        Size sleeveLength = Size.L;
         attributes.setSleeveLength(sleeveLength);
         assertEquals(sleeveLength, attributes.getSleeveLength());
     }
@@ -141,7 +141,7 @@ public class ShirtAttributesTest {
         assertNull(attributes.getColor());
         assertNull(attributes.getDesign());
         assertNull(attributes.getNeckStyle());
-        assertEquals(0.0, attributes.getSleeveLength());
+        assertNull(attributes.getSleeveLength());
         assertEquals(0.0, attributes.getPrice());
         assertEquals(0, attributes.getQuantity());
         assertNull(attributes.getBrand());

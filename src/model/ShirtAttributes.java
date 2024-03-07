@@ -7,12 +7,13 @@ package model;
  * shirt length, ID, and pocket presence.
  */
 public class ShirtAttributes {
+	private String name;
     private Size size;
     private Material material;
     private Color color;
     private String design;
     private NeckStyle neckStyle;
-    private double sleeveLength;
+    private Size sleeveLength;
     private double price;
     private int quantity;
     private String brand;
@@ -23,6 +24,7 @@ public class ShirtAttributes {
 	private Object shirtLength;
 	private int id;
 	private boolean hasPockets;
+	private String shirtText;
 
 	/**
      * Default constructor. Initializes a new instance of the ShirtAttributes class without setting any properties.
@@ -62,6 +64,19 @@ public class ShirtAttributes {
         this.shoulderWidth = shoulderWidth;
         this.hasPockets = pockets;
         this.id = id;
+	}
+
+	public ShirtAttributes(String name, Size newSize, Material newMaterial, Color newColor, String newText,
+			NeckStyle newNeckStyle, int newQuantity, boolean newPocket, Size newSleeveLength) {
+	    this.name = name;
+	    this.size = newSize;
+	    this.material = newMaterial;
+	    this.color = newColor;
+	    this.description = newText;
+	    this.neckStyle = newNeckStyle;
+	    this.quantity = newQuantity;
+	    this.hasPockets = newPocket;
+	    this.sleeveLength = newSleeveLength;
 	}
 
 	public Size getSize() {
@@ -104,11 +119,11 @@ public class ShirtAttributes {
         this.neckStyle = neckStyle;
     }
 
-    public double getSleeveLength() {
+    public Size getSleeveLength() {
         return sleeveLength;
     }
 
-    public void setSleeveLength(double sleeveLength) {
+    public void setSleeveLength(Size sleeveLength) {
         this.sleeveLength = sleeveLength;
     }
 
@@ -170,8 +185,6 @@ public class ShirtAttributes {
             return new ShirtAttributes(Size.XXXL, 23.0, 34.0);
         }
     }
-
-
 	public double getShoulderWidth() {
 		return shoulderWidth;
 	}
@@ -209,6 +222,14 @@ public class ShirtAttributes {
 
 	public void setBackLength(double backLength) {
 		this.backLength = backLength;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getShirtText() {
+		return this.shirtText;
 	}
 }
 
