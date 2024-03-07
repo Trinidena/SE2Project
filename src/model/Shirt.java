@@ -7,6 +7,8 @@ package model;
  */
 public abstract class Shirt {
     // Class fields
+	protected String name;
+	protected String shirtText;
     protected Size size;
     protected Material material;
     protected Color color;
@@ -67,6 +69,13 @@ public abstract class Shirt {
         System.out.println("Description: " + description);
     }
     
+    public String getName() {
+    	return name;
+    }
+    
+    public String getShirtText() {
+    	return this.shirtText;
+    }
     public Size getSize() {
         return size;
     }
@@ -107,6 +116,12 @@ public abstract class Shirt {
         return description;
     }
 
+    public void setName(String name) {
+    	this.name = name;
+    }
+    public void setShirtText(String shirtText) {
+    	this.shirtText = shirtText;
+    }
     public void setSize(Size size) {
         this.size = size;
     }

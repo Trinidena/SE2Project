@@ -3,15 +3,12 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-
 import java.util.Optional;
 import java.util.Random;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,20 +37,19 @@ import model.TShirt;
 import viewmodel.ShirtCreatorViewModel;
 
 /**
- * Controller class for the Shirt Creator application.
- * This class handles user interactions with the GUI for creating and managing custom shirt designs.
- * It provides methods to load images, add and clear design requests, and update UI components based on user selections.
+ * The ShirtCreatorCodeBehind class is responsible for handling user interactions with the GUI of the Shirt Creator application.
+ * It manages functionalities such as loading images, adding and clearing design requests, and updating UI components based on user selections.
  */
 public class ShirtCreatorCodeBehind {
 
-	@FXML
-	private ObservableList<ShirtAttributes> requests;
-	
-	ShirtAttributes shirtAttributes;
-	
-	Random random = new Random();
-	
-	@FXML
+    @FXML
+    private ObservableList<ShirtAttributes> requests;
+
+    private ShirtAttributes shirtAttributes;
+
+    private Random random = new Random();
+
+    @FXML
     private ComboBox<Double> backLengthComboBox;
     @FXML
     private ComboBox<Color> colorComboBox;
@@ -89,225 +85,179 @@ public class ShirtCreatorCodeBehind {
     private Button submitButton;
     @FXML
     private Button viewButton;
+    
     private GraphicsContext graphicsContext;
     private BufferedImage canvas;
     private ListView<ShirtAttributes> listView;
     private ShirtCreatorViewModel viewModel;
 
     @FXML
-	private ComboBox<Integer> quantityComboBox;
+    private ComboBox<Integer> quantityComboBox;
 
-	@FXML
-	private ComboBox<Size> sleeveComboBox;
+    @FXML
+    private ComboBox<Size> sleeveComboBox;
 
-	@FXML
-	private ComboBox<NeckStyle> collarCombobox;
+    @FXML
+    private ComboBox<NeckStyle> collarCombobox;
 
-	@FXML
-	private ListView<TShirt> designedListView;
+    @FXML
+    private ListView<TShirt> designedListView;
 
-	@FXML
-	private ListView<TShirt> presetsListView;
+    @FXML
+    private ListView<TShirt> presetsListView;
 
+    @FXML
+    private TextField textTextField;
 
-	@FXML
-	private TextField textTextField;
-	
-	/**
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded. It initializes the view model and
+     * UI components, binds properties to the view model, and sets up handlers.
+     */
+    public void initialize() {
+        this.viewModel = new ShirtCreatorViewModel();
+        this.designedListView = new ListView<TShirt>();
+        this.quantityComboBox = new ComboBox<>();
+        this.sleeveComboBox = new ComboBox<>();
+        this.collarCombobox = new ComboBox<>();
+        bindToViewModel();
+        populateComboBoxes();
+        setupSelectionHandlerForListView();
+        quantityComboBox.valueProperty().set(1);
+    }
+
+    /**
      * Handles the action of loading a shirt image from the filesystem.
      * @param event The action event triggered by the user.
      */
-	@FXML
-	void handleLoadButton(ActionEvent event) throws IOException {
-	   FileChooser fc = new FileChooser();
-	   Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-	   File selectedFile = fc.showOpenDialog(stage);
-	   
-    Image image = new Image(selectedFile.toURI().toString());
-    graphicsContext.drawImage(image, 0, 0, (canvas.getWidth()), (canvas.getHeight()));
-	}
-	
-	/**
+    @FXML
+    void handleLoadButton(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            graphicsContext.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight());
+        }
+    }
+
+    /**
      * Adds a new shirt design request to the list of requests.
      * @param requestedShirt The ShirtAttributes object containing the details of the requested shirt.
      */
-	public void addRequest(ShirtAttributes requestedShirt) {
-	   requests.add(requestedShirt);
-	}
-	
-	/**
+    public void addRequest(ShirtAttributes requestedShirt) {
+        requests.add(requestedShirt);
+    }
+
+    /**
      * Clears all existing shirt design requests from the list.
      */
-	public void clearRequests() {
-	    requests.clear();
-	}
-	
-	/**
+    public void clearRequests() {
+        requests.clear();
+    }
+
+    /**
      * Displays a dialog with the current list of shirt design requests.
      * @param event The action event triggered by the user.
      */
-	@FXML
-	void onShowRequestsButtonClick(ActionEvent event) {
-	    Stage stage = new Stage();
-	    stage.setTitle("List of Requests");
-	    VBox layout = new VBox(10);
-	    listView.setItems(requests);
+    @FXML
+    void onShowRequestsButtonClick(ActionEvent event) {
+        Stage stage = new Stage();
+        stage.setTitle("List of Requests");
+        VBox layout = new VBox(10);
+        listView.setItems(requests);
 
-	    layout.getChildren().add(listView);
+        layout.getChildren().add(listView);
 
-	    Scene scene = new Scene(layout, 300, 250);
-	    stage.setScene(scene);
-	    stage.initModality(Modality.APPLICATION_MODAL);
-	    stage.show();
-	    }
+        Scene scene = new Scene(layout, 300, 250);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
 
-	/**
+    /**
      * Handles the action of submitting a request for a new shirt design.
      * @param event The action event triggered by the user.
      */
-	@FXML
-	void onRequestButtonClick(ActionEvent event) {
-	    Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
-	    confirmationDialog.setTitle("Request Confirmation");
-	    confirmationDialog.setHeaderText("Request Shirt Design");
-	    confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
+    @FXML
+    void onRequestButtonClick(ActionEvent event) {
+        Alert confirmationDialog = new Alert(AlertType.CONFIRMATION);
+        confirmationDialog.setTitle("Request Confirmation");
+        confirmationDialog.setHeaderText("Request Shirt Design");
+        confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
 
-	    Optional<ButtonType> result = confirmationDialog.showAndWait();
-	    if (result.isPresent() && result.get() == ButtonType.OK) {
-	    	addRequest(new ShirtAttributes(random.nextInt(), shirtAttributes.getSize(), 
-	    								   shirtAttributes.getMaterial(), shirtAttributes.getColor(), 
-	    								   shirtAttributes.getBackLength(), shirtAttributes.getShoulderWidth(), 
-	    								   shirtAttributes.hasPocket()));
-	        Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION);
-	        requestConfirmationDialog.setTitle("Request Successful");
-	        requestConfirmationDialog.setHeaderText(null);
-	        requestConfirmationDialog.setContentText("Shirt design requested successfully.");
-	        requestConfirmationDialog.showAndWait();
-	    } else {
+        Optional<ButtonType> result = confirmationDialog.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            addRequest(new ShirtAttributes(random.nextInt(), shirtAttributes.getSize(), shirtAttributes.getMaterial(), shirtAttributes.getColor(), shirtAttributes.getBackLength(), shirtAttributes.getShoulderWidth(), shirtAttributes.hasPocket()));
+            Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION);
+            requestConfirmationDialog.setTitle("Request Successful");
+            requestConfirmationDialog.setHeaderText(null);
+            requestConfirmationDialog.setContentText("Shirt design requested successfully.");
+            requestConfirmationDialog.showAndWait();
+        } else {
+            Alert noConfirmationDialog = new Alert(Alert.AlertType.INFORMATION);
+            noConfirmationDialog.setTitle("Request Cancelled");
+            noConfirmationDialog.setHeaderText(null);
+            noConfirmationDialog.setContentText("Shirt design request cancelled.");
+            noConfirmationDialog.showAndWait();
+        }
+    }
 
-	        Alert noConfirmationDialog = new Alert(Alert.AlertType.INFORMATION);
-	        noConfirmationDialog.setTitle("Request Cancelled");
-	        noConfirmationDialog.setHeaderText(null);
-	        noConfirmationDialog.setContentText("Shirt design request cancelled.");
-	        noConfirmationDialog.showAndWait();
-	    }
-	}
-
-	/**
-     * Updates the UI components based on the selected shirt size.
-     * @param size The Size enum representing the selected shirt size.
+    /**
+     * Binds UI components to the view model properties. This method ensures that the UI components are updated automatically when the model changes.
      */
-	private void updateUIBasedOnSize(Size size) {
-        shirtAttributes.createPresetForSize(size);
-        materialComboBox.setValue(shirtAttributes.getMaterial());
-        colorComboBox.setValue(shirtAttributes.getColor());
-        backLengthComboBox.setValue(shirtAttributes.getBackLength());
-        shoulderLengthComboBox.setValue(shirtAttributes.getShoulderWidth());
-        pocketComboBox.setValue(shirtAttributes.hasPocket() ? "Yes" : "No");
-	}
+    private void bindToViewModel() {
+    	this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
 
-		public ShirtCreatorCodeBehind() {
-			this.viewModel = new ShirtCreatorViewModel();
-		}
+		//this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
+		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
 
-		public void initialize() {
+		this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
 
-			this.bindToViewModel();
-			this.populateComboBoxes();
-			this.setupSelectionHandlerForListView();
-			this.quantityComboBox.valueProperty().set(1);
-		}
+		this.sizeComboBox.valueProperty().bindBidirectional(this.viewModel.sizeProperty());
 
-		@FXML
-		void handleAdd(ActionEvent event) {
-			Alert newAlert = new Alert(AlertType.ERROR);
+		this.sleeveComboBox.valueProperty().bindBidirectional(this.viewModel.sleeveLengthProperty());
+		this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
 
-			try {
-				if (!this.viewModel.addShirt()) {
-					newAlert.setContentText("This name already exists");
-					newAlert.showAndWait();
-				}
-			} catch (NullPointerException nPE) {
-				newAlert.setContentText(nPE.getLocalizedMessage());
+		this.collarCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
+		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
+    }
 
-				newAlert.showAndWait();
-			} catch (IllegalArgumentException iAE) {
-				newAlert.setContentText(iAE.getLocalizedMessage());
-				newAlert.showAndWait();
+    /**
+     * Populates combo boxes with values. This method initializes combo boxes with predefined values for size, color, material, etc.
+     */
+    private void populateComboBoxes() {
+    	//this.pocketComboBox.getItems().addAll(true, false);
+		this.quantityComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		this.sizeComboBox.getItems().addAll(Size.values());
+		this.sleeveComboBox.getItems().addAll(Size.values());
+		this.colorComboBox.getItems().addAll(Color.values());
+		this.collarCombobox.getItems().addAll(NeckStyle.values());
+		this.materialComboBox.getItems().addAll(Material.values());
+    }
 
-			}
+    /**
+     * Sets up selection handlers for the list views. This method ensures that selecting an item from a list view updates the relevant UI components.
+     */
+    private void setupSelectionHandlerForListView() {
+    	this.designedListView.getSelectionModel().selectedItemProperty().addListener(
 
-		}
+				(observable, oldValue, newValue) -> {
+					if (newValue != null) {
+						this.nameTextField.setText(newValue.getName());
 
-		@FXML
-		void handleDelete(ActionEvent event) {
-
-		}
-
-		@FXML
-		void handleEdit(ActionEvent event) {
-
-		}
-
-		@FXML
-		void handleRequest(ActionEvent event) {
-
-		}
-
-		@FXML
-		void handleViewRequests(ActionEvent event) {
-
-		}
-
-		private void bindToViewModel() {
-			this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
-
-			//this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
-			this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
-
-			this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
-
-			this.sizeComboBox.valueProperty().bindBidirectional(this.viewModel.sizeProperty());
-
-			this.sleeveComboBox.valueProperty().bindBidirectional(this.viewModel.sleeveLengthProperty());
-			this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
-
-			this.collarCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
-			this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
-
-		}
-
-		private void populateComboBoxes() {
-			//this.pocketComboBox.getItems().addAll(true, false);
-			this.quantityComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9);
-			this.sizeComboBox.getItems().addAll(Size.values());
-			this.sleeveComboBox.getItems().addAll(Size.values());
-			this.colorComboBox.getItems().addAll(Color.values());
-			this.collarCombobox.getItems().addAll(NeckStyle.values());
-			this.materialComboBox.getItems().addAll(Material.values());
-
-		}
-
-		private void setupSelectionHandlerForListView() {
-			this.designedListView.getSelectionModel().selectedItemProperty().addListener(
-
-					(observable, oldValue, newValue) -> {
-						if (newValue != null) {
-							this.nameTextField.setText(newValue.getName());
-
-							//this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
-							this.quantityComboBox.valueProperty().setValue(newValue.getQuantity());
-							this.sizeComboBox.valueProperty().setValue(newValue.getSize());
-							this.sleeveComboBox.valueProperty().setValue(newValue.getSize());
-							this.colorComboBox.valueProperty().setValue(newValue.getColor());
-							this.collarCombobox.valueProperty().setValue(newValue.getNeckStyle());
-							this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
-							this.textTextField.setText(newValue.getText());
-
-						}
-					});
-
+						//this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
+						this.quantityComboBox.valueProperty().setValue(newValue.getQuantity());
+						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
+						this.sleeveComboBox.valueProperty().setValue(newValue.getSize());
+						this.colorComboBox.valueProperty().setValue(newValue.getColor());
+						this.collarCombobox.valueProperty().setValue(newValue.getNeckStyle());
+						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
+						this.textTextField.setText(newValue.getShirtText());
+					}
+				});
+    }
 }
-	}
 	
 
