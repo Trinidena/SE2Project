@@ -3,12 +3,6 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import java.util.Optional;
-import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -35,91 +32,53 @@ import model.ShirtAttributes;
 import model.Size;
 import model.TShirt;
 import viewmodel.ShirtCreatorViewModel;
+import java.util.Optional;
+import java.util.Random;
 
 /**
- * The ShirtCreatorCodeBehind class is responsible for handling user interactions with the GUI of the Shirt Creator application.
- * It manages functionalities such as loading images, adding and clearing design requests, and updating UI components based on user selections.
+ * The ShirtCreatorCodeBehind class manages the interaction between the user and the GUI of the Shirt Creator application.
+ * It handles the loading of shirt images, addition and removal of design requests, and updates the UI components according to user input.
  */
 public class ShirtCreatorCodeBehind {
 
-    @FXML
-    private ObservableList<ShirtAttributes> requests;
-
     private ShirtAttributes shirtAttributes;
-
     private Random random = new Random();
-
-    @FXML
-    private ComboBox<Double> backLengthComboBox;
-    @FXML
-    private ComboBox<Color> colorComboBox;
-    @FXML
-    private Button deleteButton;
-    @FXML
-    private TextArea designedTextArea;
-    @FXML
-    private Button editButton;
-    @FXML
-    private ComboBox<Material> materialComboBox;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private ComboBox<String> pocketComboBox;
-    @FXML
-    private TextArea presetsTextArea;
-    @FXML
-    private Button requestButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private ImageView shirtImageView;
-    @FXML
-    private MenuBar shirtMenubar;
-    @FXML
-    private ComboBox<Double> shoulderLengthComboBox;
-    @FXML
-    private ComboBox<Size> sizeComboBox;
-    @FXML
-    private ComboBox<?> styleCombobox;
-    @FXML
-    private Button submitButton;
-    @FXML
-    private Button viewButton;
-    
     private GraphicsContext graphicsContext;
     private BufferedImage canvas;
     private ListView<ShirtAttributes> listView;
     private ShirtCreatorViewModel viewModel;
 
-    @FXML
-    private ComboBox<Integer> quantityComboBox;
-
-    @FXML
-    private ComboBox<Size> sleeveComboBox;
-
-    @FXML
-    private ComboBox<NeckStyle> collarCombobox;
-
-    @FXML
-    private ListView<TShirt> designedListView;
-
-    @FXML
-    private ListView<TShirt> presetsListView;
-
-    @FXML
-    private TextField textTextField;
+    @FXML private ObservableList<ShirtAttributes> requests;
+    @FXML private ComboBox<Double> backLengthComboBox;
+    @FXML private ComboBox<Color> colorComboBox;
+    @FXML private Button deleteButton;
+    @FXML private TextArea designedTextArea;
+    @FXML private Button editButton;
+    @FXML private ComboBox<Material> materialComboBox;
+    @FXML private TextField nameTextField;
+    @FXML private ComboBox<Boolean> pocketComboBox;
+    @FXML private TextArea presetsTextArea;
+    @FXML private Button requestButton;
+    @FXML private Button saveButton;
+    @FXML private ImageView shirtImageView;
+    @FXML private MenuBar shirtMenubar;
+    @FXML private ComboBox<Double> shoulderLengthComboBox;
+    @FXML private ComboBox<Size> sizeComboBox;
+    @FXML private ComboBox<?> styleCombobox;
+    @FXML private Button submitButton;
+    @FXML private Button viewButton;
+    @FXML private ComboBox<Integer> quantityComboBox;
+    @FXML private ComboBox<Size> sleeveComboBox;
+    @FXML private ComboBox<NeckStyle> collarCombobox;
+    @FXML private ListView<TShirt> designedListView;
+    @FXML private ListView<TShirt> presetsListView;
+    @FXML private TextField textTextField;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded. It initializes the view model and
-     * UI components, binds properties to the view model, and sets up handlers.
+     * Initializes the controller class, sets up the view model, UI components, and data bindings.
      */
     public void initialize() {
         this.viewModel = new ShirtCreatorViewModel();
-        this.designedListView = new ListView<TShirt>();
-        this.quantityComboBox = new ComboBox<>();
-        this.sleeveComboBox = new ComboBox<>();
-        this.collarCombobox = new ComboBox<>();
         bindToViewModel();
         populateComboBoxes();
         setupSelectionHandlerForListView();
@@ -127,15 +86,14 @@ public class ShirtCreatorCodeBehind {
     }
 
     /**
-     * Handles the action of loading a shirt image from the filesystem.
+     * Handles loading a shirt image from the filesystem.
      * @param event The action event triggered by the user.
      */
     @FXML
     void handleLoadButton(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
-
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
             graphicsContext.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight());
@@ -143,22 +101,22 @@ public class ShirtCreatorCodeBehind {
     }
 
     /**
-     * Adds a new shirt design request to the list of requests.
-     * @param requestedShirt The ShirtAttributes object containing the details of the requested shirt.
+     * Adds a new design request to the observable list of requests.
+     * @param requestedShirt The ShirtAttributes object detailing the requested shirt.
      */
     public void addRequest(ShirtAttributes requestedShirt) {
         requests.add(requestedShirt);
     }
 
     /**
-     * Clears all existing shirt design requests from the list.
+     * Clears all design requests from the observable list.
      */
     public void clearRequests() {
         requests.clear();
     }
 
     /**
-     * Displays a dialog with the current list of shirt design requests.
+     * Shows a dialog listing all current design requests.
      * @param event The action event triggered by the user.
      */
     @FXML
@@ -177,7 +135,7 @@ public class ShirtCreatorCodeBehind {
     }
 
     /**
-     * Handles the action of submitting a request for a new shirt design.
+     * Submits a request for a new shirt design after user confirmation.
      * @param event The action event triggered by the user.
      */
     @FXML
@@ -209,17 +167,12 @@ public class ShirtCreatorCodeBehind {
      */
     private void bindToViewModel() {
     	this.designedListView.itemsProperty().bind(this.viewModel.listProperty());
-
 		//this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
 		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
-
 		this.quantityComboBox.valueProperty().bindBidirectional(this.viewModel.quantityProperty());
-
 		this.sizeComboBox.valueProperty().bindBidirectional(this.viewModel.sizeProperty());
-
 		this.sleeveComboBox.valueProperty().bindBidirectional(this.viewModel.sleeveLengthProperty());
 		this.colorComboBox.valueProperty().bindBidirectional(this.viewModel.colorProperty());
-
 		this.collarCombobox.valueProperty().bindBidirectional(this.viewModel.neckStyleProperty());
 		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
     }
@@ -242,12 +195,10 @@ public class ShirtCreatorCodeBehind {
      */
     private void setupSelectionHandlerForListView() {
     	this.designedListView.getSelectionModel().selectedItemProperty().addListener(
-
 				(observable, oldValue, newValue) -> {
 					if (newValue != null) {
 						this.nameTextField.setText(newValue.getName());
-
-						//this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
+						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
 						this.quantityComboBox.valueProperty().setValue(newValue.getQuantity());
 						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
 						this.sleeveComboBox.valueProperty().setValue(newValue.getSize());

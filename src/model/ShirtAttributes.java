@@ -13,7 +13,7 @@ public class ShirtAttributes {
     private Color color;
     private String design;
     private NeckStyle neckStyle;
-    private double sleeveLength;
+    private Size sleeveLength;
     private double price;
     private int quantity;
     private String brand;
@@ -24,6 +24,7 @@ public class ShirtAttributes {
 	private Object shirtLength;
 	private int id;
 	private boolean hasPockets;
+	private String shirtText;
 
 	/**
      * Default constructor. Initializes a new instance of the ShirtAttributes class without setting any properties.
@@ -66,7 +67,7 @@ public class ShirtAttributes {
 	}
 
 	public ShirtAttributes(String name, Size newSize, Material newMaterial, Color newColor, String newText,
-			NeckStyle newNeckStyle, int newQuantity, boolean newPocket, double newSleeveLength) {
+			NeckStyle newNeckStyle, int newQuantity, boolean newPocket, Size newSleeveLength) {
 	    this.name = name;
 	    this.size = newSize;
 	    this.material = newMaterial;
@@ -118,11 +119,11 @@ public class ShirtAttributes {
         this.neckStyle = neckStyle;
     }
 
-    public double getSleeveLength() {
+    public Size getSleeveLength() {
         return sleeveLength;
     }
 
-    public void setSleeveLength(double sleeveLength) {
+    public void setSleeveLength(Size sleeveLength) {
         this.sleeveLength = sleeveLength;
     }
 
@@ -221,6 +222,14 @@ public class ShirtAttributes {
 
 	public void setBackLength(double backLength) {
 		this.backLength = backLength;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getShirtText() {
+		return this.shirtText;
 	}
 }
 

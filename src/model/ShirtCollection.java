@@ -15,7 +15,6 @@ public class ShirtCollection {
 	 * @precondition none
 	 * @postcondition none
 	 */
-
 	public ShirtCollection() {
 		this.shirts = new HashMap<Integer, TShirt>();
 	}
@@ -27,7 +26,6 @@ public class ShirtCollection {
 	 * @postcondition none
 	 * 
 	 */
-
 	public void clear() {
 		this.shirts.clear();
 	}
@@ -41,9 +39,7 @@ public class ShirtCollection {
 	 * @param id the id to check
 	 * @return true or false if the shirt exists
 	 */
-
 	public boolean containsKey(int id) {
-
 		for (TShirt currentBaby : this.shirts.values()) {
 			if (currentBaby.hashCode() == id) {
 				return true;
@@ -61,9 +57,7 @@ public class ShirtCollection {
 	 * @param id the key to search by
 	 * @return the found shirt or null
 	 */
-
 	public TShirt findByKey(int id) {
-
 		for (TShirt currentShirt : this.shirts.values()) {
 			if (currentShirt.hashCode() == id) {
 				return currentShirt;
@@ -81,13 +75,10 @@ public class ShirtCollection {
 	 * @param newBaby the new shirt to put in the map
 	 * @return null
 	 */
-
 	public boolean put(TShirt newShirt) {
-
 		if (newShirt == null) {
 			throw new IllegalArgumentException("Shirt can't be null");
 		}
-
 		if (this.shirts.containsKey(newShirt.hashCode())) {
 			return false;
 		}
@@ -102,13 +93,10 @@ public class ShirtCollection {
 	 * 
 	 * @param babyList the list of babies to iterate through
 	 */
-
 	public void putAll(List<TShirt> shirtList) {
 		for (TShirt currentShirt : shirtList) {
 			this.shirts.put(currentShirt.hashCode(), currentShirt);
-
 		}
-
 	}
 
 	/**
@@ -120,7 +108,6 @@ public class ShirtCollection {
 	 * @param id the id to search for
 	 * @return true if it can be removed, or false if not
 	 */
-
 	public boolean removeByKey(int id) {
 
 		for (TShirt currentShirt : this.shirts.values()) {
@@ -140,7 +127,6 @@ public class ShirtCollection {
 	 * 
 	 * @return true if empty, or false if not
 	 */
-
 	public boolean isEmpty() {
 		return this.shirts.isEmpty();
 	}
@@ -153,7 +139,6 @@ public class ShirtCollection {
 	 * 
 	 * @return the size of this.computers
 	 */
-
 	public int size() {
 		return this.shirts.size();
 	}
@@ -166,7 +151,6 @@ public class ShirtCollection {
 	 * 
 	 * @return the values of this.computer
 	 */
-
 	public Collection<TShirt> values() {
 		return this.shirts.values();
 	}
