@@ -1,4 +1,4 @@
-package model;
+package model.shirt;
 
 import java.util.Collection;
 import java.util.HashMap;

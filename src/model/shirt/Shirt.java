@@ -1,4 +1,9 @@
-package model;
+package model.shirt;
+
+import model.shirt_attribute.Color;
+import model.shirt_attribute.Material;
+import model.shirt_attribute.NeckStyle;
+import model.shirt_attribute.Size;
 
 /**
  * Represents a general abstract concept of a Shirt. This class defines common properties
@@ -20,13 +25,14 @@ public abstract class Shirt {
     protected String brand;
     protected String description;
     protected boolean hasPocket;
+	private double shoulderWidth;
 
     /**
      * Initializes a new Shirt object with the specified attributes.
      * 
      * @param attributes The attributes used to initialize the shirt.
      */
-    public Shirt(ShirtAttributes attributes) {
+    public Shirt(Shirt attributes) {
         this.name = attributes.getName();
         this.shirtText = attributes.getShirtText();
         this.size = attributes.getSize();
@@ -40,6 +46,10 @@ public abstract class Shirt {
         this.brand = attributes.getBrand();
         this.description = attributes.getDescription();
         this.hasPocket = attributes.hasPocket();
+    }
+    
+    public Shirt() {
+    	
     }
 
     /**
@@ -179,4 +189,8 @@ public abstract class Shirt {
     public void setHasPocket(boolean hasPocket) {
         this.hasPocket = hasPocket;
     }
+
+	public double getShoulderWidth() {
+		return this.shoulderWidth;
+	}
 }

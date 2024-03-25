@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,12 +24,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Color;
-import model.Material;
-import model.NeckStyle;
-import model.ShirtAttributes;
-import model.Size;
-import model.TShirt;
+import model.shirt.Shirt;
+import model.shirt.TShirt;
+import model.shirt_attribute.Color;
+import model.shirt_attribute.Material;
+import model.shirt_attribute.NeckStyle;
+import model.shirt_attribute.Size;
 import viewmodel.ShirtCreatorViewModel;
 import java.util.Optional;
 import java.util.Random;
@@ -41,14 +40,14 @@ import java.util.Random;
  */
 public class ShirtCreatorCodeBehind {
 
-    private ShirtAttributes shirtAttributes;
+    private Shirt shirtAttributes;
     private Random random = new Random();
     private GraphicsContext graphicsContext;
     private BufferedImage canvas;
-    private ListView<ShirtAttributes> listView;
+    private ListView<Shirt> listView;
     private ShirtCreatorViewModel viewModel;
 
-    @FXML private ObservableList<ShirtAttributes> requests;
+    @FXML private ObservableList<Shirt> requests;
     @FXML private ComboBox<Double> backLengthComboBox;
     @FXML private ComboBox<Color> colorComboBox;
     @FXML private Button deleteButton;
@@ -108,7 +107,7 @@ public class ShirtCreatorCodeBehind {
      * Adds a new design request to the observable list of requests.
      * @param requestedShirt The ShirtAttributes object detailing the requested shirt.
      */
-    public void addRequest(ShirtAttributes requestedShirt) {
+    public void addRequest(Shirt requestedShirt) {
         requests.add(requestedShirt);
     }
 
@@ -151,7 +150,7 @@ public class ShirtCreatorCodeBehind {
 
         Optional<ButtonType> result = confirmationDialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            addRequest(new ShirtAttributes(random.nextInt(), shirtAttributes.getSize(), shirtAttributes.getMaterial(), shirtAttributes.getColor(), shirtAttributes.getBackLength(), shirtAttributes.getShoulderWidth(), shirtAttributes.hasPocket()));
+            addRequest(new TShirt(random.nextInt(), shirtAttributes.getSize(), shirtAttributes.getMaterial(), shirtAttributes.getColor(), shirtAttributes.getSleeveLength(), shirtAttributes.getShoulderWidth(), shirtAttributes.hasPocket()));
             Alert requestConfirmationDialog = new Alert(Alert.AlertType.INFORMATION);
             requestConfirmationDialog.setTitle("Request Successful");
             requestConfirmationDialog.setHeaderText(null);

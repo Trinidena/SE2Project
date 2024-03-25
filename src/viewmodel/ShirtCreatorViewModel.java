@@ -9,13 +9,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import model.Color;
-import model.Material;
-import model.NeckStyle;
-import model.ShirtAttributes;
-import model.Size;
-import model.TShirt;
-import model.ShirtCollection;
+import model.shirt.ShirtCollection;
+import model.shirt.TShirt;
+import model.shirt_attribute.Color;
+import model.shirt_attribute.Material;
+import model.shirt_attribute.NeckStyle;
+import model.shirt_attribute.Size;
 
 /**
  * The ShirtCreatorViewModel class is responsible for the application logic behind the Shirt Creator UI.
@@ -103,7 +102,7 @@ public class ShirtCreatorViewModel {
      * @return true if the shirt was added successfully, false otherwise.
      */
     public boolean addShirt() {
-        TShirt newShirt = new TShirt(new ShirtAttributes(
+        TShirt newShirt = new TShirt(
                 nameProperty.get(),
                 sizeProperty.get(),
                 materialProperty.get(),
@@ -112,7 +111,7 @@ public class ShirtCreatorViewModel {
                 neckStyleProperty.get(),
                 quantityProperty.get(),
                 pocketProperty.get(),
-                sleeveLengthProperty.get()));
+                sleeveLengthProperty.get());
         
         if (this.database.put(newShirt)) {
             update();
