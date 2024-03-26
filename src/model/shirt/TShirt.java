@@ -1,4 +1,10 @@
-package model;
+package model.shirt;
+
+import model.shirt_attribute.Color;
+import model.shirt_attribute.Material;
+import model.shirt_attribute.NeckStyle;
+import model.shirt_attribute.Size;
+import model.shirt.TShirt;
 
 /**
  * Represents a T-Shirt, extending the Shirt class with specific behaviors tailored for T-Shirts.
@@ -12,11 +18,16 @@ public class TShirt extends Shirt {
      * 
      * @param attributes The attributes to initialize the TShirt with.
      */
-    public TShirt(ShirtAttributes attributes) {
-        super(attributes);
-    }
 
-    /**
+    public TShirt(int nextInt, Size size, Material material, Color color, Size sleeveLength, double shoulderWidth,
+			boolean hasPocket) {
+	}
+
+	public TShirt(String string, Size size, Material material, Color color, String string2, NeckStyle neckStyle,
+			Integer integer, boolean b, Size size2) {
+	}
+
+	/**
      * Updates the design of the T-Shirt.
      * This method allows for the customization of the T-Shirt's design.
      * 

@@ -1,4 +1,4 @@
-package model;
+package model.shirt_attribute;
 
 /**
  * Enum representing various neck styles for clothing.
