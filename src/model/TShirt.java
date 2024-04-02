@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Represents a T-Shirt, extending the Shirt class with specific behaviors tailored for T-Shirts.
  * This class provides implementations for customizing the design and calculating the price, 
@@ -52,6 +54,24 @@ public class TShirt extends Shirt {
     public void displayInformation() {
         super.displayInformation();
         System.out.println("This T-Shirt is ready to make a statement!");
+    }
+    
+    /**
+     * Returns the displayed name of the shirt.
+     */
+    @Override
+    public String toString() {
+       
+       return this.name;
+    }
+    
+    /**
+     * Returns the displayed name of the shirt.
+     */
+    @Override
+    public int hashCode() {
+       
+       return Objects.hash(this.name);
     }
 
 }
