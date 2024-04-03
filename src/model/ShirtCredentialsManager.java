@@ -45,7 +45,7 @@ public abstract class ShirtCredentialsManager {
      * 
      * @return true if shirt added successfully, false if shirt not added successfully
      */
-    public abstract boolean addShirt(String shirtName, String username, String password);
+    public abstract boolean addShirt(String shirtName);
     
     /** Remove a shirt with the specified name
      * 

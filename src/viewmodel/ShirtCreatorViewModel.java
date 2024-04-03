@@ -107,6 +107,7 @@ public class ShirtCreatorViewModel {
                 neckStyleProperty.get(),
                 materialProperty.get(),
                 imageProperty.get());
+        shirtManager.addShirt(newShirt, null, null)
         clearTextFields();
         return newShirt;
     }

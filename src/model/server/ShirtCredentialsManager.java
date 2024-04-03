@@ -77,18 +77,12 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
     }
 
     @Override
-    public boolean addShirt(String shirtName, String username, String password) {
+    public boolean addShirt(String shirtName) {
         if (shirtName == null) {
             throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_NULL);
         }
         if (shirtName.isEmpty()) {
             throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_EMPTY);
-        }
-        if (username == null) {
-            throw new IllegalArgumentException(USERNAME_FOR_SHIRT_MUST_NOT_BE_NULL);
-        }
-        if (password == null) {
-            throw new IllegalArgumentException(PASSWORD_FOR_SHIRT_MUST_NOT_BE_NULL);
         }
         String confirmation = Server.sendRequest("add shirt," + shirtName + "," + username + "," + password);
         if (confirmation.equals("name already exists")) {
