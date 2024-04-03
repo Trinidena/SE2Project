@@ -12,78 +12,48 @@ import model.shirt_attribute.Size;
  * for more specific shirt types by enforcing the implementation of certain abstract methods.
  */
 public abstract class Shirt {
+	protected boolean hasPocket;
     protected String name;
-    protected String shirtText;
+	protected Size shoulderWidth;
     protected Size size;
-    protected Material material;
+    protected Size backLength;
     protected Color color;
-    protected String design;
     protected NeckStyle neckStyle;
-    protected Size sleeveLength;
-    protected double price;
-    protected int quantity;
-    protected String brand;
-    protected String description;
-    protected boolean hasPocket;
-	private double shoulderWidth;
+    protected Material material;
 
     /**
      * Initializes a new Shirt object with the specified attributes.
      * 
      * @param attributes The attributes used to initialize the shirt.
      */
-    public Shirt(Shirt attributes) {
-        this.name = attributes.getName();
-        this.shirtText = attributes.getShirtText();
-        this.size = attributes.getSize();
-        this.material = attributes.getMaterial();
-        this.color = attributes.getColor();
-        this.design = attributes.getDesign();
-        this.neckStyle = attributes.getNeckStyle();
-        this.sleeveLength = attributes.getSleeveLength();
-        this.price = attributes.getPrice();
-        this.quantity = attributes.getQuantity();
-        this.brand = attributes.getBrand();
-        this.description = attributes.getDescription();
-        this.hasPocket = attributes.hasPocket();
+    public Shirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size backLength, Color color, NeckStyle neckStyle, Material material) {
+    	this.hasPocket = hasPocket;
+        this.name = name;
+        this.shoulderWidth = shoulderWidth;
+        this.size = size;
+        this.backLength = backLength;
+        this.color = color;
+        this.neckStyle = neckStyle;
+        this.material = material;
     }
-    
-    public Shirt() {
-    	
-    }
-
-    /**
-     * Customizes the design of the shirt.
-     * 
-     * @param design The new design to be applied to the shirt.
-     */
-    public abstract void customizeDesign(String design);
-
-    /**
-     * Calculates and returns the price of the shirt.
-     * 
-     * @return The price of the shirt.
-     */
-    public abstract double calculatePrice();
 
     /**
      * Displays detailed information about the shirt, including all properties.
      */
     public void displayInformation() {
-        System.out.println("Shirt Information:");
-        System.out.println("Name: " + name);
-        System.out.println("Text: " + shirtText);
-        System.out.println("Size: " + size);
-        System.out.println("Material: " + material);
-        System.out.println("Color: " + color);
-        System.out.println("Design: " + design);
-        System.out.println("Neck Style: " + neckStyle);
-        System.out.println("Sleeve Length: " + sleeveLength);
-        System.out.println("Price: $" + price);
-        System.out.println("Quantity: " + quantity);
-        System.out.println("Brand: " + brand);
-        System.out.println("Description: " + description);
-        System.out.println("Has Pocket: " + hasPocket);
+    	System.out.println("Has Pocket: " + this.hasPocket);
+        System.out.println("Name: " + this.name);
+        System.out.println("Shoulder: " + this.shoulderWidth);
+        System.out.println("Size: " + this.size);
+        System.out.println("Back: " + this.backLength);
+        System.out.println("Material: " + this.material);
+        System.out.println("Color: " + this.color);
+        System.out.println("Neck Style: " + this.neckStyle);
+    }
+    
+    @Override
+    public String toString() {
+    	return this.name;
     }
 
     public String getName() {
@@ -93,15 +63,15 @@ public abstract class Shirt {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getShirtText() {
-        return shirtText;
+    
+    public Size getShoulderWidth() {
+    	return this.shoulderWidth;
     }
-
-    public void setShirtText(String shirtText) {
-        this.shirtText = shirtText;
+    
+    public void setShoulderWidth(Size shoulderWidth) {
+    	this.shoulderWidth = shoulderWidth;
     }
-
+    
     public Size getSize() {
         return size;
     }
@@ -109,7 +79,15 @@ public abstract class Shirt {
     public void setSize(Size size) {
         this.size = size;
     }
-
+    
+    public Size getBackLength() {
+    	return this.shoulderWidth;
+    }
+    
+    public void setBackLength(Size backLength) {
+    	this.backLength = backLength;
+    }
+    
     public Material getMaterial() {
         return material;
     }
@@ -126,60 +104,12 @@ public abstract class Shirt {
         this.color = color;
     }
 
-    public String getDesign() {
-        return design;
-    }
-
-    public void setDesign(String design) {
-        this.design = design;
-    }
-
     public NeckStyle getNeckStyle() {
         return neckStyle;
     }
 
     public void setNeckStyle(NeckStyle neckStyle) {
         this.neckStyle = neckStyle;
-    }
-
-    public Size getSleeveLength() {
-        return sleeveLength;
-    }
-
-    public void setSleeveLength(Size sleeveLength) {
-        this.sleeveLength = sleeveLength;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean hasPocket() {
@@ -189,8 +119,4 @@ public abstract class Shirt {
     public void setHasPocket(boolean hasPocket) {
         this.hasPocket = hasPocket;
     }
-
-	public double getShoulderWidth() {
-		return this.shoulderWidth;
-	}
 }
