@@ -158,6 +158,7 @@ public class ShirtCreatorCodeBehind {
         designedListView.itemsProperty().bindBidirectional(viewModel.listProperty());
         pocketComboBox.valueProperty().bindBidirectional(viewModel.pocketProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        shoulderLengthComboBox.valueProperty().bindBidirectional(viewModel.backLengthProperty());
         sizeComboBox.valueProperty().bindBidirectional(viewModel.sizeProperty());
         backLengthComboBox.valueProperty().bindBidirectional(viewModel.backLengthProperty());
         colorComboBox.valueProperty().bindBidirectional(viewModel.colorProperty());
