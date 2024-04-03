@@ -3,6 +3,8 @@ package model.server;
 import java.util.Arrays;
 import java.util.List;
 
+import model.shirt.Shirt;
+
 /**
  * Local implementation of the ShirtCredentialsManager interface WARNING: This
  * implementation is not threadsafe and must be cleared (using the clear method)
@@ -77,13 +79,11 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
     }
 
     @Override
-    public boolean addShirt(String shirtName) {
+    public boolean addShirt(Shirt shirtName) {
         if (shirtName == null) {
             throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_NULL);
         }
-        if (shirtName.isEmpty()) {
-            throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_EMPTY);
-        }
+        
         String confirmation = Server.sendRequest("add shirt," + shirtName + "," + username + "," + password);
         if (confirmation.equals("name already exists")) {
             throw new IllegalStateException(SHIRT_WITH_THE_SPECIFIED_NAME_ALREADY_EXISTS);
