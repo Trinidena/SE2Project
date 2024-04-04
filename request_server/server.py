@@ -9,8 +9,17 @@ import json
 import constants
 
 class Shirt:
-    def __init__(self, shirt_name):
-        self.shirt_name = shirt_name
+    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text):
+        self.name = name
+        self.has_pocket = has_pocket
+        self.shoulder = shoulder
+        self.size = size
+        self.sleeve_length = sleeve_length
+        self.color = color
+        self.neck_style = neck_style
+        self.material = material
+        self.back_length = back_length
+        self.text = text
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -77,7 +86,18 @@ def main(protocol, ipAddress, port):
                 log(f"Missing key in JSON data: {e}")
                 
             if shirt_name and not any(s.shirt_name == shirt_name for s in shirts):
-                shirt = Shirt(shirt_name)
+                shirt = Shirt(
+                        name=shirt_data['name'],
+                        has_pocket=shirt_data['hasPocket'],
+                        shoulder=shirt_data['shoulderWidth'],
+                        size=shirt_data['size'],
+                        sleeve_length=shirt_data['sleeve'],
+                        color=shirt_data['color'],
+                        neck_style=shirt_data['neckStyle'],
+                        material=shirt_data['material'],
+                        ack_length=shirt_data['backLength'],
+                        text=shirt_data['text']
+                        )
                 shirts.append(shirt)
         # Log all shirts after adding a new one
                 log("Logging all shirts...")
