@@ -1,3 +1,7 @@
+
+//This file will be used later on.
+
+/*
 package view;
 
 import javafx.collections.FXCollections;
@@ -76,5 +80,6 @@ public class LoginController {
         stage.show();
     }
 }
+*/
 
 
