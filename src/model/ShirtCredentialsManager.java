@@ -14,37 +14,6 @@ import model.shirt.Shirt;
 public abstract class ShirtCredentialsManager {
 
 	/**
-	 * Retrieves a list of the names for all shirts with credentials in the password
-	 * manager
-	 * 
-	 * @return list of the names for all shirts with credentials in the password
-	 *         manager
-	 */
-	public abstract List<String> getShirtNames();
-
-	/**
-	 * Return the password for a specified shirt
-	 * 
-	 * @precondition shirtName != null && getShirtNames().contains(shirtName)
-	 * @param shirtName name of the shirt
-	 * 
-	 * @return password of the shirt if getShirtNames().contains(shirtName) null if
-	 *         !getShirtNames().contains(shirtName)
-	 */
-	public abstract String getShirtPassword(String shirtName);
-
-	/**
-	 * Return the username for a specified shirt
-	 * 
-	 * @precondition shirtName != null && getShirtNames().contains(shirtName)
-	 * @param shirtName name of the shirt
-	 * 
-	 * @return username of the shirt if getShirtNames().contains(shirtName) null if
-	 *         !getShirtNames().contains(shirtName)
-	 */
-	public abstract String getShirtUsername(String shirtName);
-
-	/**
 	 * Add a new shirt with the specified credentials to the manager
 	 * 
 	 * @precondition shirtName != null && !shirtName.isEmpty() && username != null
