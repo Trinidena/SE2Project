@@ -210,11 +210,12 @@ public class ShirtCreatorViewModel {
 
 	private Shirt formShirt() {
 
-		Shirt newShirt = new TShirt(pocketProperty.get(), nameProperty.get(), shoulderProperty.get(),
-				sizeProperty.get(), this.sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(),
-				materialProperty.get(), this.backLengthProperty.get(), this.textProperty().get());
+		Shirt shirt = new TShirt(
+			    nameProperty.get(), pocketProperty.get(), shoulderProperty.get(), sizeProperty.get(),
+			    sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(), materialProperty.get(),
+			    backLengthProperty.get(), textProperty.get());
 
-		return newShirt;
+		return shirt;
 	}
 
 	/**
