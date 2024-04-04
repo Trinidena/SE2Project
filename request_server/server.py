@@ -5,6 +5,7 @@ Created on Feb 14, 2019
 '''
 import zmq
 import time
+import json
 import constants
 
 class Shirt:
@@ -34,12 +35,11 @@ def main(protocol, ipAddress, port):
         message_data = message.decode('utf-8')
         log("message_data = {0}".format(message_data))
         values = message_data.split(',')
+        log(values)
         
         request_type = values[0]
         try:
             shirt_name = values[1]
-            user_name = values[2]
-            password = values[3]
         except IndexError:
             log("Index doesn't exist!")
             
@@ -51,8 +51,8 @@ def main(protocol, ipAddress, port):
         if(request_type == 'get shirt'):
             for shirt in shirts:
                 if (shirt.shirt_name == shirt_name):
-                    response = "{0},{1},{2}".format(shirt.shirt_name,shirt.user_name,shirt.password)
-                    log("Response is {0}, {1}, {2}".format(shirt.shirt_name,shirt.user_name,shirt.password))
+                    response = "{0}".format(shirt.shirt_name)
+                    log("Response is {0}".format(shirt.shirt_name))
         if (request_type == 'get shirt names'):
             shirt_names = ""
             for shirt in shirts:
@@ -61,14 +61,29 @@ def main(protocol, ipAddress, port):
                     log("Shirt names are {0}".format(shirt_names))
             response = shirt_names
         if (request_type == 'add shirt'):
-            if (shirt_name in [s.shirt_name for s in shirts]):
-                response = "name already exists"
-            else:
-                log("Received add shirt")
-                log("Size of request arguments is ".format(str((len(values)))))
-                shirt = Shirt(shirt_name, user_name, password)
-                shirts.append(shirt)
-                response = "true"
+            log("Received request: {0}".format(request_type))
+            log(len(values))
+            json_parts = values[1:]  # Get all parts of the JSON string except for the command part
+            json_string = ','.join(json_parts)  # Rejoin the parts into a complete JSON string
+            log("JSON Data Received: {0}".format(json_string))
+            try:
+        # Now, attempt to parse the reassembled JSON string.
+                shirt_data = json.loads(json_string)
+        # Process the shirt data...
+                shirt_name = shirt_data['shirt_name']
+            except json.JSONDecodeError as e:
+                response = "bad format"
+                log(f"Failed to decode JSON: {e}")
+                    # Check if the shirt already exists
+                if any(s.shirt_name == shirt_name for s in shirts):
+                    response = "name already exists"
+                else:
+                    shirt = Shirt(shirt_name, user_name, password)
+                    shirts.append(shirt)
+                    response = "true"
+            except json.JSONDecodeError:
+                response = false
+                log("Failed to decode JSON")
         if (request_type == 'update shirt'):
             for i, shirt in enumerate(shirts):
                 if (shirt.shirt_name == shirt_name):

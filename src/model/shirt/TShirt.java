@@ -4,7 +4,6 @@ import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
-import javafx.scene.image.Image;
 import model.shirt.TShirt;
 
 /**
@@ -13,7 +12,6 @@ import model.shirt.TShirt;
  * along with any additional T-Shirt specific functionalities.
  */
 public class TShirt extends Shirt {
-	private Image image;
 	
     /**
      * Initializes a new TShirt object using provided shirt attributes.
@@ -21,9 +19,8 @@ public class TShirt extends Shirt {
      * @param attributes The attributes to initialize the TShirt with.
      */
 
-	public TShirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size backLength, Color color, NeckStyle neckStyle, Material material, Image image) {
+	public TShirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size backLength, Color color, NeckStyle neckStyle, Material material) {
         super(hasPocket, name, shoulderWidth, size, backLength, color, neckStyle, material);
-        this.image = image;
     }
     /**
      * Displays T-Shirt specific information along with the common shirt information.
@@ -31,7 +28,6 @@ public class TShirt extends Shirt {
     @Override
     public void displayInformation() {
         super.displayInformation();
-        System.out.println("Image: " + image);
     }
 
 }
