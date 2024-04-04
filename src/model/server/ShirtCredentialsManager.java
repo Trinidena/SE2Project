@@ -30,11 +30,13 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		return Arrays.asList(namesStr.split(","));
 	}
 
-	private List<Shirt> getShirts(String shirtName) {
-		List<Shirt> shirts;
+	public List<TShirt> getShirts() {
+		List<TShirt> shirts;
 		try {
-			String jsonResponse = Server.sendRequest("get shirt," + shirtName);
+			String jsonResponse = Server.sendRequest("get shirts,");
+			System.out.println(jsonResponse);
 			shirts = parseShirtsFromJson(jsonResponse);
+			System.out.println(shirts.get(0).getMaterial());
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Shirt has incorrect number of fields", e);
 		}
@@ -83,9 +85,9 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		return true;
 	}
 
-	public List<Shirt> parseShirtsFromJson(String json) {
+	public List<TShirt> parseShirtsFromJson(String json) {
 		Gson gson = new Gson();
-		Type shirtListType = new TypeToken<List<Shirt>>() {
+		Type shirtListType = new TypeToken<List<TShirt>>() {
 		}.getType();
 		return gson.fromJson(json, shirtListType);
 	}

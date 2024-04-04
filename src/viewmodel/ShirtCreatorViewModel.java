@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
+import model.ModelAwareController;
 import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.ShirtCollection;
@@ -26,7 +27,7 @@ import model.shirt_attribute.Size;
  * manages shirt attributes, validates user input, and updates the UI
  * accordingly.
  */
-public class ShirtCreatorViewModel {
+public class ShirtCreatorViewModel implements ModelAwareController{
 
 	private final ListProperty<Shirt> listProperty;
 	private final BooleanProperty pocketProperty;
@@ -45,6 +46,7 @@ public class ShirtCreatorViewModel {
 	private final ShirtCredentialsManager shirtManager;
 
 	private ShirtCollection database;
+	private ShirtCredentialsManager manager;
 
 	/**
 	 * Constructs a ShirtCreatorViewModel initializing all the property fields and
@@ -233,5 +235,11 @@ public class ShirtCreatorViewModel {
 		neckStyleProperty.set(null);
 		materialProperty.set(null);
 		this.textProperty().set("");
+	}
+	
+	@Override
+	public void setModel(model.ShirtCredentialsManager manager) {
+		this.manager = (ShirtCredentialsManager) manager;
+		
 	}
 }

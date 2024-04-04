@@ -23,11 +23,29 @@ class Shirt:
 
 def log(message):
     print("SERVER::{0}".format(message))
+    
+def shirts_to_json(shirts):
+    shirts_list = []
+    for shirt in shirts:
+        shirt_dict = {
+            'name': shirt.name,
+            'has_pocket': shirt.has_pocket,
+            'shoulder': shirt.shoulder,
+            'size': shirt.size,
+            'sleeve_length': shirt.sleeve_length,
+            'color': shirt.color,
+            'neck_style': shirt.neck_style,
+            'material': shirt.material,
+            'back_length': shirt.back_length,
+            'text': shirt.text
+        }
+        shirts_list.append(shirt_dict)
+    return json.dumps(shirts_list)
 
 def main(protocol, ipAddress, port):
     
     response = ''
-    valid_messages = ['get shirt names', 'add shirt,']
+    valid_messages = ['get shirts', 'add shirt,']
     shirts = []
     context = zmq.Context()
     socket = context.socket(zmq.REP)
@@ -43,30 +61,15 @@ def main(protocol, ipAddress, port):
         log("message_data = {0}".format(message_data))
         values = message_data.split(',')
         log(values)
-        
         request_type = values[0]
-        try:
-            shirt_name = values[1]
-        except IndexError:
-            log("Index doesn't exist!")
-            
         log("values = {0}".format(values))
         if (request_type not in valid_messages):
             response = "bad format"
         if(message == b"exit"):
             return
-        if(request_type == 'get shirt'):
-            for shirt in shirts:
-                if (shirt.shirt_name == shirt_name):
-                    response = "{0}".format(shirt.shirt_name)
-                    log("Response is {0}".format(shirt.shirt_name))
-        if (request_type == 'get shirt names'):
-            shirt_names = ""
-            for shirt in shirts:
-                if shirt.shirt_name not in shirt_names:
-                    shirt_names += shirt.shirt_name + ","
-                    log("Shirt names are {0}".format(shirt_names))
-            response = shirt_names
+        if(request_type == 'get shirts'):
+            response = shirts_to_json(shirts)  # Use the helper function to get JSON representation
+            log("Sending all shirts data.")
         if (request_type == 'add shirt'):
             log("Received request: {0}".format(request_type))
             json_parts = values[1:]  # Get all parts of the JSON string except for the command part
