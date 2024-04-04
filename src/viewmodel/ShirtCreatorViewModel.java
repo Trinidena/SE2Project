@@ -160,12 +160,15 @@ public class ShirtCreatorViewModel {
 	 */
 	public boolean deleteShirt() {
 
-		Shirt shirtToDelete = this.formShirt();
+		if (!this.database.values().isEmpty()) {
+			Shirt shirtToDelete = this.formShirt();
 
-		if (this.database.removeByKey(shirtToDelete.hashCode())) {
-			this.update();
-			this.clearTextFields();
-			return true;
+			if (this.database.removeByKey(shirtToDelete.hashCode())) {
+
+				this.update();
+				this.clearTextFields();
+				return true;
+			}
 		}
 
 		return false;
@@ -180,19 +183,11 @@ public class ShirtCreatorViewModel {
 	public boolean editShirt() {
 
 		Shirt shirtToEdit = this.formShirt();
+		int hash = shirtToEdit.hashCode();
 
 		if (this.database.containsKey(shirtToEdit.hashCode())) {
 
-			this.database.findByKey(shirtToEdit.hashCode()).setHasPocket(shirtToEdit.hasPocket());
-
-			this.database.findByKey(shirtToEdit.hashCode()).setSize(shirtToEdit.getSize());
-
-			this.database.findByKey(shirtToEdit.hashCode()).setSleeveLength(shirtToEdit.getSleeveLength());
-			this.database.findByKey(shirtToEdit.hashCode()).setColor(shirtToEdit.getColor());
-			this.database.findByKey(shirtToEdit.hashCode()).setNeckStyle(shirtToEdit.getNeckStyle());
-			this.database.findByKey(shirtToEdit.hashCode()).setMaterial(shirtToEdit.getMaterial());
-			this.database.findByKey(shirtToEdit.hashCode()).setShirtText(shirtToEdit.getShirtText());
-
+			this.database.replaceByKey(hash, shirtToEdit);
 			this.update();
 			this.clearTextFields();
 			return true;
@@ -210,10 +205,9 @@ public class ShirtCreatorViewModel {
 
 	private Shirt formShirt() {
 
-		Shirt shirt = new TShirt(
-			    nameProperty.get(), pocketProperty.get(), shoulderProperty.get(), sizeProperty.get(),
-			    sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(), materialProperty.get(),
-			    backLengthProperty.get(), textProperty.get());
+		Shirt shirt = new TShirt(nameProperty.get(), pocketProperty.get(), shoulderProperty.get(), sizeProperty.get(),
+				sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(), materialProperty.get(),
+				backLengthProperty.get(), textProperty.get());
 
 		return shirt;
 	}
@@ -226,6 +220,7 @@ public class ShirtCreatorViewModel {
 		nameProperty.set("");
 		shoulderProperty.set(null);
 		sizeProperty.set(null);
+		this.sleeveProperty.set(null);
 		backLengthProperty.set(null);
 		colorProperty.set(null);
 		neckStyleProperty.set(null);

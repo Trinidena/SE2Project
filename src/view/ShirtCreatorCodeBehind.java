@@ -81,6 +81,8 @@ public class ShirtCreatorCodeBehind {
 
 	private ShirtCreatorViewModel viewModel;
 
+	private ShirtCreatorViewModel presetsViewModel;
+
 	public ShirtCreatorCodeBehind() {
 		this.viewModel = new ShirtCreatorViewModel();
 		this.presetsViewModel = new ShirtCreatorViewModel();
@@ -95,8 +97,8 @@ public class ShirtCreatorCodeBehind {
 		this.addPresets();
 		this.requests = FXCollections.observableArrayList();
 		requestListView = new ListView<>(requests);
-		setupSelectionHandlerForListView();
-		this.setupSelectionHandlerForPresetsListView();
+		 setupSelectionHandlerForListView();
+		//this.setupSelectionHandlerForPresetsListView();
 		this.pocketComboBox.valueProperty().set(false);
 
 		bindToViewModel();
@@ -256,7 +258,25 @@ public class ShirtCreatorCodeBehind {
 		detailStage.show();
 	}
 
-	private ShirtCreatorViewModel presetsViewModel;
+	@FXML
+	void handleAdd(ActionEvent event) {
+		Alert newAlert = new Alert(AlertType.ERROR);
+
+		try {
+			if (!this.viewModel.addShirtToListView()) {
+				newAlert.setContentText("This name already exists");
+				newAlert.showAndWait();
+			}
+		} catch (NullPointerException nPE) {
+			newAlert.setContentText(nPE.getLocalizedMessage());
+
+			newAlert.showAndWait();
+		} catch (IllegalArgumentException iAE) {
+			newAlert.setContentText(iAE.getLocalizedMessage());
+			newAlert.showAndWait();
+		}
+
+	}
 
 	@FXML
 	void handleDeleteShirt(ActionEvent event) {
@@ -286,6 +306,7 @@ public class ShirtCreatorCodeBehind {
 	}
 
 	private void setupSelectionHandlerForListView() {
+
 		this.designedListView.getSelectionModel().selectedItemProperty().addListener(
 
 				(observable, oldValue, newValue) -> {
@@ -319,9 +340,11 @@ public class ShirtCreatorCodeBehind {
 	}
 
 	private void setupSelectionHandlerForPresetsListView() {
+
 		this.presetsListView.getSelectionModel().selectedItemProperty().addListener(
 
 				(observable, oldValue, newValue) -> {
+
 					if (newValue != null) {
 						this.nameTextField.setText(newValue.getName());
 
@@ -345,21 +368,34 @@ public class ShirtCreatorCodeBehind {
 	}
 
 	private void addPresets() {
-		this.presetsViewModel.pocketProperty().set(true);
-		this.presetsViewModel.nameProperty().set("Preset 1");
-		this.presetsViewModel.shoulderProperty().set(Size.XXL);
-		this.presetsViewModel.sizeProperty().set(Size.XXXL);
-		this.presetsViewModel.sleeveLengthProperty().set(Size.XS);
 
-		this.presetsViewModel.colorProperty().set(Color.BLUE);
-		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
+		this.viewModel.pocketProperty().set(true);
+		this.viewModel.nameProperty().set("Preset 2");
+		this.viewModel.shoulderProperty().set(Size.XXL);
+		this.viewModel.sizeProperty().set(Size.XXXL);
+		this.viewModel.sleeveLengthProperty().set(Size.XS);
 
-		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
-		this.presetsViewModel.materialProperty().set(Material.SILK);
-		this.presetsViewModel.backLengthProperty().set(Size.XL);
-		this.presetsViewModel.textProperty().set("Big Boss");
+		this.viewModel.colorProperty().set(Color.BLUE);
+		this.viewModel.neckStyleProperty().set(NeckStyle.V_NECK);
 
-		this.presetsViewModel.addShirtToListView();
+		this.viewModel.materialProperty().set(Material.SILK);
+		this.viewModel.backLengthProperty().set(Size.XL);
+		this.viewModel.textProperty().set("Big Boss");
+
+		this.viewModel.addShirtToListView();
+		this.viewModel.nameProperty().set("Preset 1");
+		this.viewModel.shoulderProperty().set(Size.XS);
+		this.viewModel.sizeProperty().set(Size.S);
+		this.viewModel.sleeveLengthProperty().set(Size.XXXL);
+
+		this.viewModel.colorProperty().set(Color.RED);
+		this.viewModel.neckStyleProperty().set(NeckStyle.SCOOP_NECK);
+
+		this.viewModel.materialProperty().set(Material.PREMIUM_COTTON);
+		this.viewModel.backLengthProperty().set(Size.M);
+		this.viewModel.textProperty().set("Small Boss");
+
+		this.viewModel.addShirtToListView();
 
 	}
 
