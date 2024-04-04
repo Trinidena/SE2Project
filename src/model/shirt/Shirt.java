@@ -1,5 +1,7 @@
 package model.shirt;
 
+import java.util.Objects;
+
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
@@ -116,6 +118,11 @@ public abstract class Shirt {
 		return this.name;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name);
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -157,7 +164,7 @@ public abstract class Shirt {
 	}
 
 	public Size getBackLength() {
-		return this.shoulderWidth;
+		return this.backLength;
 	}
 
 	public void setBackLength(Size backLength) {

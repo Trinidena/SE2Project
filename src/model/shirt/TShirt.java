@@ -15,20 +15,23 @@ import model.shirt.TShirt;
  * specific functionalities.
  */
 public class TShirt extends Shirt {
-    /**
-     * Initializes a new TShirt object using provided shirt attributes.
-     * 
-     * @param attributes The attributes to initialize the TShirt with.
-     */
+	/**
+	 * Initializes a new TShirt object using provided shirt attributes.
+	 * 
+	 * @param attributes The attributes to initialize the TShirt with.
+	 */
 
-	public TShirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color, NeckStyle neckStyle, Material material, Size backLength, String shirtText) {
-        super(name, hasPocket, shoulderWidth, size, backLength, color, neckStyle, material, backLength, shirtText);
-    }
-    /**
-     * Displays T-Shirt specific information along with the common shirt information.
-     */
-    @Override
-    public void displayInformation() {
-        super.displayInformation();
-    }
+	public TShirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color,
+			NeckStyle neckStyle, Material material, Size backLength, String shirtText) {
+		super(name, hasPocket, shoulderWidth, size, sleeveLength, color, neckStyle, material, backLength, shirtText);
+	}
+
+	/**
+	 * Displays T-Shirt specific information along with the common shirt
+	 * information.
+	 */
+	@Override
+	public void displayInformation() {
+		super.displayInformation();
+	}
 }

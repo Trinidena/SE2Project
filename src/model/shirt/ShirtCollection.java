@@ -120,6 +120,37 @@ public class ShirtCollection {
 	}
 
 	/**
+	 * Removes the shirt with the specified key
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param id the id to search for
+	 * @return true if it can be removed, or false if not
+	 */
+	public boolean replaceByKey(int id, Shirt newShirt) {
+
+		for (Shirt currentShirt : this.shirts.values()) {
+			if (currentShirt.hashCode() == id) {
+
+				currentShirt.setHasPocket(newShirt.hasPocket);
+				currentShirt.setColor(newShirt.getColor());
+				currentShirt.setSize(newShirt.getSize());
+				currentShirt.setMaterial(newShirt.getMaterial());
+				currentShirt.setSleeveLength(newShirt.getSleeveLength());
+				currentShirt.setShoulderWidth(newShirt.getShoulderWidth());
+				currentShirt.setBackLength(newShirt.getBackLength());
+				currentShirt.setNeckStyle(newShirt.getNeckStyle());
+				currentShirt.setShirtText(newShirt.getShirtText());
+		
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	/**
 	 * Checks if the map of babies is empty
 	 * 
 	 * @precondition none

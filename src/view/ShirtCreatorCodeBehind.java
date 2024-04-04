@@ -48,10 +48,8 @@ import viewmodel.ShirtCreatorViewModel;
  */
 public class ShirtCreatorCodeBehind {
 
-	private ListView<Shirt> listView;
-
 	@FXML
-	private ListView<Shirt> designedListView, presetsListView, requestListView;
+	private ListView<Shirt> designedListView, requestListView;
 	@FXML
 	private ObservableList<Shirt> requests;
 	@FXML
@@ -81,9 +79,11 @@ public class ShirtCreatorCodeBehind {
 
 	private ShirtCreatorViewModel viewModel;
 
+	private ShirtCreatorViewModel presetsViewModel;
+
 	public ShirtCreatorCodeBehind() {
 		this.viewModel = new ShirtCreatorViewModel();
-		this.presetsViewModel = new ShirtCreatorViewModel();
+
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ShirtCreatorCodeBehind {
 		this.requests = FXCollections.observableArrayList();
 		requestListView = new ListView<>(requests);
 		setupSelectionHandlerForListView();
-		this.setupSelectionHandlerForPresetsListView();
+
 		this.pocketComboBox.valueProperty().set(false);
 
 		bindToViewModel();
@@ -186,7 +186,7 @@ public class ShirtCreatorCodeBehind {
 
 	private void bindToViewModel() {
 		designedListView.itemsProperty().bindBidirectional(viewModel.listProperty());
-		this.presetsListView.itemsProperty().bindBidirectional(this.presetsViewModel.listProperty());
+
 		pocketComboBox.valueProperty().bindBidirectional(viewModel.pocketProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 		shoulderLengthComboBox.valueProperty().bindBidirectional(viewModel.shoulderProperty());
@@ -256,7 +256,25 @@ public class ShirtCreatorCodeBehind {
 		detailStage.show();
 	}
 
-	private ShirtCreatorViewModel presetsViewModel;
+	@FXML
+	void handleAdd(ActionEvent event) {
+		Alert newAlert = new Alert(AlertType.ERROR);
+
+		try {
+			if (!this.viewModel.addShirtToListView()) {
+				newAlert.setContentText("This name already exists");
+				newAlert.showAndWait();
+			}
+		} catch (NullPointerException nPE) {
+			newAlert.setContentText(nPE.getLocalizedMessage());
+
+			newAlert.showAndWait();
+		} catch (IllegalArgumentException iAE) {
+			newAlert.setContentText(iAE.getLocalizedMessage());
+			newAlert.showAndWait();
+		}
+
+	}
 
 	@FXML
 	void handleDeleteShirt(ActionEvent event) {
@@ -286,24 +304,22 @@ public class ShirtCreatorCodeBehind {
 	}
 
 	private void setupSelectionHandlerForListView() {
+
 		this.designedListView.getSelectionModel().selectedItemProperty().addListener(
 
 				(observable, oldValue, newValue) -> {
 					if (newValue != null) {
 						this.nameTextField.setText(newValue.getName());
-
-						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
-
-						this.shoulderLengthComboBox.valueProperty().setValue(newValue.getSize());
-						this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
-
 						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
-						this.sleeveComboBox.valueProperty().setValue(newValue.getSleeveLength());
+						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
 						this.colorComboBox.valueProperty().setValue(newValue.getColor());
-
+						this.sleeveComboBox.valueProperty().setValue(newValue.getSleeveLength());
+						this.shoulderLengthComboBox.valueProperty().setValue(newValue.getShoulderWidth());
 						this.backLengthComboBox.valueProperty().setValue(newValue.getBackLength());
 
-						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
+						this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
+
+						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
 
 						this.textTextField.textProperty().setValue(newValue.getShirtText());
 
@@ -318,48 +334,35 @@ public class ShirtCreatorCodeBehind {
 		});
 	}
 
-	private void setupSelectionHandlerForPresetsListView() {
-		this.presetsListView.getSelectionModel().selectedItemProperty().addListener(
-
-				(observable, oldValue, newValue) -> {
-					if (newValue != null) {
-						this.nameTextField.setText(newValue.getName());
-
-						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
-
-						this.shoulderLengthComboBox.valueProperty().setValue(newValue.getSize());
-						this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
-
-						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
-						this.sleeveComboBox.valueProperty().setValue(newValue.getSleeveLength());
-						this.colorComboBox.valueProperty().setValue(newValue.getColor());
-
-						this.backLengthComboBox.valueProperty().setValue(newValue.getBackLength());
-
-						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
-
-						this.textTextField.textProperty().setValue(newValue.getShirtText());
-
-					}
-				});
-	}
-
 	private void addPresets() {
-		this.presetsViewModel.pocketProperty().set(true);
-		this.presetsViewModel.nameProperty().set("Standard Shirt");
-		this.presetsViewModel.shoulderProperty().set(Size.L);
-		this.presetsViewModel.sizeProperty().set(Size.L);
-		this.presetsViewModel.sleeveLengthProperty().set(Size.L);
 
-		this.presetsViewModel.colorProperty().set(Color.BLUE);
-		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
+		this.viewModel.pocketProperty().set(true);
+		this.viewModel.nameProperty().set("Preset 2");
+		this.viewModel.shoulderProperty().set(Size.XXL);
+		this.viewModel.sizeProperty().set(Size.XXXL);
+		this.viewModel.sleeveLengthProperty().set(Size.XS);
 
-		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
-		this.presetsViewModel.materialProperty().set(Material.SILK);
-		this.presetsViewModel.backLengthProperty().set(Size.L);
-		this.presetsViewModel.textProperty().set("Big Boss");
+		this.viewModel.colorProperty().set(Color.BLUE);
+		this.viewModel.neckStyleProperty().set(NeckStyle.V_NECK);
 
-		this.presetsViewModel.addShirtToListView();
+		this.viewModel.materialProperty().set(Material.SILK);
+		this.viewModel.backLengthProperty().set(Size.XL);
+		this.viewModel.textProperty().set("Big Boss");
+
+		this.viewModel.addShirtToListView();
+		this.viewModel.nameProperty().set("Preset 1");
+		this.viewModel.shoulderProperty().set(Size.XS);
+		this.viewModel.sizeProperty().set(Size.S);
+		this.viewModel.sleeveLengthProperty().set(Size.XXXL);
+
+		this.viewModel.colorProperty().set(Color.RED);
+		this.viewModel.neckStyleProperty().set(NeckStyle.SCOOP_NECK);
+
+		this.viewModel.materialProperty().set(Material.PREMIUM_COTTON);
+		this.viewModel.backLengthProperty().set(Size.M);
+		this.viewModel.textProperty().set("Small Boss");
+
+		this.viewModel.addShirtToListView();
 
 	}
 
