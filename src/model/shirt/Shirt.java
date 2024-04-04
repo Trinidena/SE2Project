@@ -29,7 +29,7 @@ public abstract class Shirt {
 	 * 
 	 * @param attributes The attributes used to initialize the shirt.
 	 */
-	public Shirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size sleeveLength, Color color,
+	public Shirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color,
 			NeckStyle collar, Material material, Size backLength, String shirtText) {
 
 		boolean isError = false;
@@ -90,7 +90,7 @@ public abstract class Shirt {
 		this.size = size;
 		this.backLength = backLength;
 		this.color = color;
-		this.neckStyle = neckStyle;
+		this.neckStyle = collar;
 		this.material = material;
 	}
 

@@ -136,6 +136,7 @@ public class ShirtCreatorCodeBehind {
 		confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
 
 		Optional<ButtonType> result = confirmationDialog.showAndWait();
+		String response = "";
 		if (result.isPresent() && result.get() == ButtonType.OK) {
 			requests.add(viewModel.addShirt());
 			showAlert(AlertType.INFORMATION, "Request Successful", "Shirt design requested successfully.");
