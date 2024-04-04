@@ -19,7 +19,7 @@ import view.CreateAccountController;
  */
 public class Main extends Application {
 
-    private static final String WINDOW_TITLE = "Shirt Builder: Create Account";
+    private static final String WINDOW_TITLE = "TeeGenius";
     private static final String CREATEACCOUNT_FXML = "/view/CreateAccount.fxml";
 
     @Override
