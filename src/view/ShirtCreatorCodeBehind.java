@@ -48,6 +48,8 @@ import viewmodel.ShirtCreatorViewModel;
  */
 public class ShirtCreatorCodeBehind {
 
+	private ListView<Shirt> listView;
+
 	@FXML
 	private ListView<Shirt> designedListView, presetsListView, requestListView;
 	@FXML
@@ -58,12 +60,14 @@ public class ShirtCreatorCodeBehind {
 	private ComboBox<Color> colorComboBox;
 	@FXML
 	private ComboBox<Material> materialComboBox;
-	@FXML
-	private ComboBox<NeckStyle> styleCombobox;
+
 	@FXML
 	private ComboBox<Boolean> pocketComboBox;
 	@FXML
 	private ComboBox<Integer> quantityComboBox;
+
+	@FXML
+	private ComboBox<NeckStyle> collarComboBox;
 	@FXML
 	private Button saveButton, deleteButton, editButton, requestButton, submitButton, viewButton;
 	@FXML
@@ -88,13 +92,13 @@ public class ShirtCreatorCodeBehind {
 	 */
 	public void initialize() {
 		populateComboBoxes();
-
+		this.addPresets();
 		this.requests = FXCollections.observableArrayList();
 		requestListView = new ListView<>(requests);
 		setupSelectionHandlerForListView();
 		this.setupSelectionHandlerForPresetsListView();
 		this.pocketComboBox.valueProperty().set(false);
-		this.addPresets();
+
 		bindToViewModel();
 	}
 
@@ -133,7 +137,7 @@ public class ShirtCreatorCodeBehind {
 
 		Optional<ButtonType> result = confirmationDialog.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK) {
-//			requests.add(viewModel.addShirt());
+			requests.add(viewModel.addShirt());
 			showAlert(AlertType.INFORMATION, "Request Successful", "Shirt design requested successfully.");
 		} else {
 			showAlert(AlertType.INFORMATION, "Request Cancelled", "Shirt design request cancelled.");
@@ -177,40 +181,29 @@ public class ShirtCreatorCodeBehind {
 
 	private void bindToViewModel() {
 		designedListView.itemsProperty().bindBidirectional(viewModel.listProperty());
+		this.presetsListView.itemsProperty().bindBidirectional(this.presetsViewModel.listProperty());
 		pocketComboBox.valueProperty().bindBidirectional(viewModel.pocketProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
-		// shoulderLengthComboBox.valueProperty().bindBidirectional(viewModel.backLengthProperty());
+		shoulderLengthComboBox.valueProperty().bindBidirectional(viewModel.shoulderProperty());
 		sizeComboBox.valueProperty().bindBidirectional(viewModel.sizeProperty());
-		// backLengthComboBox.valueProperty().bindBidirectional(viewModel.backLengthProperty());
+		this.sleeveComboBox.valueProperty().bindBidirectional(viewModel.sleeveLengthProperty());
 		colorComboBox.valueProperty().bindBidirectional(viewModel.colorProperty());
-		styleCombobox.valueProperty().bindBidirectional(viewModel.neckStyleProperty());
+		this.collarComboBox.valueProperty().bindBidirectional(viewModel.neckStyleProperty());
 		materialComboBox.valueProperty().bindBidirectional(viewModel.materialProperty());
+		backLengthComboBox.valueProperty().bindBidirectional(viewModel.backLengthProperty());
 		this.textTextField.textProperty().bindBidirectional(this.viewModel.textProperty());
 	}
 
 	private void populateComboBoxes() {
 		pocketComboBox.getItems().addAll(true, false);
-		sizeComboBox.getItems().addAll(Size.values());
-		backLengthComboBox.getItems().addAll(Size.values());
+
 		shoulderLengthComboBox.getItems().addAll(Size.values());
+		sizeComboBox.getItems().addAll(Size.values());
+		this.sleeveComboBox.getItems().addAll(Size.values());
 		colorComboBox.getItems().addAll(Color.values());
-		styleCombobox.getItems().addAll(NeckStyle.values());
+		this.collarComboBox.getItems().addAll(NeckStyle.values());
 		materialComboBox.getItems().addAll(Material.values());
-	}
-
-	private void setupSelectionHandlerForListView() {
-		designedListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue != null) {
-				updateFormFields(newValue);
-			}
-		});
-
-		requestListView.setOnMouseClicked(event -> {
-			Shirt selectedShirt = requestListView.getSelectionModel().getSelectedItem();
-			if (selectedShirt != null && event.getClickCount() == 2) { // Double-click to view details
-				showShirtDetails(selectedShirt);
-			}
-		});
+		backLengthComboBox.getItems().addAll(Size.values());
 	}
 
 	private void updateFormFields(Shirt newValue) {
@@ -220,7 +213,7 @@ public class ShirtCreatorCodeBehind {
 		sizeComboBox.valueProperty().setValue(newValue.getSize());
 		backLengthComboBox.valueProperty().setValue(newValue.getSize());
 		colorComboBox.valueProperty().setValue(newValue.getColor());
-		styleCombobox.valueProperty().setValue(newValue.getNeckStyle());
+		this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
 		materialComboBox.valueProperty().setValue(newValue.getMaterial());
 	}
 
@@ -258,33 +251,7 @@ public class ShirtCreatorCodeBehind {
 		detailStage.show();
 	}
 
-	private Shirt shirtAttributes;
-	private Random random = new Random();
-	private GraphicsContext graphicsContext;
-	private BufferedImage canvas;
-	private ListView<Shirt> listView;
-
 	private ShirtCreatorViewModel presetsViewModel;
-
-	@FXML
-	void handleAdd(ActionEvent event) {
-		Alert newAlert = new Alert(AlertType.ERROR);
-
-		try {
-			if (!this.viewModel.addShirt()) {
-				newAlert.setContentText("This name already exists");
-				newAlert.showAndWait();
-			}
-		} catch (NullPointerException nPE) {
-			newAlert.setContentText(nPE.getLocalizedMessage());
-
-			newAlert.showAndWait();
-		} catch (IllegalArgumentException iAE) {
-			newAlert.setContentText(iAE.getLocalizedMessage());
-			newAlert.showAndWait();
-
-		}
-	}
 
 	@FXML
 	void handleDeleteShirt(ActionEvent event) {
@@ -313,6 +280,39 @@ public class ShirtCreatorCodeBehind {
 		requests.clear();
 	}
 
+	private void setupSelectionHandlerForListView() {
+		this.designedListView.getSelectionModel().selectedItemProperty().addListener(
+
+				(observable, oldValue, newValue) -> {
+					if (newValue != null) {
+						this.nameTextField.setText(newValue.getName());
+
+						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
+
+						this.shoulderLengthComboBox.valueProperty().setValue(newValue.getSize());
+						this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
+
+						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
+						this.sleeveComboBox.valueProperty().setValue(newValue.getSleeveLength());
+						this.colorComboBox.valueProperty().setValue(newValue.getColor());
+
+						this.backLengthComboBox.valueProperty().setValue(newValue.getBackLength());
+
+						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
+
+						this.textTextField.textProperty().setValue(newValue.getShirtText());
+
+					}
+				});
+
+		requestListView.setOnMouseClicked(event -> {
+			Shirt selectedShirt = requestListView.getSelectionModel().getSelectedItem();
+			if (selectedShirt != null && event.getClickCount() == 2) { // Double-click to view details
+				showShirtDetails(selectedShirt);
+			}
+		});
+	}
+
 	private void setupSelectionHandlerForPresetsListView() {
 		this.presetsListView.getSelectionModel().selectedItemProperty().addListener(
 
@@ -322,13 +322,18 @@ public class ShirtCreatorCodeBehind {
 
 						this.pocketComboBox.valueProperty().setValue(newValue.hasPocket());
 
+						this.shoulderLengthComboBox.valueProperty().setValue(newValue.getSize());
+						this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
+
 						this.sizeComboBox.valueProperty().setValue(newValue.getSize());
-						this.sleeveComboBox.valueProperty().setValue(newValue.getSize());
+						this.sleeveComboBox.valueProperty().setValue(newValue.getSleeveLength());
 						this.colorComboBox.valueProperty().setValue(newValue.getColor());
-						// this.collarComboBox.valueProperty().setValue(newValue.getNeckStyle());
+
+						this.backLengthComboBox.valueProperty().setValue(newValue.getBackLength());
+
 						this.materialComboBox.valueProperty().setValue(newValue.getMaterial());
 
-						// this.textTextField.textProperty().setValue(newValue.getShirtText());
+						this.textTextField.textProperty().setValue(newValue.getShirtText());
 
 					}
 				});
@@ -337,15 +342,19 @@ public class ShirtCreatorCodeBehind {
 	private void addPresets() {
 		this.presetsViewModel.pocketProperty().set(true);
 		this.presetsViewModel.nameProperty().set("Preset 1");
-		this.presetsViewModel.quantityProperty().set(6);
-		this.presetsViewModel.colorProperty().set(Color.BLUE);
+		this.presetsViewModel.shoulderProperty().set(Size.XXL);
 		this.presetsViewModel.sizeProperty().set(Size.XXXL);
 		this.presetsViewModel.sleeveLengthProperty().set(Size.XS);
+
+		this.presetsViewModel.colorProperty().set(Color.BLUE);
+		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
+
 		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
 		this.presetsViewModel.materialProperty().set(Material.SILK);
+		this.presetsViewModel.backLengthProperty().set(Size.XL);
 		this.presetsViewModel.textProperty().set("Big Boss");
 
-		this.presetsViewModel.addShirt();
+		this.presetsViewModel.addShirtToListView();
 
 	}
 

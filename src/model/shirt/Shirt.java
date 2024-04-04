@@ -18,17 +18,19 @@ public abstract class Shirt {
 	protected Size shoulderWidth;
 	protected Size size;
 	protected Size backLength;
+	protected Size sleeveLength;
 	protected Color color;
 	protected NeckStyle neckStyle;
 	protected Material material;
+	protected String shirtText;
 
 	/**
 	 * Initializes a new Shirt object with the specified attributes.
 	 * 
 	 * @param attributes The attributes used to initialize the shirt.
 	 */
-	public Shirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size backLength, Color color,
-			NeckStyle neckStyle, Material material) {
+	public Shirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size sleeveLength, Color color,
+			NeckStyle collar, Material material, Size backLength, String shirtText) {
 
 		boolean isError = false;
 		String errorMessage = "The following cannot be empty:";
@@ -43,12 +45,17 @@ public abstract class Shirt {
 			errorMessage += " name ";
 		}
 
+		if (shoulderWidth == null) {
+			isError = true;
+			errorMessage += " shoulder ";
+		}
+
 		if (size == null) {
 			isError = true;
 			errorMessage += " size ";
 		}
 
-		if (backLength == null) {
+		if (sleeveLength == null) {
 			isError = true;
 			errorMessage += " sleeve length ";
 		}
@@ -58,7 +65,7 @@ public abstract class Shirt {
 			errorMessage += " color ";
 		}
 
-		if (neckStyle == null) {
+		if (collar == null) {
 			isError = true;
 			errorMessage += " collar ";
 		}
@@ -66,6 +73,11 @@ public abstract class Shirt {
 		if (material == null) {
 			isError = true;
 			errorMessage += " material ";
+		}
+
+		if (backLength == null) {
+			isError = true;
+			errorMessage += " back length ";
 		}
 
 		if (isError) {
@@ -109,6 +121,14 @@ public abstract class Shirt {
 		this.name = name;
 	}
 
+	public String getShirtText() {
+		return this.shirtText;
+	}
+
+	public void setShirtText(String shirtText) {
+		this.shirtText = shirtText;
+	}
+
 	public Size getShoulderWidth() {
 		return this.shoulderWidth;
 	}
@@ -123,6 +143,14 @@ public abstract class Shirt {
 
 	public void setSize(Size size) {
 		this.size = size;
+	}
+
+	public Size getSleeveLength() {
+		return this.sleeveLength;
+	}
+
+	public void setSleeveLength(Size sleeveLength) {
+		this.sleeveLength = sleeveLength;
 	}
 
 	public Size getBackLength() {

@@ -26,9 +26,9 @@ public class TShirt extends Shirt {
 	 * @param attributes The attributes to initialize the TShirt with.
 	 */
 
-	public TShirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size backLength, Color color,
-			NeckStyle neckStyle, Material material, Image image) {
-		super(hasPocket, name, shoulderWidth, size, backLength, color, neckStyle, material);
+	public TShirt(boolean hasPocket, String name, Size shoulderWidth, Size size, Size sleeveLength, Color color,
+			NeckStyle collar, Material material, Size backLength, String shirtText, Image image) {
+		super(hasPocket, name, shoulderWidth, size, sleeveLength, color, collar, material, backLength, shirtText);
 
 		this.image = image;
 

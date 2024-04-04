@@ -15,56 +15,55 @@ import java.io.IOException;
 
 public class CreateAccountController {
 
-    @FXML
-    private TextField usernameField;
+	@FXML
+	private TextField usernameField;
 
-    @FXML
-    private PasswordField passwordField;
+	@FXML
+	private PasswordField passwordField;
 
-    @FXML
-    private ComboBox<String> accountTypeComboBox;
+	@FXML
+	private ComboBox<String> accountTypeComboBox;
 
-    @FXML
-    private Button createAccountButton;
+	@FXML
+	private Button createAccountButton;
 
-    private Stage stage;
+	private Stage stage;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
-    @FXML
-    void initialize() {
-        // Populate the ComboBox with options
-        accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
-    }
+	@FXML
+	void initialize() {
+		// Populate the ComboBox with options
+		accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
+	}
 
-    @FXML
-    void createAccount(ActionEvent event) throws IOException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        String selectedAccountType = accountTypeComboBox.getValue();
-        
-        if (username.isEmpty() || password.isEmpty() || selectedAccountType == null) {
-            // Show an alert or handle empty fields
-            return;
-        }
+	@FXML
+	void createAccount(ActionEvent event) throws IOException {
+		String username = usernameField.getText();
+		String password = passwordField.getText();
+		String selectedAccountType = accountTypeComboBox.getValue();
 
-        if (selectedAccountType.equals("Creator")) {
-            // Navigate to ShirtCreatorView.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ShirtCreatorView.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } else if (selectedAccountType.equals("Business")) {
-            // Navigate to BusinessView.fxml (or any other desired window)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Business.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-    }
+		if (username.isEmpty() || password.isEmpty() || selectedAccountType == null) {
+			// Show an alert or handle empty fields
+			return;
+		}
+
+		if (selectedAccountType.equals("Creator")) {
+			// Navigate to ShirtCreatorView.fxml
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ShirtCreatorView.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} else if (selectedAccountType.equals("Business")) {
+			// Navigate to BusinessView.fxml (or any other desired window)
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Business.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		}
+	}
 }
-

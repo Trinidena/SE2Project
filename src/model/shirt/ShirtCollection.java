@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ShirtCollection {
 
-	private final Map<Integer, TShirt> shirts;
+	private final Map<Integer, Shirt> shirts;
 
 	/**
 	 * Creates a new collection
@@ -16,7 +16,7 @@ public class ShirtCollection {
 	 * @postcondition none
 	 */
 	public ShirtCollection() {
-		this.shirts = new HashMap<Integer, TShirt>();
+		this.shirts = new HashMap<Integer, Shirt>();
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class ShirtCollection {
 	 * @return true or false if the shirt exists
 	 */
 	public boolean containsKey(int id) {
-		for (TShirt currentBaby : this.shirts.values()) {
-			if (currentBaby.hashCode() == id) {
+		for (Shirt currentShirt : this.shirts.values()) {
+			if (currentShirt.hashCode() == id) {
 				return true;
 			}
 		}
@@ -57,8 +57,8 @@ public class ShirtCollection {
 	 * @param id the key to search by
 	 * @return the found shirt or null
 	 */
-	public TShirt findByKey(int id) {
-		for (TShirt currentShirt : this.shirts.values()) {
+	public Shirt findByKey(int id) {
+		for (Shirt currentShirt : this.shirts.values()) {
 			if (currentShirt.hashCode() == id) {
 				return currentShirt;
 			}
@@ -75,7 +75,7 @@ public class ShirtCollection {
 	 * @param newBaby the new shirt to put in the map
 	 * @return null
 	 */
-	public boolean put(TShirt newShirt) {
+	public boolean put(Shirt newShirt) {
 		if (newShirt == null) {
 			throw new IllegalArgumentException("Shirt can't be null");
 		}
@@ -93,8 +93,8 @@ public class ShirtCollection {
 	 * 
 	 * @param babyList the list of babies to iterate through
 	 */
-	public void putAll(List<TShirt> shirtList) {
-		for (TShirt currentShirt : shirtList) {
+	public void putAll(List<Shirt> shirtList) {
+		for (Shirt currentShirt : shirtList) {
 			this.shirts.put(currentShirt.hashCode(), currentShirt);
 		}
 	}
@@ -110,7 +110,7 @@ public class ShirtCollection {
 	 */
 	public boolean removeByKey(int id) {
 
-		for (TShirt currentShirt : this.shirts.values()) {
+		for (Shirt currentShirt : this.shirts.values()) {
 			if (currentShirt.hashCode() == id) {
 				return this.shirts.remove(currentShirt.hashCode(), currentShirt);
 			}
@@ -151,7 +151,7 @@ public class ShirtCollection {
 	 * 
 	 * @return the values of this.computer
 	 */
-	public Collection<TShirt> values() {
+	public Collection<Shirt> values() {
 		return this.shirts.values();
 	}
 }
