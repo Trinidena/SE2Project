@@ -3,6 +3,8 @@ package model.shirt_attribute;
 /**
  * Enum representing types of materials.
  * This enumeration defines a set of constants for various materials that can be used in the manufacture of clothing or other textile products.
+ * 
+ * @author Trinidad Dena
  */
 public enum Material {
     COTTON("Cotton"),
@@ -13,7 +15,7 @@ public enum Material {
     SILK("Silk"), 
     PREMIUM_COTTON("Premium Cotton");
 
-    private final String material; // The name of the material.
+    private final String material;
 
     /**
      * Constructor for the Material enum.
@@ -31,7 +33,7 @@ public enum Material {
      * @return The name of the material.
      */
     public String getMaterial() {
-        return material;
+        return this.material;
     }
     
     /**
@@ -41,6 +43,6 @@ public enum Material {
      */
     @Override
     public String toString() {
-        return material;
+        return this.material;
     }
 }

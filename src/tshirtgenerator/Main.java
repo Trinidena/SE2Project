@@ -1,11 +1,8 @@
 package tshirtgenerator;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import view.CreateAccountController;
@@ -27,16 +24,12 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(CREATEACCOUNT_FXML));
         Parent root = loader.load();
         CreateAccountController createAccountController = loader.getController();
-        createAccountController.setStage(primaryStage); // Pass the main stage to the LoginController
-
+        createAccountController.setStage(primaryStage);
         primaryStage.setTitle(WINDOW_TITLE);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
-
-	
-	
-	
+    
 	/**
 	 * Launches the application.
 	 * 

@@ -3,6 +3,8 @@ package model.shirt_attribute;
 /**
  * Enum representing clothing sizes.
  * This enumeration defines a set of size constants for clothing items, each associated with a specific descriptive label.
+ * 
+ * @author Trinidad Dena
  */
 public enum Size {
     XS("Extra Small"),
@@ -13,7 +15,7 @@ public enum Size {
     XXL("Double Extra Large"),
     XXXL("Triple Extra Large");
 
-    private final String description; // The descriptive label of the size.
+    private final String description;
 
     /**
      * Constructor for the Size enum.
@@ -31,6 +33,6 @@ public enum Size {
      * @return The descriptive label of the size.
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 }
