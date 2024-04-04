@@ -134,14 +134,18 @@ public class ShirtCreatorCodeBehind {
 		confirmationDialog.setTitle("Request Confirmation");
 		confirmationDialog.setHeaderText("Request Shirt Design");
 		confirmationDialog.setContentText("Are you sure you want to request this shirt design?");
+		try {
 
-		Optional<ButtonType> result = confirmationDialog.showAndWait();
-		String response = "";
-		if (result.isPresent() && result.get() == ButtonType.OK) {
-			requests.add(viewModel.addShirt());
-			showAlert(AlertType.INFORMATION, "Request Successful", "Shirt design requested successfully.");
-		} else {
-			showAlert(AlertType.INFORMATION, "Request Cancelled", "Shirt design request cancelled.");
+			Optional<ButtonType> result = confirmationDialog.showAndWait();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+				requests.add(viewModel.addShirt());
+				showAlert(AlertType.INFORMATION, "Request Successful", "Shirt design requested successfully.");
+			} else {
+				showAlert(AlertType.INFORMATION, "Request Cancelled", "Shirt design request cancelled.");
+			}
+
+		} catch (IllegalArgumentException iAE) {
+			this.showAlert(AlertType.ERROR, "Request Cancelled", iAE.getMessage());
 		}
 	}
 
