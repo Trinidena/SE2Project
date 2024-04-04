@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import model.shirt.Shirt;
+
 /** Interface for interacting with the Persistence Layer
  * Specifically for managing credentials associated with shirts in a password manager.
  * 
@@ -45,7 +47,7 @@ public abstract class ShirtCredentialsManager {
      * 
      * @return true if shirt added successfully, false if shirt not added successfully
      */
-    public abstract boolean addShirt(String shirtName);
+    public abstract boolean addShirt(Shirt shirt);
     
     /** Remove a shirt with the specified name
      * 

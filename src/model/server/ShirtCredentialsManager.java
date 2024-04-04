@@ -1,5 +1,9 @@
 package model.server;
 
+import com.google.gson.Gson;
+
+import model.shirt.Shirt;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,18 +81,21 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
     }
 
     @Override
-    public boolean addShirt(String shirtName) {
-        if (shirtName == null) {
+    public boolean addShirt(Shirt shirt) {
+        if (shirt == null) {
             throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_NULL);
         }
-        if (shirtName.isEmpty()) {
+        if (shirt.getName().isEmpty()) {
             throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_EMPTY);
         }
-        String confirmation = Server.sendRequest("add shirt," + shirtName + "," + username + "," + password);
-        if (confirmation.equals("name already exists")) {
+        Gson gson = new Gson();
+        String jsonShirt = gson.toJson(shirt);
+        String requestPayload = "add shirt," + jsonShirt;
+        String response = Server.sendRequest(requestPayload);
+        if (response.equals("name already exists")) {
             throw new IllegalStateException(SHIRT_WITH_THE_SPECIFIED_NAME_ALREADY_EXISTS);
         } else {
-            return confirmation.equals("true");
+            return response.equals("true");
         }
     }
 
