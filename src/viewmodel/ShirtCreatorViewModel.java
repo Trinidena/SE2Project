@@ -3,11 +3,11 @@ package viewmodel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 import model.ModelAwareController;
@@ -21,225 +21,233 @@ import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
 
 /**
- * The ShirtCreatorViewModel class is responsible for the application logic
- * behind the Shirt Creator UI. It binds UI components to the underlying data
- * model, facilitating communication between the view and the model. This class
- * manages shirt attributes, validates user input, and updates the UI
- * accordingly.
+ * Manages the application logic behind the Shirt Creator UI. It facilitates
+ * communication between the view and the model by binding UI components to the
+ * underlying data model. This class handles the management of shirt attributes,
+ * user input validation, and UI updates.
+ * 
+ * @author Trinidad Dena
  */
-public class ShirtCreatorViewModel implements ModelAwareController{
+public class ShirtCreatorViewModel implements ModelAwareController {
 
-	private final ListProperty<Shirt> listProperty;
-	private final BooleanProperty pocketProperty;
-	private final StringProperty nameProperty;
-	private final ObjectProperty<Size> shoulderProperty;
-	private final ObjectProperty<Size> sizeProperty;
-	private final ObjectProperty<Size> sleeveProperty;
-	private final ObjectProperty<Color> colorProperty;
-	private final ObjectProperty<NeckStyle> neckStyleProperty;
-	private final ObjectProperty<Material> materialProperty;
+    private final ListProperty<Shirt> listProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final BooleanProperty pocketProperty = new SimpleBooleanProperty();
+    private final StringProperty nameProperty = new SimpleStringProperty();
+    private final ObjectProperty<Size> shoulderProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Size> sizeProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Size> sleeveProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Color> colorProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<NeckStyle> neckStyleProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Material> materialProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Size> backLengthProperty = new SimpleObjectProperty<>();
+    private final StringProperty textProperty = new SimpleStringProperty();
+    private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+    private ShirtCredentialsManager shirtManager = new ShirtCredentialsManager();
+    private ShirtCollection database = new ShirtCollection();
 
-	private final ObjectProperty<Size> backLengthProperty;
+    /**
+     * Initializes the ViewModel, setting up the properties and the initial state.
+     */
+    public ShirtCreatorViewModel() {
+    }
 
-	private final StringProperty textProperty;
-	private final ObjectProperty<Image> imageProperty;
-	private final ShirtCredentialsManager shirtManager;
+    /**
+     * Creates a new Shirt object from the properties and attempts to add it to the shirtManager.
+     * Clears the text fields after adding.
+     *
+     * @return The new Shirt object that was added.
+     */
+    public Shirt addShirt() {
+        Shirt newShirt = this.formShirt();
+        this.shirtManager.addShirt(newShirt);
+        this.clearTextFields();
+        return newShirt;
+    }
 
-	private ShirtCollection database;
-	private ShirtCredentialsManager manager;
+    /**
+     * Attempts to add a shirt to the ListView directly, bypassing any database or external storage.
+     *
+     * @return true if the shirt was added successfully, false otherwise.
+     */
+    public boolean addShirtToListView() {
+        Shirt newShirt = this.formShirt();
+        if (this.database.put(newShirt)) {
+            this.update();
+            this.clearTextFields();
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * Constructs a ShirtCreatorViewModel initializing all the property fields and
-	 * the database.
-	 */
-	public ShirtCreatorViewModel() {
-		this.listProperty = new SimpleListProperty<Shirt>(FXCollections.observableArrayList());
-		this.nameProperty = new SimpleStringProperty();
-		this.materialProperty = new SimpleObjectProperty<Material>();
-		this.colorProperty = new SimpleObjectProperty<Color>();
-		this.pocketProperty = new SimpleBooleanProperty();
-		this.neckStyleProperty = new SimpleObjectProperty<NeckStyle>();
-		this.backLengthProperty = new SimpleObjectProperty<Size>();
-		this.shoulderProperty = new SimpleObjectProperty<Size>();
-		this.sleeveProperty = new SimpleObjectProperty<Size>();
+    /**
+     * Gets the list property of shirts.
+     * 
+     * @return The observable list property of shirts.
+     */
+    public ListProperty<Shirt> listProperty() { 
+    	return this.listProperty; }
+    
+    /**
+     * Gets the name property of a shirt.
+     * 
+     * @return The string property for the shirt's name.
+     */
+    public StringProperty nameProperty() { 
+    	return this.nameProperty; }
+    
+    /**
+     * Gets the material property of a shirt.
+     * 
+     * @return The object property for the shirt's material.
+     */
+    public ObjectProperty<Material> materialProperty() { 
+    	return this.materialProperty; }
+    
+    /**
+     * Gets the color property of a shirt.
+     * 
+     * @return The object property for the shirt's color.
+     */
+    public ObjectProperty<Color> colorProperty() { 
+    	return this.colorProperty; }
+    
+    /**
+     * Gets the pocket presence property of a shirt.
+     * 
+     * @return The boolean property indicating if the shirt has a pocket.
+     */
+    public BooleanProperty pocketProperty() { 
+    	return this.pocketProperty; }
+    
+    /**
+     * Gets the neck style property of a shirt.
+     * 
+     * @return The object property for the shirt's neck style.
+     */
+    public ObjectProperty<NeckStyle> neckStyleProperty() { 
+    	return this.neckStyleProperty; }
+    
+    /**
+     * Gets the sleeve length property of a shirt.
+     * 
+     * @return The object property for the shirt's sleeve length.
+     */
+    public ObjectProperty<Size> sleeveLengthProperty() { 
+    	return this.sleeveProperty; }
+    
+    /**
+     * Gets the size property of a shirt.
+     * 
+     * @return The object property for the shirt's size.
+     */
+    public ObjectProperty<Size> sizeProperty() { 
+    	return this.sizeProperty; }
+    
+    /**
+     * Gets the shoulder width property of a shirt.
+     * 
+     * @return The object property for the shirt's shoulder width.
+     */
+    public ObjectProperty<Size> shoulderProperty() { 
+    	return this.shoulderProperty; }
+    
+    /**
+     * Gets the back length property of a shirt.
+     * 
+     * @return The object property for the shirt's back length.
+     */
+    public ObjectProperty<Size> backLengthProperty() { 
+    	return this.backLengthProperty; }
+    
+    /**
+     * Gets the custom text property of a shirt.
+     * 
+     * @return The string property for the custom text on the shirt.
+     */
+    public StringProperty textProperty() { 
+    	return this.textProperty; }
+    
+    /**
+     * Gets the image property of a shirt.
+     * 
+     * @return The object property for the shirt's image.
+     */
+    public ObjectProperty<Image> imageProperty() { 
+    	return this.imageProperty; }
 
-		this.sizeProperty = new SimpleObjectProperty<Size>();
-		this.textProperty = new SimpleStringProperty();
-		this.imageProperty = new SimpleObjectProperty<>();
-		this.shirtManager = new ShirtCredentialsManager();
-
-		this.database = new ShirtCollection();
-	}
-
-	/**
-	 * Attempts to add a new TShirt to the database based on the current property
-	 * values. Validates the input before adding and updates the view accordingly.
-	 *
-	 * @return true if the shirt was added successfully, false otherwise.
-	 */
-	public Shirt addShirt() {
-		Shirt newShirt = this.formShirt();
-
-		shirtManager.addShirt(newShirt);
-		clearTextFields();
-
-		return newShirt;
-	}
-
-	/**
-	 * Adds a shirt to just the listview
-	 *
-	 * @return true if the shirt was added successfully, false otherwise.
-	 */
-	public boolean addShirtToListView() {
-		Shirt newShirt = this.formShirt();
-		if (this.database.put(newShirt)) {
-			this.update();
-			clearTextFields();
-			return true;
-		}
-
-		return false;
-	}
-
-	public ListProperty<Shirt> listProperty() {
-		return listProperty;
-	}
-
-	public StringProperty nameProperty() {
-		return nameProperty;
-	}
-
-	public ObjectProperty<Material> materialProperty() {
-		return materialProperty;
-	}
-
-	public ObjectProperty<Color> colorProperty() {
-		return colorProperty;
-	}
-
-	public BooleanProperty pocketProperty() {
-		return pocketProperty;
-	}
-
-	public ObjectProperty<NeckStyle> neckStyleProperty() {
-		return neckStyleProperty;
-	}
-
-	public ObjectProperty<Size> sleeveLengthProperty() {
-		return sleeveProperty;
-	}
-
-	public ObjectProperty<Size> sizeProperty() {
-		return this.sizeProperty;
-	}
-
-	public ObjectProperty<Size> shoulderProperty() {
-		return this.shoulderProperty;
-	}
-
-	public ObjectProperty<Size> backLengthProperty() {
-		return this.backLengthProperty;
-	}
-
-	public void setSizeProperty(Size newSize) {
-		this.sizeProperty.set(newSize);
-	}
-
-	public StringProperty textProperty() {
-		return textProperty;
-	}
-
-	public StringProperty imageProperty() {
-		return this.imageProperty();
-	}
-
-	/**
-	 * Deletes a tshirt from the database
-	 * 
-	 * @return false if deleted
-	 *
-	 */
-	public boolean deleteShirt() {
-
-		if (!this.database.values().isEmpty() && !this.nameProperty.getValue().isBlank()) {
+    /**
+     * Deletes a Shirt from the database.
+     * 
+     * @return true if the Shirt was successfully deleted, false otherwise.
+     */
+    public boolean deleteShirt() {
+    	if (!this.database.values().isEmpty() && !this.nameProperty.getValue().isBlank()) {
 			Shirt shirtToDelete = this.formShirt();
-
 			if (this.database.removeByKey(shirtToDelete.hashCode())) {
-
 				this.update();
 				this.clearTextFields();
 				return true;
 			}
 		}
-
 		return false;
 	}
 
-	/**
-	 * Edits an existing T shirt
-	 * 
-	 * @return false if deleted
-	 *
-	 */
-	public boolean editShirt() {
-
+    /**
+     * Edits an existing Shirt in the database.
+     * 
+     * @return true if the Shirt was successfully edited, false otherwise.
+     */
+    public boolean editShirt() {
 		if (!this.database.values().isEmpty() && !this.nameProperty.getValue().isBlank()) {
-
 			Shirt shirtToEdit = this.formShirt();
 			int hash = shirtToEdit.hashCode();
-
 			if (this.database.containsKey(shirtToEdit.hashCode())) {
-
 				this.database.replaceByKey(hash, shirtToEdit);
-
 				this.update();
-
 				this.clearTextFields();
 				return true;
 			}
 		}
 		return false;
-
 	}
 
-	/**
-	 * Updates the list property to reflect any changes in the database.
-	 */
-	private void update() {
+    /**
+     * Forms a new Shirt object based on the current state of the properties.
+     * 
+     * @return A new Shirt object.
+     */
+    private Shirt formShirt() {
+        return new TShirt(this.nameProperty.get(), this.pocketProperty.get(), this.shoulderProperty.get(),
+                this.sizeProperty.get(), this.sleeveProperty.get(), this.colorProperty.get(),
+                this.neckStyleProperty.get(), this.materialProperty.get(), this.backLengthProperty.get(),
+                this.textProperty.get());
+    }
 
-		this.listProperty.set(FXCollections.observableArrayList(this.database.values()));
-
-	}
-
-	private Shirt formShirt() {
-
-		Shirt shirt = new TShirt(nameProperty.get(), pocketProperty.get(), shoulderProperty.get(), sizeProperty.get(),
-				sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(), materialProperty.get(),
-				backLengthProperty.get(), textProperty.get());
-
-		return shirt;
-	}
-
-	/**
-	 * Clears all input fields by resetting their properties.
-	 */
-	private void clearTextFields() {
-		pocketProperty.set(false);
-		nameProperty.set("");
-		shoulderProperty.set(null);
-		sizeProperty.set(null);
+    /**
+     * Clears all text fields by resetting their bound properties.
+     */
+    private void clearTextFields() {
+		this.pocketProperty.set(false);
+		this.nameProperty.set("");
+		this.shoulderProperty.set(null);
+		this.sizeProperty.set(null);
 		this.sleeveProperty.set(null);
-		backLengthProperty.set(null);
-		colorProperty.set(null);
-		neckStyleProperty.set(null);
-		materialProperty.set(null);
+		this.backLengthProperty.set(null);
+		this.colorProperty.set(null);
+		this.neckStyleProperty.set(null);
+		this.materialProperty.set(null);
 		this.textProperty().set("");
 	}
-	
-	@Override
-	public void setModel(model.ShirtCredentialsManager manager) {
-		this.manager = (ShirtCredentialsManager) manager;
-		
-	}
+
+    /**
+     * Updates the list property to reflect the current state of the database.
+     */
+    private void update() {
+        this.listProperty.set(FXCollections.observableArrayList(this.database.values()));
+    }
+
+    @Override
+    public void setModel(model.ShirtCredentialsManager manager) {
+        this.shirtManager = (ShirtCredentialsManager) manager;
+    }
 }

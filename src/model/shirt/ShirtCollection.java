@@ -5,184 +5,127 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages a collection of Shirt objects. This class provides functionality to
+ * add, remove, and query shirts based on unique identifiers.
+ * 
+ * @author Trinidad Dena
+ */
 public class ShirtCollection {
 
-	private final Map<Integer, Shirt> shirts;
+    private final Map<Integer, Shirt> shirts;
 
-	/**
-	 * Creates a new collection
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 */
-	public ShirtCollection() {
-		this.shirts = new HashMap<Integer, Shirt>();
-	}
+    /**
+     * Constructs a new ShirtCollection instance.
+     */
+    public ShirtCollection() {
+        this.shirts = new HashMap<>();
+    }
 
-	/**
-	 * Clears the map of any previous shirt names
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 */
-	public void clear() {
-		this.shirts.clear();
-	}
+    /**
+     * Clears the collection of all shirts.
+     */
+    public void clear() {
+        this.shirts.clear();
+    }
 
-	/**
-	 * checks if the map contains a shirt name with the specified key
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param id the id to check
-	 * @return true or false if the shirt exists
-	 */
-	public boolean containsKey(int id) {
-		for (Shirt currentShirt : this.shirts.values()) {
-			if (currentShirt.hashCode() == id) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * Checks if the collection contains a shirt associated with the specified ID.
+     * 
+     * @param id The ID to check.
+     * @return true if a shirt with the specified ID exists, false otherwise.
+     */
+    public boolean containsKey(int id) {
+        return this.shirts.containsKey(id);
+    }
 
-	/**
-	 * Finds the shirt with the specified key
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param id the key to search by
-	 * @return the found shirt or null
-	 */
-	public Shirt findByKey(int id) {
-		for (Shirt currentShirt : this.shirts.values()) {
-			if (currentShirt.hashCode() == id) {
-				return currentShirt;
-			}
-		}
-		return null;
-	}
+    /**
+     * Retrieves the shirt associated with the specified ID.
+     * 
+     * @param id The ID of the shirt to find.
+     * @return The shirt if found, null otherwise.
+     */
+    public Shirt findByKey(int id) {
+        return this.shirts.get(id);
+    }
 
-	/**
-	 * Adds a new shirt
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param newBaby the new shirt to put in the map
-	 * @return null
-	 */
-	public boolean put(Shirt newShirt) {
-		if (newShirt == null) {
-			throw new IllegalArgumentException("Shirt can't be null");
-		}
-		if (this.shirts.containsKey(newShirt.hashCode())) {
-			return false;
-		}
-		return (this.shirts.put(newShirt.hashCode(), newShirt) == null);
-	}
+    /**
+     * Adds a new shirt to the collection. The shirt is indexed by its hash code.
+     * 
+     * @param newShirt The new shirt to add.
+     * @return true if the shirt was added successfully, false if a shirt with the same ID already exists.
+     * @throws IllegalArgumentException If the new shirt is null.
+     */
+    public boolean put(Shirt newShirt) {
+        if (newShirt == null) {
+            throw new IllegalArgumentException("Shirt can't be null");
+        }
+        int id = newShirt.hashCode();
+        if (this.shirts.containsKey(id)) {
+            return false;
+        }
+        this.shirts.put(id, newShirt);
+        return true;
+    }
 
-	/**
-	 * Adds every shirt in a list to the hashmap
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param babyList the list of babies to iterate through
-	 */
-	public void putAll(List<Shirt> shirtList) {
-		for (Shirt currentShirt : shirtList) {
-			this.shirts.put(currentShirt.hashCode(), currentShirt);
-		}
-	}
+    /**
+     * Adds all shirts from a given list to the collection.
+     * 
+     * @param shirtList The list of shirts to add.
+     */
+    public void putAll(List<Shirt> shirtList) {
+        shirtList.forEach(shirt -> this.shirts.put(shirt.hashCode(), shirt));
+    }
 
-	/**
-	 * Removes the shirt with the specified key
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param id the id to search for
-	 * @return true if it can be removed, or false if not
-	 */
-	public boolean removeByKey(int id) {
+    /**
+     * Removes the shirt associated with the specified ID from the collection.
+     * 
+     * @param id The ID of the shirt to remove.
+     * @return true if the shirt was removed, false if no such shirt exists.
+     */
+    public boolean removeByKey(int id) {
+        return this.shirts.remove(id) != null;
+    }
 
-		for (Shirt currentShirt : this.shirts.values()) {
-			if (currentShirt.hashCode() == id) {
-				return this.shirts.remove(currentShirt.hashCode(), currentShirt);
-			}
+    /**
+     * Replaces the details of the shirt associated with the specified ID.
+     * 
+     * @param id The ID of the shirt to replace.
+     * @param newShirt The new shirt details to apply.
+     * @return true if the shirt was found and replaced, false otherwise.
+     */
+    public boolean replaceByKey(int id, Shirt newShirt) {
+        if (this.shirts.containsKey(id) && newShirt != null) {
+            this.shirts.put(id, newShirt);
+            return true;
+        }
+        return false;
+    }
 
-		}
-		return false;
-	}
+    /**
+     * Checks if the collection is empty.
+     * 
+     * @return true if the collection has no shirts, false otherwise.
+     */
+    public boolean isEmpty() {
+        return this.shirts.isEmpty();
+    }
 
-	/**
-	 * Removes the shirt with the specified key
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param id the id to search for
-	 * @return true if it can be removed, or false if not
-	 */
-	public boolean replaceByKey(int id, Shirt newShirt) {
+    /**
+     * Returns the number of shirts in the collection.
+     * 
+     * @return The size of the collection.
+     */
+    public int size() {
+        return this.shirts.size();
+    }
 
-		for (Shirt currentShirt : this.shirts.values()) {
-			if (currentShirt.hashCode() == id) {
-
-				currentShirt.setHasPocket(newShirt.hasPocket);
-				currentShirt.setColor(newShirt.getColor());
-				currentShirt.setSize(newShirt.getSize());
-				currentShirt.setMaterial(newShirt.getMaterial());
-				currentShirt.setSleeveLength(newShirt.getSleeveLength());
-				currentShirt.setShoulderWidth(newShirt.getShoulderWidth());
-				currentShirt.setBackLength(newShirt.getBackLength());
-				currentShirt.setNeckStyle(newShirt.getNeckStyle());
-				currentShirt.setShirtText(newShirt.getShirtText());
-		
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if the map of babies is empty
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return true if empty, or false if not
-	 */
-	public boolean isEmpty() {
-		return this.shirts.isEmpty();
-	}
-
-	/**
-	 * The size of the shirt map
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return the size of this.computers
-	 */
-	public int size() {
-		return this.shirts.size();
-	}
-
-	/**
-	 * Returns all the values of the map
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return the values of this.computer
-	 */
-	public Collection<Shirt> values() {
-		return this.shirts.values();
-	}
+    /**
+     * Retrieves a collection of all shirts.
+     * 
+     * @return A collection of Shirt objects.
+     */
+    public Collection<Shirt> values() {
+        return this.shirts.values();
+    }
 }

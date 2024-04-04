@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Optional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +19,14 @@ import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
 
-public class BusinessCodeBehind implements ModelAwareController{
+import java.util.Optional;
+
+/**
+ * Controller class for the Business view. Handles interactions with the UI for business users.
+ * 
+ * @author Trinidad Dena
+ */
+public class BusinessCodeBehind implements ModelAwareController {
 
     @FXML
     private ListView<TShirt> availableRequestsListView;
@@ -31,36 +36,52 @@ public class BusinessCodeBehind implements ModelAwareController{
     private ObservableList<TShirt> availableRequests;
     private ObservableList<TShirt> acceptedRequests;
 
-	private ShirtCredentialsManager manager;
+    private ShirtCredentialsManager manager;
 
-	@FXML
+    /**
+     * Initializes the controller. This method is called after the FXML fields have been injected.
+     */
+    @FXML
     void initialize() {
-		manager = new ShirtCredentialsManager();
+        this.manager = new ShirtCredentialsManager();
         this.availableRequests = FXCollections.observableArrayList();
         this.acceptedRequests = FXCollections.observableArrayList();
         this.getShirtsFromServer();
-        this.availableRequestsListView.setItems(availableRequests);
-        this.acceptedRequestsListView.setItems(acceptedRequests);
-        
-        availableRequestsListView.setOnMouseClicked(event -> {
-			Shirt selectedShirt = availableRequestsListView.getSelectionModel().getSelectedItem();
-			if (selectedShirt != null && event.getClickCount() == 2) { // Double-click to view details
-				showShirtDetails(selectedShirt);
-			}
-		});
-    }
-    
-    public void getShirtsFromServer() {
-    	availableRequests.setAll(this.manager.getShirts());
-    }
-    
-    public void addRequest(TShirt requestedShirt) {
-        availableRequests.add(requestedShirt);
+        this.availableRequestsListView.setItems(this.availableRequests);
+        this.acceptedRequestsListView.setItems(this.acceptedRequests);
+
+        this.availableRequestsListView.setOnMouseClicked(event -> {
+            Shirt selectedShirt = this.availableRequestsListView.getSelectionModel().getSelectedItem();
+            if (selectedShirt != null && event.getClickCount() == 2) {
+                this.showShirtDetails(selectedShirt);
+            }
+        });
     }
 
+    /**
+     * Fetches available shirt requests from the server and populates the list.
+     */
+    public void getShirtsFromServer() {
+        this.availableRequests.setAll(this.manager.getShirts());
+    }
+
+    /**
+     * Adds a new shirt request to the list of available requests.
+     * 
+     * @param requestedShirt The shirt request to add.
+     */
+    public void addRequest(TShirt requestedShirt) {
+        this.availableRequests.add(requestedShirt);
+    }
+
+    /**
+     * Handles acceptance of a shirt request. Moves the shirt from available to accepted requests.
+     * 
+     * @param event The ActionEvent triggered by clicking the accept button.
+     */
     @FXML
     void onRequestAccepted(ActionEvent event) {
-        TShirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
+        TShirt selectedRequest = this.availableRequestsListView.getSelectionModel().getSelectedItem();
         if (selectedRequest != null) {
             Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationDialog.setTitle("Request Confirmation");
@@ -68,15 +89,22 @@ public class BusinessCodeBehind implements ModelAwareController{
             confirmationDialog.setContentText("Are you sure you want to accept this shirt design?");
             Optional<ButtonType> result = confirmationDialog.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                availableRequests.remove(selectedRequest);
-                acceptedRequests.add(selectedRequest);
-                showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
+                this.availableRequests.remove(selectedRequest);
+                this.acceptedRequests.add(selectedRequest);
+                this.showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
+            this.showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
         }
     }
 
+    /**
+     * Displays a modal alert dialog.
+     * 
+     * @param type    The type of alert.
+     * @param title   The title of the dialog.
+     * @param content The content message.
+     */
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -85,69 +113,44 @@ public class BusinessCodeBehind implements ModelAwareController{
         alert.showAndWait();
     }
 
-    @FXML
-    void onRequestClicked() {
-        Shirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
-        if (selectedRequest != null) {
-            showAlert(Alert.AlertType.INFORMATION, "Request Details", selectedRequest.toString());
-        }
-    }
-    
     /**
-	 * Shows a dialog listing all current design requests.
-	 * 
-	 * @param event The action event triggered by the user.
-	 */
-	@FXML
-	void onShowRequestsButtonClick(ActionEvent event) {
-		Stage stage = new Stage();
-		stage.setTitle("List of Requests");
-		VBox layout = new VBox(10);
-		availableRequestsListView.setItems(availableRequests);
+     * Shows the details of a selected shirt request in a new window.
+     * 
+     * @param selectedShirt The shirt to display details for.
+     */
+    private void showShirtDetails(Shirt selectedShirt) {
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(15));
 
-		layout.getChildren().add(availableRequestsListView);
+        Label pocketLabel = new Label("Pocket: " + selectedShirt.hasPocket());
+        Label nameLabel = new Label("Name: " + selectedShirt.getName());
+        Label shoulderLabel = new Label("Shoulder: " + selectedShirt.getShoulderWidth());
+        Label sizeLabel = new Label("Size: " + selectedShirt.getSize().toString());
+        Label backLabel = new Label("Back: " + selectedShirt.getBackLength());
+        Label styleLabel = new Label("Style: " + selectedShirt.getNeckStyle());
+        Label materialLabel = new Label("Material: " + selectedShirt.getMaterial());
+        Label colorLabel = new Label("Color: " + selectedShirt.getColor().toString());
+        Button button = new Button("Accept");
 
-		Scene scene = new Scene(layout, 300, 250);
-		stage.setScene(scene);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.show();
-	}
+        root.getChildren().addAll(pocketLabel, nameLabel, shoulderLabel, sizeLabel, backLabel, styleLabel,
+                materialLabel, colorLabel, button);
 
-	private void showShirtDetails(Shirt selectedShirt) {
-		VBox root = new VBox(10);
-		root.setPadding(new Insets(15));
+        Scene scene = new Scene(root, 300, 300);
+        Stage detailStage = new Stage();
+        detailStage.setTitle("Shirt Details");
+        detailStage.setScene(scene);
+        detailStage.initModality(Modality.APPLICATION_MODAL);
+        detailStage.show();
 
-		Label pocketLabel = new Label("Pocket: " + selectedShirt.hasPocket());
-		Label nameLabel = new Label("Name: " + selectedShirt.getName());
-		Label shoulderLabel = new Label("Shoulder: " + selectedShirt.getShoulderWidth());
-		Label sizeLabel = new Label("Size: " + selectedShirt.getSize().toString());
-		Label backLabel = new Label("Back: " + selectedShirt.getBackLength());
-		Label styleLabel = new Label("Style: " + selectedShirt.getNeckStyle());
-		Label materialLabel = new Label("Material: " + selectedShirt.getMaterial());
-		Label colorLabel = new Label("Color: " + selectedShirt.getColor().toString());
-		Button button = new Button("Accept");
+        button.setOnAction(event -> {
+            this.availableRequests.remove(selectedShirt);
+            this.acceptedRequests.add((TShirt) selectedShirt);
+            detailStage.close();
+        });
+    }
 
-		root.getChildren().addAll(pocketLabel, nameLabel, shoulderLabel, sizeLabel, backLabel, styleLabel,
-				materialLabel, colorLabel, button);
-
-		Scene scene = new Scene(root, 300, 300);
-		Stage detailStage = new Stage();
-		detailStage.setTitle("Shirt Details");
-		detailStage.setScene(scene);
-
-		detailStage.initModality(Modality.APPLICATION_MODAL);
-
-		detailStage.show();
-		button.setOnAction(event -> {
-	        availableRequests.remove(selectedShirt);
-	        acceptedRequests.add((TShirt) selectedShirt);
-	        detailStage.close();
-	    });
-	}
-	
-	@Override
-	public void setModel(model.ShirtCredentialsManager manager) {
-		this.manager = (ShirtCredentialsManager) manager;
-		
-	}
+    @Override
+    public void setModel(model.ShirtCredentialsManager manager) {
+        this.manager = (ShirtCredentialsManager) manager;
+    }
 }
