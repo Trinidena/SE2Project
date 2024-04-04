@@ -3,6 +3,8 @@ package model.shirt_attribute;
 /**
  * Enum representing common colors with display names.
  * This enumeration defines a list of color constants, each associated with a specific display name.
+ * 
+ * @author Trinidad Dena
  */
 public enum Color {
     RED("Red"),
@@ -13,7 +15,7 @@ public enum Color {
     WHITE("White"),
     PURPLE("Purple");
 
-    private final String displayName; // The human-readable name of the color.
+    private final String displayName;
 
     /**
      * Constructor for the Color enum.
@@ -31,7 +33,7 @@ public enum Color {
      * @return The display name of the color.
      */
     public String getDisplayName() {
-        return displayName;
+        return this.displayName;
     }
 
     /**
@@ -41,7 +43,7 @@ public enum Color {
      */
     @Override
     public String toString() {
-        return displayName;
+        return this.displayName;
     }
 
     /**

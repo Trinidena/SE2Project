@@ -3,6 +3,8 @@ package model.shirt_attribute;
 /**
  * Enum representing various neck styles for clothing.
  * This enumeration defines a set of constants for different neck styles that can be used in the design of tops, such as shirts.
+ * 
+ * @author Trinidad Dena
  */
 public enum NeckStyle {
     CREW("Crew Neck"),
@@ -12,7 +14,7 @@ public enum NeckStyle {
     HENLEY("Henley"),
     TURTLENECK("Turtleneck");
 
-    private final String style; // The description of the neck style.
+    private final String style;
 
     /**
      * Constructor for the NeckStyle enum.
@@ -30,6 +32,6 @@ public enum NeckStyle {
      * @return The description of the neck style.
      */
     public String getStyle() {
-        return style;
+        return this.style;
     }
 }
