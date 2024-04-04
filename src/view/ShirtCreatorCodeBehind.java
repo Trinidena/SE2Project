@@ -341,17 +341,17 @@ public class ShirtCreatorCodeBehind {
 
 	private void addPresets() {
 		this.presetsViewModel.pocketProperty().set(true);
-		this.presetsViewModel.nameProperty().set("Preset 1");
-		this.presetsViewModel.shoulderProperty().set(Size.XXL);
-		this.presetsViewModel.sizeProperty().set(Size.XXXL);
-		this.presetsViewModel.sleeveLengthProperty().set(Size.XS);
+		this.presetsViewModel.nameProperty().set("Standard Shirt");
+		this.presetsViewModel.shoulderProperty().set(Size.L);
+		this.presetsViewModel.sizeProperty().set(Size.L);
+		this.presetsViewModel.sleeveLengthProperty().set(Size.L);
 
 		this.presetsViewModel.colorProperty().set(Color.BLUE);
 		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
 
 		this.presetsViewModel.neckStyleProperty().set(NeckStyle.V_NECK);
 		this.presetsViewModel.materialProperty().set(Material.SILK);
-		this.presetsViewModel.backLengthProperty().set(Size.XL);
+		this.presetsViewModel.backLengthProperty().set(Size.L);
 		this.presetsViewModel.textProperty().set("Big Boss");
 
 		this.presetsViewModel.addShirtToListView();
