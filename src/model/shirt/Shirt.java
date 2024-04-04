@@ -88,10 +88,13 @@ public abstract class Shirt {
 		this.name = name;
 		this.shoulderWidth = shoulderWidth;
 		this.size = size;
+		this.sleeveLength = sleeveLength;
 		this.backLength = backLength;
 		this.color = color;
-		this.neckStyle = neckStyle;
+		this.neckStyle = collar;
 		this.material = material;
+
+		this.shirtText = shirtText;
 	}
 
 	/**
