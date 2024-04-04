@@ -18,30 +18,31 @@ import javafx.scene.control.Alert.AlertType;
 
 public class CreateAccountController {
 
-    @FXML
-    private TextField usernameField;
+	@FXML
+	private TextField usernameField;
 
-    @FXML
-    private PasswordField passwordField;
+	@FXML
+	private PasswordField passwordField;
 
-    @FXML
-    private ComboBox<String> accountTypeComboBox;
+	@FXML
+	private ComboBox<String> accountTypeComboBox;
 
-    @FXML
-    private Button createAccountButton;
+	@FXML
+	private Button createAccountButton;
 
-    private Stage stage;
+	private Stage stage;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
-    @FXML
-    void initialize() {
-        // Populate the ComboBox with options
-        accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
-    }
+	@FXML
+	void initialize() {
+		// Populate the ComboBox with options
+		accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
+	}
 
+<<<<<<< HEAD
     @FXML
     void createAccount(ActionEvent event) throws IOException {
         String username = usernameField.getText();
@@ -116,74 +117,73 @@ import javafx.scene.control.Alert.AlertType;
 
 public class CreateAccountController {
 
-    @FXML
-    private TextField usernameField;
+	@FXML
+	private TextField usernameField;
 
-    @FXML
-    private PasswordField passwordField;
+	@FXML
+	private PasswordField passwordField;
 
-    @FXML
-    private ComboBox<String> accountTypeComboBox;
+	@FXML
+	private ComboBox<String> accountTypeComboBox;
 
-    @FXML
-    private Button createAccountButton;
+	@FXML
+	private Button createAccountButton;
 
-    private Stage stage;
+	private Stage stage;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
-    @FXML
-    void initialize() {
-        // Populate the ComboBox with options
-        accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
-    }
+	@FXML
+	void initialize() {
+		// Populate the ComboBox with options
+		accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
+	}
 
-    @FXML
-    void createAccount(ActionEvent event) throws IOException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        String selectedAccountType = accountTypeComboBox.getValue();
+	@FXML
+	void createAccount(ActionEvent event) throws IOException {
+		String username = usernameField.getText();
+		String password = passwordField.getText();
+		String selectedAccountType = accountTypeComboBox.getValue();
 
-        // Validate username and password
-        /*if (!isValidUsername(username) || !isValidPassword(password)) {
-            // Show an alert for invalid input
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("		Invalid username and/or password.\n\n Username must have a minimum of 4 letters and 1 number.\n"
-            		+ " Password must have a minimum of 6 letters and 3 numbers.\n\n 				Try again.");
-            alert.showAndWait();
-            return;
-        }*/
+		// Validate username and password
+		/*
+		 * if (!isValidUsername(username) || !isValidPassword(password)) { // Show an
+		 * alert for invalid input Alert alert = new Alert(AlertType.ERROR);
+		 * alert.setTitle("Error"); alert.setHeaderText(null); alert.
+		 * setContentText("		Invalid username and/or password.\n\n Username must have a minimum of 4 letters and 1 number.\n"
+		 * +
+		 * " Password must have a minimum of 6 letters and 3 numbers.\n\n 				Try again."
+		 * ); alert.showAndWait(); return; }
+		 */
 
-        // Load scene based on selected account type
-        if (selectedAccountType.equals("Creator")) {
-            loadScene("/view/ShirtCreatorView.fxml");
-        } else if (selectedAccountType.equals("Business")) {
-            loadScene("/view/Business.fxml");
-        }
-    }
+		// Load scene based on selected account type
+		if (selectedAccountType.equals("Creator")) {
+			loadScene("/view/ShirtCreatorView.fxml");
+		} else if (selectedAccountType.equals("Business")) {
+			loadScene("/view/Business.fxml");
+		}
+	}
 
-    private boolean isValidUsername(String username) {
-        // Check if username has at least 4 letters and one number
-        return username.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$");
-    }
+	private boolean isValidUsername(String username) {
+		// Check if username has at least 4 letters and one number
+		return username.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$");
+	}
 
-    private boolean isValidPassword(String password) {
-        // Check if password has at least 6 letters and 3 numbers
-        return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$") &&
-                password.replaceAll("[^0-9]", "").length() >= 3;
-    }
+	private boolean isValidPassword(String password) {
+		// Check if password has at least 6 letters and 3 numbers
+		return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$")
+				&& password.replaceAll("[^0-9]", "").length() >= 3;
+	}
 
-    private void loadScene(String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) createAccountButton.getScene().getWindow(); // Get the stage from the button's scene
-        stage.setScene(scene);
-        stage.show();
-    }
+	private void loadScene(String fxmlPath) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) createAccountButton.getScene().getWindow(); // Get the stage from the button's scene
+		stage.setScene(scene);
+		stage.show();
+	}
+
 }
-
