@@ -2,14 +2,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateAccountController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateAccountController" style="-fx-background-color: #6495ED;">
     <children>
-    	<Label layoutX="150.0" layoutY="10.0" text="Account Type:"/>
-        <ComboBox fx:id="accountTypeComboBox" layoutX="250.0" layoutY="10.0" prefWidth="150.0"/>
-        <Label layoutX="150.0" layoutY="100.0" text="Username:" />
-        <TextField fx:id="usernameField" layoutX="250.0" layoutY="100.0" />
-        <Label layoutX="150.0" layoutY="150.0" text="Password:" />
-        <PasswordField fx:id="passwordField" layoutX="250.0" layoutY="150.0" />
-        <Button fx:id="createAccountButton" layoutX="272.5" layoutY="200.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account" />
+        <Label layoutX="255.0" layoutY="20.0" text="TeeGenius" style="-fx-font-size: 30px; -fx-text-fill: BLACK;" />
+        <Label layoutX="150.0" layoutY="70.0" text="Account Type:" style="-fx-text-fill: white;" />
+        <ComboBox fx:id="accountTypeComboBox" layoutX="250.0" layoutY="70.0" prefWidth="150.0" />
+        <Label layoutX="150.0" layoutY="120.0" text="Username:" style="-fx-text-fill: white;" />
+        <TextField fx:id="usernameField" layoutX="250.0" layoutY="120.0" />
+        <Label layoutX="150.0" layoutY="170.0" text="Password:" style="-fx-text-fill: white;" />
+        <PasswordField fx:id="passwordField" layoutX="250.0" layoutY="170.0" />
+        <Button fx:id="createAccountButton" layoutX="272.5" layoutY="220.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account" />
     </children>
 </AnchorPane>
