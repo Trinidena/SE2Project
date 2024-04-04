@@ -77,7 +77,7 @@ def main(protocol, ipAddress, port):
         # Attempt to parse the reassembled JSON string.
                 shirt_data = json.loads(json_string)
         # Process the shirt data...
-                shirt_name = shirt_data['name']
+                name = shirt_data['name']
             except json.JSONDecodeError as e:
                 response = "JSON Decode Error"
                 log(f"Failed to decode JSON: {e}")
@@ -85,24 +85,24 @@ def main(protocol, ipAddress, port):
                 response = "missing key"
                 log(f"Missing key in JSON data: {e}")
                 
-            if shirt_name and not any(s.shirt_name == shirt_name for s in shirts):
+            if name and not any(s.name == name for s in shirts):
                 shirt = Shirt(
                         name=shirt_data['name'],
                         has_pocket=shirt_data['hasPocket'],
                         shoulder=shirt_data['shoulderWidth'],
                         size=shirt_data['size'],
-                        sleeve_length=shirt_data['sleeve'],
+                        sleeve_length=shirt_data['sleeveLength'],
                         color=shirt_data['color'],
                         neck_style=shirt_data['neckStyle'],
                         material=shirt_data['material'],
-                        ack_length=shirt_data['backLength'],
-                        text=shirt_data['text']
+                        back_length=shirt_data['backLength'],
+                        text=shirt_data['shirtText']
                         )
                 shirts.append(shirt)
         # Log all shirts after adding a new one
                 log("Logging all shirts...")
                 for s in shirts:
-                    log(f"Shirt Name: {s.shirt_name}")
+                    log(f"Shirt Name: {s.name}")
                 response = "true"
             elif shirt_name:
                 response = "name already exists"
@@ -113,7 +113,7 @@ def main(protocol, ipAddress, port):
                     shirts[i] = shirt
                     response = "true"
         if (request_type == 'remove shirt'):
-            shirts[:] = [s for s in shirts if s.shirt_name != shirt_name]
+            shirts[:] = [s for s in shirts if s.name != name]
             response = 'true'
         #  Do some 'work'
         time.sleep(1)
