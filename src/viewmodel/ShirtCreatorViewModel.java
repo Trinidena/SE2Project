@@ -212,8 +212,7 @@ public class ShirtCreatorViewModel {
 
 		Shirt newShirt = new TShirt(pocketProperty.get(), nameProperty.get(), shoulderProperty.get(),
 				sizeProperty.get(), this.sleeveProperty.get(), colorProperty.get(), neckStyleProperty.get(),
-				materialProperty.get(), this.backLengthProperty.get(), this.textProperty().get(),
-				this.imageProperty.get());
+				materialProperty.get(), this.backLengthProperty.get(), this.textProperty().get());
 
 		return newShirt;
 	}
