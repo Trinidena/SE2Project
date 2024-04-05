@@ -2,7 +2,6 @@ package model.shirt;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,16 +22,6 @@ public class ShirtCollection {
 	}
 
 	/**
-	 * Retrieves the shirt associated with the specified ID.
-	 * 
-	 * @param id The ID of the shirt to find.
-	 * @return The shirt if found, null otherwise.
-	 */
-	public Shirt findByKey(int id) {
-		return this.shirts.get(id);
-	}
-
-	/**
 	 * Adds a new shirt to the collection. The shirt is indexed by its hash code.
 	 * 
 	 * @param newShirt The new shirt to add.
@@ -50,15 +39,6 @@ public class ShirtCollection {
 		}
 		this.shirts.put(id, newShirt);
 		return true;
-	}
-
-	/**
-	 * Adds all shirts from a given list to the collection.
-	 * 
-	 * @param shirtList The list of shirts to add.
-	 */
-	public void putAll(List<Shirt> shirtList) {
-		shirtList.forEach(shirt -> this.shirts.put(shirt.hashCode(), shirt));
 	}
 
 	/**
@@ -87,15 +67,6 @@ public class ShirtCollection {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Checks if the collection is empty.
-	 * 
-	 * @return true if the collection has no shirts, false otherwise.
-	 */
-	public boolean isEmpty() {
-		return this.shirts.isEmpty();
 	}
 
 	/**

@@ -7,10 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.server.Server;
 import model.server.ShirtCredentialsManager;
-import model.shirt.Shirt;
-import model.shirt.TShirt;
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;

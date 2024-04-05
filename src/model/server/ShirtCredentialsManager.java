@@ -6,7 +6,6 @@ import model.shirt.Shirt;
 import model.shirt.TShirt;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Provides a local implementation of the ShirtCredentialsManager interface.
@@ -22,12 +21,7 @@ import java.util.Objects;
  */
 public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 
-	private static final String SHIRT_WITH_THE_SPECIFIED_NAME_ALREADY_EXISTS = "Shirt with the specified name already exists.";
-	private static final String NAME_OF_SHIRT_MUST_NOT_BE_EMPTY = "Name of shirt must not be empty";
 	private static final String NAME_OF_SHIRT_MUST_NOT_BE_NULL = "Name of shirt must not be null";
-	private Gson gson;
-	private String jsonResponse;
-	private List<TShirt> shirts;
 
 	public List<TShirt> getShirts() {
 		List<TShirt> shirts;

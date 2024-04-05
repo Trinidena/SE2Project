@@ -23,4 +23,8 @@ public enum Material {
 		this.material = material;
 	}
 
+	public String getMaterial() {
+		return material;
+	}
+
 }
