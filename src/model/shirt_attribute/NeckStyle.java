@@ -23,4 +23,8 @@ public enum NeckStyle {
 		this.style = style;
 	}
 
+	public String getStyle() {
+		return style;
+	}
+
 }
