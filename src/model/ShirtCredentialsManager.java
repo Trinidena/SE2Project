@@ -14,7 +14,8 @@ public abstract class ShirtCredentialsManager {
 	/**
 	 * Add a new shirt with the specified credentials to the manager
 	 * 
-	 * @precondition shirtName != null && !shirtName.isEmpty() && !getShirtNames().contains(shirtName)
+	 * @precondition shirtName != null && !shirtName.isEmpty() &&
+	 *               !getShirtNames().contains(shirtName)
 	 * @param shirtName name of the shirt
 	 * 
 	 * @return true if shirt added successfully, false if shirt not added
@@ -33,13 +34,4 @@ public abstract class ShirtCredentialsManager {
 	 */
 	public abstract boolean removeShirt(String shirtName);
 
-	/**
-	 * Update an existing shirt with the specified credentials
-	 * 
-	 * @precondition shirt != null && !shirt.isEmpty() && getShirts().contains(shirt)
-	 * @param shirt the shirt object
-	 * @return true if shirt updated successfully, false if shirt not updated
-	 *         successfully
-	 */
-	public abstract boolean updateShirt(Shirt shirt);
 }
