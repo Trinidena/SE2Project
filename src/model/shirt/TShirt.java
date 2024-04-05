@@ -26,12 +26,4 @@ public class TShirt extends Shirt {
 		super(name, hasPocket, shoulderWidth, size, sleeveLength, color, neckStyle, material, backLength, shirtText);
 	}
 
-	/**
-	 * Displays T-Shirt specific information along with the common shirt
-	 * information.
-	 */
-	@Override
-	public void displayInformation() {
-		super.displayInformation();
-	}
 }

@@ -21,79 +21,79 @@ import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
 
-public class BusinessCodeBehind implements ModelAwareController{
+public class BusinessCodeBehind implements ModelAwareController {
 
-    @FXML
-    private ListView<TShirt> availableRequestsListView;
-    @FXML
-    private ListView<TShirt> acceptedRequestsListView;
+	@FXML
+	private ListView<TShirt> availableRequestsListView;
+	@FXML
+	private ListView<TShirt> acceptedRequestsListView;
 
-    private ObservableList<TShirt> availableRequests;
-    private ObservableList<TShirt> acceptedRequests;
+	private ObservableList<TShirt> availableRequests;
+	private ObservableList<TShirt> acceptedRequests;
 
 	private ShirtCredentialsManager manager;
 
 	@FXML
-    void initialize() {
+	void initialize() {
 		manager = new ShirtCredentialsManager();
-        this.availableRequests = FXCollections.observableArrayList();
-        this.acceptedRequests = FXCollections.observableArrayList();
-        this.getShirtsFromServer();
-        this.availableRequestsListView.setItems(availableRequests);
-        this.acceptedRequestsListView.setItems(acceptedRequests);
-        
-        availableRequestsListView.setOnMouseClicked(event -> {
+		this.availableRequests = FXCollections.observableArrayList();
+		this.acceptedRequests = FXCollections.observableArrayList();
+		this.getShirtsFromServer();
+		this.availableRequestsListView.setItems(availableRequests);
+		this.acceptedRequestsListView.setItems(acceptedRequests);
+
+		availableRequestsListView.setOnMouseClicked(event -> {
 			Shirt selectedShirt = availableRequestsListView.getSelectionModel().getSelectedItem();
 			if (selectedShirt != null && event.getClickCount() == 2) { // Double-click to view details
 				showShirtDetails(selectedShirt);
 			}
 		});
-    }
-    
-    public void getShirtsFromServer() {
-    	availableRequests.setAll(this.manager.getShirts());
-    }
-    
-    public void addRequest(TShirt requestedShirt) {
-        availableRequests.add(requestedShirt);
-    }
+	}
 
-    @FXML
-    void onRequestAccepted(ActionEvent event) {
-        TShirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
-        if (selectedRequest != null) {
-            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationDialog.setTitle("Request Confirmation");
-            confirmationDialog.setHeaderText("Accept Shirt Design");
-            confirmationDialog.setContentText("Are you sure you want to accept this shirt design?");
-            Optional<ButtonType> result = confirmationDialog.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                availableRequests.remove(selectedRequest);
-                acceptedRequests.add(selectedRequest);
-                showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
-            }
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
-        }
-    }
+	public void getShirtsFromServer() {
+		availableRequests.setAll(this.manager.getShirts());
+	}
 
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+	public void addRequest(TShirt requestedShirt) {
+		availableRequests.add(requestedShirt);
+	}
 
-    @FXML
-    void onRequestClicked() {
-        Shirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
-        if (selectedRequest != null) {
-            showAlert(Alert.AlertType.INFORMATION, "Request Details", selectedRequest.toString());
-        }
-    }
-    
-    /**
+	@FXML
+	void onRequestAccepted(ActionEvent event) {
+		TShirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
+		if (selectedRequest != null) {
+			Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+			confirmationDialog.setTitle("Request Confirmation");
+			confirmationDialog.setHeaderText("Accept Shirt Design");
+			confirmationDialog.setContentText("Are you sure you want to accept this shirt design?");
+			Optional<ButtonType> result = confirmationDialog.showAndWait();
+			if (result.isPresent() && result.get() == ButtonType.OK) {
+				availableRequests.remove(selectedRequest);
+				acceptedRequests.add(selectedRequest);
+				showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
+			}
+		} else {
+			showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
+		}
+	}
+
+	private void showAlert(Alert.AlertType type, String title, String content) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
+	@FXML
+	void onRequestClicked() {
+		Shirt selectedRequest = availableRequestsListView.getSelectionModel().getSelectedItem();
+		if (selectedRequest != null) {
+			showAlert(Alert.AlertType.INFORMATION, "Request Details", selectedRequest.toString());
+		}
+	}
+
+	/**
 	 * Shows a dialog listing all current design requests.
 	 * 
 	 * @param event The action event triggered by the user.
@@ -139,15 +139,15 @@ public class BusinessCodeBehind implements ModelAwareController{
 
 		detailStage.show();
 		button.setOnAction(event -> {
-	        availableRequests.remove(selectedShirt);
-	        acceptedRequests.add((TShirt) selectedShirt);
-	        detailStage.close();
-	    });
+			availableRequests.remove(selectedShirt);
+			acceptedRequests.add((TShirt) selectedShirt);
+			detailStage.close();
+		});
 	}
-	
+
 	@Override
 	public void setModel(model.ShirtCredentialsManager manager) {
 		this.manager = (ShirtCredentialsManager) manager;
-		
+
 	}
 }

@@ -24,12 +24,5 @@ public enum NeckStyle {
         this.style = style;
     }
 
-    /**
-     * Gets the description of the neck style.
-     * 
-     * @return The description of the neck style.
-     */
-    public String getStyle() {
-        return style;
-    }
+    
 }

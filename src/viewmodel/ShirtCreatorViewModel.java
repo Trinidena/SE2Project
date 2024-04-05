@@ -27,7 +27,7 @@ import model.shirt_attribute.Size;
  * manages shirt attributes, validates user input, and updates the UI
  * accordingly.
  */
-public class ShirtCreatorViewModel implements ModelAwareController{
+public class ShirtCreatorViewModel implements ModelAwareController {
 
 	private final ListProperty<Shirt> listProperty;
 	private final BooleanProperty pocketProperty;
@@ -42,7 +42,7 @@ public class ShirtCreatorViewModel implements ModelAwareController{
 	private final ObjectProperty<Size> backLengthProperty;
 
 	private final StringProperty textProperty;
-	private final ObjectProperty<Image> imageProperty;
+
 	private final ShirtCredentialsManager shirtManager;
 
 	private ShirtCollection database;
@@ -65,7 +65,7 @@ public class ShirtCreatorViewModel implements ModelAwareController{
 
 		this.sizeProperty = new SimpleObjectProperty<Size>();
 		this.textProperty = new SimpleStringProperty();
-		this.imageProperty = new SimpleObjectProperty<>();
+
 		this.shirtManager = new ShirtCredentialsManager();
 
 		this.database = new ShirtCollection();
@@ -142,16 +142,8 @@ public class ShirtCreatorViewModel implements ModelAwareController{
 		return this.backLengthProperty;
 	}
 
-	public void setSizeProperty(Size newSize) {
-		this.sizeProperty.set(newSize);
-	}
-
 	public StringProperty textProperty() {
 		return textProperty;
-	}
-
-	public StringProperty imageProperty() {
-		return this.imageProperty();
 	}
 
 	/**
@@ -236,10 +228,10 @@ public class ShirtCreatorViewModel implements ModelAwareController{
 		materialProperty.set(null);
 		this.textProperty().set("");
 	}
-	
+
 	@Override
 	public void setModel(model.ShirtCredentialsManager manager) {
 		this.manager = (ShirtCredentialsManager) manager;
-		
+
 	}
 }

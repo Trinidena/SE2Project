@@ -25,22 +25,5 @@ public enum Material {
         this.material = material;
     }
 
-    /**
-     * Gets the name of the material.
-     * 
-     * @return The name of the material.
-     */
-    public String getMaterial() {
-        return material;
-    }
     
-    /**
-     * Returns the name of the material when the enum is used in a string context.
-     * 
-     * @return The name of the material.
-     */
-    @Override
-    public String toString() {
-        return material;
-    }
 }

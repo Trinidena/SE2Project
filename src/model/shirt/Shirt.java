@@ -86,31 +86,17 @@ public abstract class Shirt {
 			throw new IllegalArgumentException(errorMessage);
 		}
 
-		this.hasPocket = hasPocket;
-		this.name = name;
-		this.shoulderWidth = shoulderWidth;
-		this.size = size;
-		this.sleeveLength = sleeveLength;
-		this.backLength = backLength;
-		this.color = color;
-		this.neckStyle = collar;
-		this.material = material;
+		this.setHasPocket(hasPocket);
+		this.setName(name);
+		this.setShoulderWidth(shoulderWidth);
+		this.setSize(size);
+		this.setSleeveLength(sleeveLength);
+		this.setBackLength(backLength);
+		this.setColor(color);
+		this.setNeckStyle(collar);
+		this.setMaterial(material);
 
-		this.shirtText = shirtText;
-	}
-
-	/**
-	 * Displays detailed information about the shirt, including all properties.
-	 */
-	public void displayInformation() {
-		System.out.println("Has Pocket: " + this.hasPocket);
-		System.out.println("Name: " + this.name);
-		System.out.println("Shoulder: " + this.shoulderWidth);
-		System.out.println("Size: " + this.size);
-		System.out.println("Back: " + this.backLength);
-		System.out.println("Material: " + this.material);
-		System.out.println("Color: " + this.color);
-		System.out.println("Neck Style: " + this.neckStyle);
+		this.setShirtText(shirtText);
 	}
 
 	@Override

@@ -38,18 +38,4 @@ public abstract class ShirtCredentialsManager {
 	 */
 	public abstract boolean removeShirt(String shirtName);
 
-	/**
-	 * Update an existing shirt with the specified credentials
-	 * 
-	 * @precondition shirtName != null && !shirtName.isEmpty() && username != null
-	 *               && password != null && getShirtNames().contains(shirtName)
-	 * @param shirtName name of the shirt
-	 * @param username  username for the shirt
-	 * @param password  password for the shirt
-	 * 
-	 * @return true if shirt updated successfully, false if shirt not updated
-	 *         successfully
-	 */
-	public abstract boolean updateShirt(String shirtName, String username, String password);
-
 }
