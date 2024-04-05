@@ -1,20 +1,18 @@
 package view;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ModelAwareController;
@@ -25,9 +23,6 @@ import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
 import viewmodel.ShirtCreatorViewModel;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Controls the interaction between the user and the GUI for the Shirt Creator application.

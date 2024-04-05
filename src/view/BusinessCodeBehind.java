@@ -18,7 +18,6 @@ import model.ModelAwareController;
 import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
-
 import java.util.Optional;
 
 /**
@@ -26,15 +25,16 @@ import java.util.Optional;
  * 
  * @author Trinidad Dena
  */
+
 public class BusinessCodeBehind implements ModelAwareController {
 
-    @FXML
-    private ListView<TShirt> availableRequestsListView;
-    @FXML
-    private ListView<TShirt> acceptedRequestsListView;
+	@FXML
+	private ListView<TShirt> availableRequestsListView;
+	@FXML
+	private ListView<TShirt> acceptedRequestsListView;
 
-    private ObservableList<TShirt> availableRequests;
-    private ObservableList<TShirt> acceptedRequests;
+	private ObservableList<TShirt> availableRequests;
+	private ObservableList<TShirt> acceptedRequests;
 
     private ShirtCredentialsManager manager;
 
@@ -121,6 +121,7 @@ public class BusinessCodeBehind implements ModelAwareController {
     private void showShirtDetails(Shirt selectedShirt) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(15));
+
 
         Label pocketLabel = new Label("Pocket: " + selectedShirt.hasPocket());
         Label nameLabel = new Label("Name: " + selectedShirt.getName());
