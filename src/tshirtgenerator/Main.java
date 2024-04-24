@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import view.CreateAccountController;
+import viewmodel.CreateAccountController;
 
 
 /**
@@ -17,7 +17,7 @@ import view.CreateAccountController;
 public class Main extends Application {
 
     private static final String WINDOW_TITLE = "TeeGenius";
-    private static final String CREATEACCOUNT_FXML = "/view/CreateAccount.fxml";
+    private static final String CREATEACCOUNT_FXML = "/viewmodel/CreateAccount.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {

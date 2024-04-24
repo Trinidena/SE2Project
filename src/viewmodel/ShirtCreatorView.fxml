@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="512.0" prefWidth="885.0"
 	style="-fx-background-color: #6495ED;"
 	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="view.ShirtCreatorCodeBehind">
+	fx:controller="viewmodel.ShirtCreatorCodeBehind">
 	<children>
 		<Label layoutX="64.0" layoutY="385.0" text="Pocket">
 

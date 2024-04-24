@@ -1,4 +1,4 @@
-package view;
+package viewmodel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-package view;
+package viewmodel;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -81,9 +81,9 @@ public class CreateAccountController {
 
         try {
             if ("Creator".equals(selectedAccountType)) {
-                this.loadScene("/view/ShirtCreatorView.fxml");
+                this.loadScene("/viewmodel/ShirtCreatorView.fxml");
             } else if ("Business".equals(selectedAccountType)) {
-                this.loadScene("/view/Business.fxml");
+                this.loadScene("/viewmodel/Business.fxml");
             }
         } catch (IOException e) {
             e.printStackTrace();
