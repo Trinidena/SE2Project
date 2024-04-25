@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 import model.ModelAwareController;
-import model.server.ShirtCredentialsManager;
+import server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.ShirtCollection;
 import model.shirt.TShirt;

@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="624.0" style="-fx-background-color: #6495ED;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateAccountController">
+<AnchorPane prefHeight="300.0" prefWidth="624.0" style="-fx-background-color: #6495ED;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.CreateAccountController">
     <children>
         <Label layoutX="150.0" layoutY="70.0" style="-fx-text-fill: white;" text="Account Type:" />
         <ComboBox fx:id="accountTypeComboBox" layoutX="250.0" layoutY="70.0" prefWidth="150.0" />

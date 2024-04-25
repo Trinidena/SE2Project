@@ -1,4 +1,4 @@
-package view;
+package views;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,9 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ModelAwareController;
-import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
+import server.ShirtCredentialsManager;
+
 import java.util.Optional;
 
 /**

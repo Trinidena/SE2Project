@@ -1,4 +1,4 @@
-package model.server;
+package server;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
