@@ -82,7 +82,6 @@ public class ShirtCollection {
 
 		for (Shirt currentShirt : this.shirts.values()) {
 			if (currentShirt.hashCode() == id) {
-
 				currentShirt.setHasPocket(newShirt.hasPocket());
 				currentShirt.setColor(newShirt.getColor());
 				currentShirt.setSize(newShirt.getSize());
@@ -92,9 +91,7 @@ public class ShirtCollection {
 				currentShirt.setBackLength(newShirt.getBackLength());
 				currentShirt.setNeckStyle(newShirt.getNeckStyle());
 				currentShirt.setShirtText(newShirt.getShirtText());
-
 			}
-
 		}
 	}
 

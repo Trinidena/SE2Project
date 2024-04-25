@@ -9,7 +9,7 @@ import json
 import constants
 
 class Shirt:
-    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text):
+    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator):
         self.name = name
         self.has_pocket = has_pocket
         self.shoulder = shoulder
@@ -20,6 +20,7 @@ class Shirt:
         self.material = material
         self.back_length = back_length
         self.text = text
+        self.creator = creator
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -37,7 +38,8 @@ def shirts_to_json(shirts):
             'neck_style': shirt.neck_style,
             'material': shirt.material,
             'back_length': shirt.back_length,
-            'text': shirt.text
+            'text': shirt.text,
+            'creator': shirt.creator
         }
         shirts_list.append(shirt_dict)
     return json.dumps(shirts_list)
@@ -99,7 +101,8 @@ def main(protocol, ipAddress, port):
                         neck_style=shirt_data['neckStyle'],
                         material=shirt_data['material'],
                         back_length=shirt_data['backLength'],
-                        text=shirt_data['shirtText']
+                        text=shirt_data['shirtText'],
+                        creator=shirt_data['creatorName']
                         )
                 shirts.append(shirt)
         # Log all shirts after adding a new one
