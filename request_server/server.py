@@ -15,7 +15,7 @@ class User:
         self.role = role
 
 class Shirt:
-    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator, status):
+    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator, status, business):
         self.name = name
         self.has_pocket = has_pocket
         self.shoulder = shoulder
@@ -28,6 +28,7 @@ class Shirt:
         self.text = text
         self.creator = creator
         self.status = status
+        self.business = business
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -47,7 +48,8 @@ def shirts_to_json(shirts):
             'back_length': shirt.back_length,
             'text': shirt.text,
             'creator': shirt.creator,
-            'status': shirt.status
+            'status': shirt.status,
+            'business': shirt.business
         }
         shirts_list.append(shirt_dict)
     return json.dumps(shirts_list)
@@ -152,7 +154,8 @@ def main(protocol, ipAddress, port):
                         back_length=shirt_data['backLength'],
                         text=shirt_data['shirtText'],
                         creator=shirt_data['creatorName'],
-                        status=shirt_data['status']
+                        status=shirt_data['status'],
+                        business=shirt_data['businessName'],
                         )
                 shirts.append(shirt)
         # Log all shirts after adding a new one
@@ -164,21 +167,28 @@ def main(protocol, ipAddress, port):
                 response = "name already exists"
         if request_type == 'update shirt':
             try:
-                # Assuming the name and new status are part of the received message
-                shirt_data = json.loads(json_string)
-                name = shirt_data['name']
-                new_status = shirt_data['status']
-                
-                # Locate the shirt by name
-                for shirt in shirts:
-                    if shirt.name == name:
-                        shirt.status = new_status  # Update the status
-                        response = "Update successful"
-                        break
+                # Directly use values from the split message data
+                if len(values) < 4:
+                    response = "Insufficient data provided"
                 else:
-                    response = "Shirt not found"
+                    shirt_name = values[1]
+                    new_status = values[2]
+                    business_id = values[3]  # Example of how you might handle additional data
+        
+                    shirt_found = False
+                    for shirt in shirts:
+                        if shirt.name == shirt_name:
+                            shirt.status = new_status
+                            shirt.business = business_id  # Update the status
+                            response = "Update successful"
+                            shirt_found = True
+                            break
+        
+                    if not shirt_found:
+                        response = "Shirt not found"
             except Exception as e:
-                response = "Error updating shirt: " + str(e)
+                response = f"Error updating shirt: {str(e)}"
+
 
         if (request_type == 'remove shirt'):
             shirts[:] = [s for s in shirts if s.name != name]

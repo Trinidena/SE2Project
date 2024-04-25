@@ -17,7 +17,7 @@ public class TShirt extends Shirt {
     
     private String creatorName;
     private String status;
-	private String businesssName;
+	private String businessName;
 
     /**
      * Initializes a new TShirt object using provided shirt attributes.
@@ -40,7 +40,7 @@ public class TShirt extends Shirt {
         super(name, hasPocket, shoulderWidth, size, sleeveLength, color, neckStyle, material, backLength, shirtText);
         this.creatorName = creatorName;
         this.status = status;
-        this.businesssName = businessName;
+        this.businessName = businessName;
     }
 
     /**
@@ -74,4 +74,8 @@ public class TShirt extends Shirt {
     public void setStatus(String status) {
         this.status = status;
     }
+
+	public String getBusiness() {
+		return this.businessName;
+	}
 }
