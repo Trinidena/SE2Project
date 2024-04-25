@@ -36,6 +36,9 @@ public class CreateAccountController {
 
     @FXML
     private Button createAccountButton;
+    
+    @FXML
+    private Button logInButton;
 
     private ShirtCredentialsManager manager;
 
@@ -81,9 +84,9 @@ public class CreateAccountController {
 
         try {
             if ("Creator".equals(selectedAccountType)) {
-                this.loadScene("/views/ShirtCreatorView.fxml");
+                this.loadScene("/views/ShirtCreatorView.fxml", createAccountButton);
             } else if ("Business".equals(selectedAccountType)) {
-                this.loadScene("/views/Business.fxml");
+                this.loadScene("/views/Business.fxml", createAccountButton);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,6 +118,65 @@ public class CreateAccountController {
         return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$")
                 && password.replaceAll("[^0-9]", "").length() >= 3;
     }
+    
+    /**
+     * Handles the Create Account action. Validates input and proceeds based on the selected account type.
+     * 
+     * @param event The ActionEvent triggered by clicking the Create Account button.
+     */
+    @FXML
+    void logIn(ActionEvent event) {
+        String username = this.usernameField.getText();
+        String password = this.passwordField.getText();
+        String selectedAccountType = this.accountTypeComboBox.getValue();
+
+        if (!this.isExistingUsername(username) || !this.isExistingPassword(password)) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Username and/or password does not exist.\n\n"
+                    + "Assure you are putting in the correct account credentials.\n\n"
+                    + "Please try again.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            if ("Creator".equals(selectedAccountType)) {
+                this.loadScene("/views/ShirtCreatorView.fxml", logInButton);
+            } else if ("Business".equals(selectedAccountType)) {
+                this.loadScene("/views/Business.fxml", logInButton);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Load Error");
+            alert.setHeaderText("Scene Load Failure");
+            alert.setContentText("There was a problem loading the scene. Please try again or contact support.");
+            alert.showAndWait();
+        }
+    }
+    
+    /**
+     * Validates the username based on existing accounts.
+     * 
+     * @param username The username to validate.
+     * @return true if the username meets the criteria, false otherwise.
+     */
+    private boolean isExistingUsername(String username) {
+        return username.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$");
+    }
+
+    /**
+     * Validates the password based on existing accounts.
+     * 
+     * @param password The password to validate.
+     * @return true if the password meets the criteria, false otherwise.
+     */
+    private boolean isExistingPassword(String password) {
+        return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$")
+                && password.replaceAll("[^0-9]", "").length() >= 3;
+    }
 
     /**
      * Loads a new scene based on the specified FXML file.
@@ -122,7 +184,7 @@ public class CreateAccountController {
      * @param fxmlPath The path to the FXML file.
      * @throws IOException If the FXML file cannot be loaded.
      */
-    private void loadScene(String fxmlPath) throws IOException {
+    private void loadScene(String fxmlPath, Button clickedButton) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
         ModelAwareController controller = loader.getController();
@@ -131,7 +193,7 @@ public class CreateAccountController {
             controller.setUsername(this.usernameField.getText());
         }
         Scene scene = new Scene(root);
-        Stage stage = (Stage) this.createAccountButton.getScene().getWindow();
+        Stage stage = (Stage) clickedButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }

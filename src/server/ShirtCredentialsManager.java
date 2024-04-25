@@ -29,7 +29,7 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		String jsonResponse = Server.sendRequest("get shirts,");
 		System.out.println(jsonResponse);
 		shirts = parseShirtsFromJson(jsonResponse);
-		System.out.println(shirts.get(0).getMaterial());
+		//System.out.println(shirts.get(0).getMaterial());
 
 		return shirts;
 	}
