@@ -163,4 +163,16 @@ public class BusinessCodeBehind implements ModelAwareController {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	@Override
+	public void setPassword(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRole(String value) {
+		// TODO Auto-generated method stub
+		
+	}
 }

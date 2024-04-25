@@ -3,6 +3,7 @@ package viewmodel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +20,7 @@ import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
+import model.user.User;
 
 /**
  * Manages the application logic behind the Shirt Creator UI. It facilitates
@@ -30,6 +32,7 @@ import model.shirt_attribute.Size;
  */
 public class ShirtCreatorViewModel implements ModelAwareController {
 
+	private final StringProperty passwordProperty = new SimpleStringProperty();
 	private final ListProperty<Shirt> listProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private final BooleanProperty pocketProperty = new SimpleBooleanProperty();
 	private final StringProperty nameProperty = new SimpleStringProperty();
@@ -42,10 +45,9 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	private final ObjectProperty<Size> backLengthProperty = new SimpleObjectProperty<>();
 	private final StringProperty textProperty = new SimpleStringProperty();
 	private final StringProperty creatorProperty = new SimpleStringProperty();
-	private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 	private ShirtCredentialsManager shirtManager = new ShirtCredentialsManager();
 	private ShirtCollection database = new ShirtCollection();
-	private String username;
+	private StringProperty roleProperty = new SimpleStringProperty();
 
 	/**
 	 * Attempts to add a shirt to the ListView directly, bypassing any database or
@@ -171,6 +173,14 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		return this.creatorProperty;
 	}
 	
+	public StringProperty passwordProperty() {
+		return this.passwordProperty;
+	}
+
+	public StringProperty roleProperty() {
+		return this.roleProperty;
+	}
+
 	/**
 	 * Attempts to add a new TShirt to the database based on the current property
 	 * values. Validates the input before adding and updates the view accordingly.
@@ -183,6 +193,14 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		clearTextFields();
 
 		return newShirt;
+	}
+	
+	public User addUser() {
+		User newUser = this.formUser();
+		shirtManager.addUser(newUser);
+		clearTextFields();
+
+		return newUser;
 	}
 
 	/**
@@ -235,6 +253,18 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 				this.neckStyleProperty.get(), this.materialProperty.get(), this.backLengthProperty.get(),
 				this.textProperty.get(), this.creatorProperty.get());
 	}
+	
+	/**
+	 * Forms a new User object based on the current state of the properties.
+	 * 
+	 * @return A new User object.
+	 */
+	private User formUser() {
+		System.out.println("Setting creator: " + this.creatorProperty.getValue());
+		System.out.println("Setting password: " + this.passwordProperty.getValue());
+		System.out.println("Setting role: " + this.roleProperty.getValue());
+		return new User(this.creatorProperty.getValue(), this.passwordProperty.getValue(), this.roleProperty.getValue());
+	}
 
 	/**
 	 * Clears all text fields by resetting their bound properties.
@@ -266,8 +296,18 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	}
 
 	@Override
-	public void setUsername(String username) {
-		this.username = username;
+	public void setPassword(String text) {
+		
 	}
 
+	@Override
+	public void setRole(String value) {
+		
+	}
+
+	@Override
+	public void setUsername(String username) {
+		// TODO Auto-generated method stub
+		
+	}
 }
