@@ -55,8 +55,10 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 	private ShirtCreatorViewModel viewModel;
 	
-	private StringProperty creatorProperty;
+	private StringProperty creatorProperty = new SimpleStringProperty();
 	private ShirtCredentialsManager manager;
+	private StringProperty passwordProperty = new SimpleStringProperty();
+	private StringProperty roleProperty = new SimpleStringProperty();
 
 	/**
 	 * Constructs an instance of the ShirtCreatorCodeBehind. Initializes the view
@@ -72,14 +74,19 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	 * Initializes the controller. Sets up the view model, UI components, and data
 	 * bindings.
 	 */
+	@FXML
 	public void initialize() {
-		this.creatorProperty = new SimpleStringProperty();
+		System.out.println("IN SHIRTCREATOR CODEBEHIND");
+		System.out.println(creatorProperty.getValue());
+		System.out.println(passwordProperty.getValue());
+		System.out.println(roleProperty.getValue());
 		this.populateComboBoxes();
 		this.addPresets();
 		this.requests = FXCollections.observableArrayList();
 		this.requestListView.setItems(this.requests);
 		this.setupSelectionHandlerForListView();
 		this.bindToViewModel();
+		//this.viewModel.addUser();
 	}
 
 	private void addPresets() {
@@ -199,6 +206,9 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	 * Binds UI components to the view model properties.
 	 */
 	private void bindToViewModel() {
+		System.out.println("Setting username: " + this.viewModel.creatorProperty().getValue());
+		System.out.println("Setting username: " + this.viewModel.passwordProperty().getValue());
+		System.out.println("Setting username: " + this.viewModel.roleProperty().getValue());
 		this.designedListView.itemsProperty().bindBidirectional(this.viewModel.listProperty());
 		this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
 		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
@@ -210,7 +220,9 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
 		this.backLengthComboBox.valueProperty().bindBidirectional(this.viewModel.backLengthProperty());
 		this.textTextField.textProperty().bindBidirectional(this.viewModel.textProperty());
-		this.creatorProperty.bindBidirectional(this.viewModel.creatorProperty());
+		System.out.println(creatorProperty.getValue());
+		System.out.println(passwordProperty.getValue());
+		System.out.println(roleProperty.getValue());
 	}
 
 	/**
@@ -255,7 +267,30 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 	@Override
 	public void setUsername(String username) {
-		this.creatorProperty.setValue(username);;
-		
+	    System.out.println("Setting username: " + username);
+	    this.viewModel.creatorProperty().setValue(username);
+	    System.out.println("Setting username: " + this.viewModel.creatorProperty().getValue());
+	    this.creatorProperty.bindBidirectional(this.viewModel.creatorProperty());
+	    System.out.println("Setting username: " + this.viewModel.creatorProperty().getValue());
+	    System.out.println("Setting role: " + this.creatorProperty.getValue());
 	}
+
+	@Override
+	public void setPassword(String text) {
+	    System.out.println("Setting password: " + text);
+	    this.viewModel.passwordProperty().setValue(text);
+	    this.passwordProperty.bindBidirectional(this.viewModel.passwordProperty());
+	    System.out.println("Setting password: " + this.viewModel.passwordProperty().getValue());
+	    System.out.println("Setting role: " + this.passwordProperty.getValue());
+	}
+
+	@Override
+	public void setRole(String value) {
+	    System.out.println("Setting role: " + value);
+	    this.viewModel.roleProperty().setValue(value);
+		this.roleProperty.bindBidirectional(this.viewModel.roleProperty());
+		System.out.println("Setting role: " + this.viewModel.roleProperty().getValue());
+		System.out.println("Setting role: " + this.roleProperty.getValue());
+	}
+
 }

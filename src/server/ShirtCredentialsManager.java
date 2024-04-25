@@ -2,8 +2,11 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import model.shirt.Shirt;
 import model.shirt.TShirt;
+import model.user.User;
+
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -23,6 +26,26 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 
 	private static final String NAME_OF_SHIRT_MUST_NOT_BE_NULL = "Name of shirt must not be null";
 
+	public List<User> getUsers() {
+		List<User> users;
+		String jsonResponse = Server.sendRequest("get users,");
+		System.out.println(jsonResponse);
+		users = parseUsersFromJson(jsonResponse);
+		return users;
+	}
+
+	public boolean addUser(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_NULL);
+		}
+		
+		Gson gson = new Gson();
+		String jsonUser = gson.toJson(user);
+		String requestPayload = "add user," + jsonUser;
+		String response = Server.sendRequest(requestPayload);
+		return response.equals("true");
+	}
+	
 	public List<TShirt> getShirts() {
 		List<TShirt> shirts;
 
@@ -58,5 +81,12 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		Type shirtListType = new TypeToken<List<TShirt>>() {
 		}.getType();
 		return gson.fromJson(json, shirtListType);
+	}
+	
+	public List<User> parseUsersFromJson(String json) {
+		Gson gson = new Gson();
+		Type userListType = new TypeToken<List<User>>() {
+		}.getType();
+		return gson.fromJson(json, userListType);
 	}
 }

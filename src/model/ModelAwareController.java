@@ -18,5 +18,9 @@ public interface ModelAwareController {
     void setModel(ShirtCredentialsManager manager);
     
     void setUsername(String username);
+
+	void setPassword(String text);
+
+	void setRole(String value);
 }
 

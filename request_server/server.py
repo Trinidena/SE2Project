@@ -8,6 +8,12 @@ import time
 import json
 import constants
 
+class User:
+    def __init__(self, creator, password, role):
+        self.creator = creator
+        self.password = password
+        self.role = role
+
 class Shirt:
     def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator):
         self.name = name
@@ -44,11 +50,24 @@ def shirts_to_json(shirts):
         shirts_list.append(shirt_dict)
     return json.dumps(shirts_list)
 
+def users_to_json(users):
+    users_list = []
+    for user in users:
+        shirt_dict = {
+            'creator': user.creator,
+            'password': user.password,
+            'role': user.role
+        }
+        users_list.append(user_dict)
+    return json.dumps(users_list)
+
+
 def main(protocol, ipAddress, port):
     
     response = ''
-    valid_messages = ['get shirts', 'add shirt,']
+    valid_messages = ['get shirts', 'add shirt,', 'get users', 'add user,']
     shirts = []
+    users = []
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("{0}://{1}:{2}".format(constants.PROTOCOL, constants.IP_ADDRESS, constants.PORT))
@@ -69,6 +88,34 @@ def main(protocol, ipAddress, port):
             response = "bad format"
         if(message == b"exit"):
             return
+        if(request_type == 'get users'):
+            response = users_to_json(users)  # Use the helper function to get JSON representation
+            log("Sending all users data.")
+        if (request_type == 'add user'):
+            log("Received request: {0}".format(request_type))
+            json_parts = values[1:]  # Get all parts of the JSON string except for the command part
+            json_string = ','.join(json_parts)  # Rejoin the parts into a complete JSON string
+            log("JSON Data Received: {0}".format(json_string))
+            user_name = None  # Define shirt_name outside of try-except
+            try:
+        # Attempt to parse the reassembled JSON string.
+                user_data = json.loads(json_string)
+        # Process the shirt data...
+                creator = user_data['creatorName']
+                if creator and not any(u.creator == creator for u in users):
+                    user = User(
+                        creator=user_data['creatorName'],
+                        password=user_data['password'],
+                        role=user_data['role']
+                        )
+                    users.append(user)
+            except json.JSONDecodeError as e:
+                response = "JSON Decode Error"
+                log(f"Failed to decode JSON: {e}")
+            except KeyError as e:
+                response = "missing key"
+                log(f"Missing key in JSON data: {e}")
+            response = 'true'
         if(request_type == 'get shirts'):
             response = shirts_to_json(shirts)  # Use the helper function to get JSON representation
             log("Sending all shirts data.")
