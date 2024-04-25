@@ -1,5 +1,7 @@
 package views;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,7 +55,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 	private ShirtCreatorViewModel viewModel;
 	
-	private String username;
+	private StringProperty creatorProperty;
 	private ShirtCredentialsManager manager;
 
 	/**
@@ -71,6 +73,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	 * bindings.
 	 */
 	public void initialize() {
+		this.creatorProperty = new SimpleStringProperty();
 		this.populateComboBoxes();
 		this.addPresets();
 		this.requests = FXCollections.observableArrayList();
@@ -85,23 +88,19 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.viewModel.shoulderProperty().set(Size.XXL);
 		this.viewModel.sizeProperty().set(Size.XXXL);
 		this.viewModel.sleeveLengthProperty().set(Size.XS);
-
 		this.viewModel.colorProperty().set(Color.BLUE);
 		this.viewModel.neckStyleProperty().set(NeckStyle.V_NECK);
-
 		this.viewModel.materialProperty().set(Material.SILK);
 		this.viewModel.backLengthProperty().set(Size.XL);
 		this.viewModel.textProperty().set("Big Boss");
-
 		this.viewModel.addShirtToListView();
+		
 		this.viewModel.nameProperty().set("Preset 1");
 		this.viewModel.shoulderProperty().set(Size.XS);
 		this.viewModel.sizeProperty().set(Size.S);
 		this.viewModel.sleeveLengthProperty().set(Size.XXXL);
-
 		this.viewModel.colorProperty().set(Color.RED);
 		this.viewModel.neckStyleProperty().set(NeckStyle.SCOOP_NECK);
-
 		this.viewModel.materialProperty().set(Material.PREMIUM_COTTON);
 		this.viewModel.backLengthProperty().set(Size.M);
 		this.viewModel.textProperty().set("Small Boss");
@@ -211,6 +210,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
 		this.backLengthComboBox.valueProperty().bindBidirectional(this.viewModel.backLengthProperty());
 		this.textTextField.textProperty().bindBidirectional(this.viewModel.textProperty());
+		this.creatorProperty.bindBidirectional(this.viewModel.creatorProperty());
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 	@Override
 	public void setUsername(String username) {
-		this.username = username;
+		this.creatorProperty.setValue(username);;
 		
 	}
 }
