@@ -71,6 +71,8 @@ public class BusinessCodeBehind implements ModelAwareController {
     void handleStatusButton(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
         Parent root = loader.load();
+        ModelAwareController controller = loader.getController();
+        controller.setModel(this.manager);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -115,21 +117,6 @@ public class BusinessCodeBehind implements ModelAwareController {
 //            this.showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
 //        }
 //    }
-
-    /**
-     * Displays a modal alert dialog.
-     * 
-     * @param type    The type of alert.
-     * @param title   The title of the dialog.
-     * @param content The content message.
-     */
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 
     /**
      * Shows the details of a selected shirt request in a new window.
