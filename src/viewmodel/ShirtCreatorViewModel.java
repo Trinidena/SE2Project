@@ -44,6 +44,7 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 	private ShirtCredentialsManager shirtManager = new ShirtCredentialsManager();
 	private ShirtCollection database = new ShirtCollection();
+	private String username;
 
 	/**
 	 * Attempts to add a shirt to the ListView directly, bypassing any database or
@@ -261,6 +262,11 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	@Override
 	public void setModel(model.ShirtCredentialsManager manager) {
 		this.shirtManager = (ShirtCredentialsManager) manager;
+	}
+
+	@Override
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

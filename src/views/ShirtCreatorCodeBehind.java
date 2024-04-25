@@ -52,6 +52,9 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	private ImageView shirtImageView;
 
 	private ShirtCreatorViewModel viewModel;
+	
+	private String username;
+	private ShirtCredentialsManager manager;
 
 	/**
 	 * Constructs an instance of the ShirtCreatorCodeBehind. Initializes the view
@@ -247,6 +250,12 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 	@Override
 	public void setModel(ShirtCredentialsManager manager) {
+		this.manager = manager;
+	}
 
+	@Override
+	public void setUsername(String username) {
+		this.username = username;
+		
 	}
 }

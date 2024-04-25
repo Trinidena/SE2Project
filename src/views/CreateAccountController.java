@@ -128,6 +128,7 @@ public class CreateAccountController {
         ModelAwareController controller = loader.getController();
         if (controller instanceof ModelAwareController) {
             controller.setModel(this.manager);
+            controller.setUsername(this.usernameField.getText());
         }
         Scene scene = new Scene(root);
         Stage stage = (Stage) this.createAccountButton.getScene().getWindow();

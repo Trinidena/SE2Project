@@ -38,6 +38,7 @@ public class BusinessCodeBehind implements ModelAwareController {
 	private ObservableList<TShirt> acceptedRequests;
 
     private ShirtCredentialsManager manager;
+	private String username;
 
     /**
      * Initializes the controller. This method is called after the FXML fields have been injected.
@@ -80,24 +81,24 @@ public class BusinessCodeBehind implements ModelAwareController {
      * 
      * @param event The ActionEvent triggered by clicking the accept button.
      */
-    @FXML
-    void onRequestAccepted(ActionEvent event) {
-        TShirt selectedRequest = this.availableRequestsListView.getSelectionModel().getSelectedItem();
-        if (selectedRequest != null) {
-            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationDialog.setTitle("Request Confirmation");
-            confirmationDialog.setHeaderText("Accept Shirt Design");
-            confirmationDialog.setContentText("Are you sure you want to accept this shirt design?");
-            Optional<ButtonType> result = confirmationDialog.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                this.availableRequests.remove(selectedRequest);
-                this.acceptedRequests.add(selectedRequest);
-                this.showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
-            }
-        } else {
-            this.showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
-        }
-    }
+//    @FXML
+//    void onRequestAccepted(ActionEvent event) {
+//        TShirt selectedRequest = this.availableRequestsListView.getSelectionModel().getSelectedItem();
+//        if (selectedRequest != null) {
+//            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+//            confirmationDialog.setTitle("Request Confirmation");
+//            confirmationDialog.setHeaderText("Accept Shirt Design");
+//            confirmationDialog.setContentText("Are you sure you want to accept this shirt design?");
+//            Optional<ButtonType> result = confirmationDialog.showAndWait();
+//            if (result.isPresent() && result.get() == ButtonType.OK) {
+//                this.availableRequests.remove(selectedRequest);
+//                this.acceptedRequests.add(selectedRequest);
+//                this.showAlert(Alert.AlertType.INFORMATION, "Request Accepted", "Shirt design accepted successfully.");
+//            }
+//        } else {
+//            this.showAlert(Alert.AlertType.ERROR, "Error", "Please select a request to accept.");
+//        }
+//    }
 
     /**
      * Displays a modal alert dialog.
@@ -148,6 +149,8 @@ public class BusinessCodeBehind implements ModelAwareController {
             this.availableRequests.remove(selectedShirt);
             this.acceptedRequests.add((TShirt) selectedShirt);
             detailStage.close();
+            
+         
         });
     }
 
@@ -155,4 +158,9 @@ public class BusinessCodeBehind implements ModelAwareController {
     public void setModel(model.ShirtCredentialsManager manager) {
         this.manager = (ShirtCredentialsManager) manager;
     }
+
+	@Override
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
