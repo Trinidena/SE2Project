@@ -44,5 +44,10 @@
             </RadialGradient>
          </textFill>
       </Label>
+      <Button fx:id="logInButton" layoutX="283.0" layoutY="259.0" mnemonicParsing="false" onAction="#logIn" prefHeight="33.0" prefWidth="83.0" text="Log In">
+         <font>
+            <Font name="Jokerman" size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
