@@ -211,10 +211,8 @@ public class CreateAccountController {
         ModelAwareController controller = loader.getController();
         if (controller instanceof ModelAwareController) {
             controller.setModel(this.manager);
+            controller.setUsername(this.usernameField.getText());
             this.manager.addUser(new User(this.usernameField.getText(), this.passwordField.getText(), this.accountTypeComboBox.getValue()));
-//            controller.setUsername(this.usernameField.getText());
-//            controller.setPassword(this.passwordField.getText());
-//            controller.setRole(this.accountTypeComboBox.getValue());
         }
         Scene scene = new Scene(root);
         Stage stage = (Stage) clickedButton.getScene().getWindow();

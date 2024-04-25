@@ -15,7 +15,7 @@ class User:
         self.role = role
 
 class Shirt:
-    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator):
+    def __init__(self, name, has_pocket, shoulder, size, sleeve_length, color, neck_style, material, back_length, text, creator, status):
         self.name = name
         self.has_pocket = has_pocket
         self.shoulder = shoulder
@@ -27,6 +27,7 @@ class Shirt:
         self.back_length = back_length
         self.text = text
         self.creator = creator
+        self.status = status
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -45,7 +46,8 @@ def shirts_to_json(shirts):
             'material': shirt.material,
             'back_length': shirt.back_length,
             'text': shirt.text,
-            'creator': shirt.creator
+            'creator': shirt.creator,
+            'status': shirt.status
         }
         shirts_list.append(shirt_dict)
     return json.dumps(shirts_list)
@@ -149,7 +151,8 @@ def main(protocol, ipAddress, port):
                         material=shirt_data['material'],
                         back_length=shirt_data['backLength'],
                         text=shirt_data['shirtText'],
-                        creator=shirt_data['creatorName']
+                        creator=shirt_data['creatorName'],
+                        status=shirt_data['status']
                         )
                 shirts.append(shirt)
         # Log all shirts after adding a new one
@@ -159,12 +162,24 @@ def main(protocol, ipAddress, port):
                 response = "true"
             elif shirt_name:
                 response = "name already exists"
-        if (request_type == 'update shirt'):
-            for i, shirt in enumerate(shirts):
-                if (shirt.shirt_name == shirt_name):
-                    shirt = Shirt(shirt.shirt_name, user_name, password)
-                    shirts[i] = shirt
-                    response = "true"
+        if request_type == 'update shirt':
+            try:
+                # Assuming the name and new status are part of the received message
+                shirt_data = json.loads(json_string)
+                name = shirt_data['name']
+                new_status = shirt_data['status']
+                
+                # Locate the shirt by name
+                for shirt in shirts:
+                    if shirt.name == name:
+                        shirt.status = new_status  # Update the status
+                        response = "Update successful"
+                        break
+                else:
+                    response = "Shirt not found"
+            except Exception as e:
+                response = "Error updating shirt: " + str(e)
+
         if (request_type == 'remove shirt'):
             shirts[:] = [s for s in shirts if s.name != name]
             response = 'true'

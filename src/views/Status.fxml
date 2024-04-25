@@ -56,11 +56,6 @@
 			</textFill>
 		</Label>
 		<Group />
-		<Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="" prefHeight="47.0" prefWidth="100.0" text="Back">
-			<font>
-				<Font name="Jokerman" size="22.0" />
-			</font>
-		</Button>
       <ListView layoutX="114.0" layoutY="202.0" prefHeight="237.0" prefWidth="653.0" />
 	</children>
 	<opaqueInsets>

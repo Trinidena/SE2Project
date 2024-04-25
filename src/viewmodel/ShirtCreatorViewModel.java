@@ -235,7 +235,6 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 			if (this.database.containsKey(shirtToEdit.hashCode())) {
 				this.database.replaceByKey(hash, shirtToEdit);
 				this.update();
-				this.clearTextFields();
 				return true;
 			}
 		}
@@ -251,7 +250,7 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		return new TShirt(this.nameProperty.get(), this.pocketProperty.get(), this.shoulderProperty.get(),
 				this.sizeProperty.get(), this.sleeveProperty.get(), this.colorProperty.get(),
 				this.neckStyleProperty.get(), this.materialProperty.get(), this.backLengthProperty.get(),
-				this.textProperty.get(), this.creatorProperty.get());
+				this.textProperty.get(), this.creatorProperty.get(), "", "");
 	}
 	
 	/**
