@@ -29,8 +29,6 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		String jsonResponse = Server.sendRequest("get shirts,");
 		System.out.println(jsonResponse);
 		shirts = parseShirtsFromJson(jsonResponse);
-		System.out.println(shirts.get(0).getMaterial());
-
 		return shirts;
 	}
 
@@ -46,7 +44,6 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		String response = Server.sendRequest(requestPayload);
 
 		return response.equals("true");
-
 	}
 
 	@Override
@@ -62,5 +59,4 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		}.getType();
 		return gson.fromJson(json, shirtListType);
 	}
-
 }
