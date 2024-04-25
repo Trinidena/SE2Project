@@ -11,10 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="512.0" prefWidth="885.0"
-	style="-fx-background-color: #6495ED;"
-	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="views.ShirtCreatorCodeBehind">
+<AnchorPane prefHeight="512.0" prefWidth="885.0" style="-fx-background-color: #6495ED;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ShirtCreatorCodeBehind">
 	<children>
 		<Label layoutX="64.0" layoutY="385.0" text="Pocket">
 
@@ -47,8 +44,7 @@
 				<Font size="24.0" />
 			</font>
 		</Label>
-		<Label layoutX="19.0" layoutY="260.0" prefHeight="30.0"
-			prefWidth="123.0" text="Shoulder Size">
+		<Label layoutX="19.0" layoutY="260.0" prefHeight="30.0" prefWidth="123.0" text="Shoulder Size">
 			<font>
 				<Font size="20.0" />
 			</font>
@@ -59,50 +55,28 @@
 			</font>
 		</Label>
 
-		<ComboBox fx:id="pocketComboBox" layoutX="144.0"
-			layoutY="390.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="shoulderLengthComboBox" layoutX="144.0"
-			layoutY="262.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="sizeComboBox" layoutX="144.0"
-			layoutY="100.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="sleeveComboBox" layoutX="144.0"
-			layoutY="217.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="colorComboBox" layoutX="144.0"
-			layoutY="177.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="collarComboBox" layoutX="144.0"
-			layoutY="345.0" prefHeight="25.0" prefWidth="101.0" />
-		<ComboBox fx:id="materialComboBox" layoutX="144.0"
-			layoutY="139.0" prefHeight="25.0" prefWidth="101.0" />
-		<Button fx:id="deleteShirtButton" layoutX="762.0"
-			layoutY="390.0" mnemonicParsing="false"
-			onAction="#handleDeleteShirt"
-			prefHeight="51.0" prefWidth="95.0" text="Delete">
+		<ComboBox fx:id="pocketComboBox" layoutX="144.0" layoutY="390.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="shoulderLengthComboBox" layoutX="144.0" layoutY="262.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="sizeComboBox" layoutX="144.0" layoutY="100.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="sleeveComboBox" layoutX="144.0" layoutY="217.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="colorComboBox" layoutX="144.0" layoutY="177.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="collarComboBox" layoutX="144.0" layoutY="345.0" prefHeight="25.0" prefWidth="101.0" />
+		<ComboBox fx:id="materialComboBox" layoutX="144.0" layoutY="139.0" prefHeight="25.0" prefWidth="101.0" />
+		<Button fx:id="deleteShirtButton" layoutX="762.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleDeleteShirt" prefHeight="51.0" prefWidth="95.0" text="Delete">
 			<font>
 				<Font name="Jokerman" size="18.0" />
 			</font>
 		</Button>
-		<Button fx:id="viewButton" layoutX="350.0" layoutY="364.0"
-			mnemonicParsing="false" onAction="#onShowRequestsButtonClick"
-			text="View Requests">
+
+		<Button fx:id="requestButton" layoutX="352.0" layoutY="358.0" mnemonicParsing="false" onAction="#onRequestButtonClick" prefHeight="55.0" prefWidth="200.0" text="Request Shirt">
 
 			<font>
 				<Font name="Jokerman" size="24.0" />
 			</font>
 		</Button>
 
-		<Button fx:id="requestButton" layoutX="354.0" layoutY="288.0"
-			mnemonicParsing="false" onAction="#onRequestButtonClick"
-			text="Request Shirt">
-
-			<font>
-				<Font name="Jokerman" size="24.0" />
-			</font>
-		</Button>
-
-		<TextField fx:id="nameTextField" layoutX="144.0"
-			layoutY="63.0" prefHeight="25.0" prefWidth="101.0" />
-		<ListView fx:id="designedListView" layoutX="667.0"
-			layoutY="53.0" prefHeight="328.0" prefWidth="189.0" />
+		<TextField fx:id="nameTextField" layoutX="144.0" layoutY="63.0" prefHeight="25.0" prefWidth="101.0" />
+		<ListView fx:id="designedListView" layoutX="667.0" layoutY="53.0" prefHeight="328.0" prefWidth="189.0" />
 		<Label layoutX="91.0" layoutY="430.0" text="Text">
 
 			<font>
@@ -110,8 +84,7 @@
 			</font>
 		</Label>
 
-		<TextField fx:id="textTextField" layoutX="144.0"
-			layoutY="435.0" prefHeight="25.0" prefWidth="101.0" />
+		<TextField fx:id="textTextField" layoutX="144.0" layoutY="435.0" prefHeight="25.0" prefWidth="101.0" />
 		<Label layoutX="26.0" layoutY="301.0" text="Shirt Length">
 
 			<font>
@@ -119,21 +92,17 @@
 			</font>
 		</Label>
 
-		<ComboBox fx:id="backLengthComboBox" layoutX="144.0"
-			layoutY="303.0" prefHeight="25.0" prefWidth="101.0" />
-		<Label layoutX="714.0" layoutY="14.0" prefHeight="32.0"
-			prefWidth="95.0" text="Designs">
+		<ComboBox fx:id="backLengthComboBox" layoutX="144.0" layoutY="303.0" prefHeight="25.0" prefWidth="101.0" />
+		<Label layoutX="714.0" layoutY="14.0" prefHeight="32.0" prefWidth="95.0" text="Designs">
 			<font>
 				<Font name="Jokerman" size="25.0" />
 			</font>
 			<textFill>
-				<RadialGradient centerX="0.494475138121547"
-					centerY="0.5710900473933649" radius="0.5">
+				<RadialGradient centerX="0.494475138121547" centerY="0.5710900473933649" radius="0.5">
 					<stops>
 						<Stop>
 							<color>
-								<Color red="0.4820094108581543" green="0.0554337240755558"
-									blue="0.8552631735801697" />
+								<Color red="0.4820094108581543" green="0.0554337240755558" blue="0.8552631735801697" />
 							</color>
 						</Stop>
 						<Stop offset="1.0">
@@ -150,19 +119,16 @@
 				<Font name="Jokerman" size="65.0" />
 			</font>
 			<textFill>
-				<RadialGradient centerX="0.494475138121547"
-					centerY="0.5710900473933649" radius="0.5">
+				<RadialGradient centerX="0.494475138121547" centerY="0.5710900473933649" radius="0.5">
 					<stops>
 						<Stop>
 							<color>
-								<Color red="0.4820094108581543" green="0.0554337240755558"
-									blue="0.8552631735801697" />
+								<Color red="0.4820094108581543" green="0.0554337240755558" blue="0.8552631735801697" />
 							</color>
 						</Stop>
 						<Stop offset="1.0">
 							<color>
-								<Color red="0.18405620753765106"
-									green="0.1387670636177063" blue="0.22368420660495758" />
+								<Color red="0.18405620753765106" green="0.1387670636177063" blue="0.22368420660495758" />
 							</color>
 						</Stop>
 					</stops>
@@ -174,39 +140,37 @@
 				<Font name="Jokerman" size="25.0" />
 			</font>
 			<textFill>
-				<RadialGradient centerX="0.494475138121547"
-					centerY="0.5710900473933649" radius="0.5">
+				<RadialGradient centerX="0.494475138121547" centerY="0.5710900473933649" radius="0.5">
 					<stops>
 						<Stop>
 							<color>
-								<Color red="0.4820094108581543" green="0.0554337240755558"
-									blue="0.8552631735801697" />
+								<Color red="0.4820094108581543" green="0.0554337240755558" blue="0.8552631735801697" />
 							</color>
 						</Stop>
 						<Stop offset="1.0">
 							<color>
-								<Color red="0.18405620753765106"
-									green="0.1387670636177063" blue="0.22368420660495758" />
+								<Color red="0.18405620753765106" green="0.1387670636177063" blue="0.22368420660495758" />
 							</color>
 						</Stop>
 					</stops>
 				</RadialGradient>
 			</textFill>
 		</Label>
-		<Button fx:id="addButton" layoutX="668.0" layoutY="390.0"
-			mnemonicParsing="false" onAction="#handleAdd" prefHeight="51.0"
-			prefWidth="87.0" text="Add">
+		<Button fx:id="addButton" layoutX="668.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="51.0" prefWidth="87.0" text="Add">
 			<font>
 				<Font name="Jokerman" size="18.0" />
 			</font>
 		</Button>
-		<Button fx:id="editButton" layoutX="714.0" layoutY="448.0"
-			mnemonicParsing="false" onAction="#handleEdit" prefHeight="51.0"
-			prefWidth="95.0" text="Edit">
+		<Button fx:id="editButton" layoutX="714.0" layoutY="448.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="51.0" prefWidth="95.0" text="Edit">
 			<font>
 				<Font name="Jokerman" size="18.0" />
 			</font>
 		</Button>
+      <Button layoutX="348.0" layoutY="444.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="209.0" text="View Requests Status">
+         <font>
+            <Font name="Jokerman" size="18.0" />
+         </font>
+      </Button>
 
 	</children>
 </AnchorPane>

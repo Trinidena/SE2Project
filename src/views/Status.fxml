@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="498.0" prefWidth="885.0" style="-fx-background-color: #6495ED;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.StatusCodeBehind">
+	<children>
+		<Label layoutX="274.0" layoutY="14.0" text="TeeGenius">
+			<font>
+				<Font name="Jokerman" size="65.0" />
+			</font>
+			<textFill>
+				<RadialGradient centerX="0.494475138121547" centerY="0.5710900473933649" radius="0.5">
+					<stops>
+						<Stop>
+							<color>
+								<Color red="0.4820094108581543" green="0.0554337240755558" blue="0.8552631735801697" />
+							</color>
+						</Stop>
+						<Stop offset="1.0">
+							<color>
+								<Color red="0.18405620753765106" green="0.1387670636177063" blue="0.22368420660495758" />
+							</color>
+						</Stop>
+					</stops>
+				</RadialGradient>
+			</textFill>
+		</Label>
+		<Label layoutX="371.0" layoutY="117.0" text="Status Page">
+			<font>
+				<Font name="Jokerman" size="25.0" />
+			</font>
+			<textFill>
+				<RadialGradient centerX="0.494475138121547" centerY="0.5710900473933649" radius="0.5">
+					<stops>
+						<Stop>
+							<color>
+								<Color red="0.4820094108581543" green="0.0554337240755558" blue="0.8552631735801697" />
+							</color>
+						</Stop>
+						<Stop offset="1.0">
+							<color>
+								<Color red="0.18405620753765106" green="0.1387670636177063" blue="0.22368420660495758" />
+							</color>
+						</Stop>
+					</stops>
+				</RadialGradient>
+			</textFill>
+		</Label>
+		<Group />
+		<Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="" prefHeight="47.0" prefWidth="100.0" text="Back">
+			<font>
+				<Font name="Jokerman" size="22.0" />
+			</font>
+		</Button>
+      <ListView layoutX="114.0" layoutY="202.0" prefHeight="237.0" prefWidth="653.0" />
+	</children>
+	<opaqueInsets>
+		<Insets />
+	</opaqueInsets>
+</AnchorPane>
