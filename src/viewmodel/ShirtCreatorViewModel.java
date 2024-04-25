@@ -41,6 +41,7 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	private final ObjectProperty<Material> materialProperty = new SimpleObjectProperty<>();
 	private final ObjectProperty<Size> backLengthProperty = new SimpleObjectProperty<>();
 	private final StringProperty textProperty = new SimpleStringProperty();
+	private final StringProperty creatorProperty = new SimpleStringProperty();
 	private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 	private ShirtCredentialsManager shirtManager = new ShirtCredentialsManager();
 	private ShirtCollection database = new ShirtCollection();
@@ -162,12 +163,12 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	}
 
 	/**
-	 * Gets the image property of a shirt.
+	 * Gets the creator of the shirt.
 	 * 
-	 * @return The object property for the shirt's image.
+	 * @return The string property for the shirt.
 	 */
-	public ObjectProperty<Image> imageProperty() {
-		return this.imageProperty;
+	public StringProperty creatorProperty() {
+		return this.creatorProperty;
 	}
 	
 	/**
@@ -178,7 +179,6 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	 */
 	public Shirt addShirt() {
 		Shirt newShirt = this.formShirt();
-
 		shirtManager.addShirt(newShirt);
 		clearTextFields();
 
@@ -233,7 +233,7 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		return new TShirt(this.nameProperty.get(), this.pocketProperty.get(), this.shoulderProperty.get(),
 				this.sizeProperty.get(), this.sleeveProperty.get(), this.colorProperty.get(),
 				this.neckStyleProperty.get(), this.materialProperty.get(), this.backLengthProperty.get(),
-				this.textProperty.get());
+				this.textProperty.get(), this.creatorProperty.get());
 	}
 
 	/**
@@ -250,6 +250,7 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		this.neckStyleProperty.set(null);
 		this.materialProperty.set(null);
 		this.textProperty().set("");
+		this.creatorProperty.set("");
 	}
 
 	/**

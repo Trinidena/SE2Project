@@ -14,7 +14,8 @@ import model.shirt_attribute.Size;
  * @author Trinidad
  */
 public class TShirt extends Shirt {
-
+	
+	private String creatorName;
 	/**
 	 * Initializes a new TShirt object using provided shirt attributes.
 	 *
@@ -30,8 +31,9 @@ public class TShirt extends Shirt {
 	 * @param shirtText     The text printed on the T-Shirt, if any.
 	 */
 	public TShirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color,
-			NeckStyle neckStyle, Material material, Size backLength, String shirtText) {
+			NeckStyle neckStyle, Material material, Size backLength, String shirtText, String creatorName) {
 		super(name, hasPocket, shoulderWidth, size, sleeveLength, color, neckStyle, material, backLength, shirtText);
+		this.creatorName = creatorName;
 	}
 
 }
