@@ -1,4 +1,4 @@
-package model.viewmodel.test;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,11 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.server.ShirtCredentialsManager;
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
+import server.ShirtCredentialsManager;
 import viewmodel.ShirtCreatorViewModel;
 
 public class TestViewModel {

@@ -1,4 +1,4 @@
-package view;
+package views;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.ModelAwareController;
-import model.server.ShirtCredentialsManager;
+import server.ShirtCredentialsManager;
 
 import java.io.IOException;
 
@@ -81,9 +81,9 @@ public class CreateAccountController {
 
         try {
             if ("Creator".equals(selectedAccountType)) {
-                this.loadScene("/view/ShirtCreatorView.fxml");
+                this.loadScene("/views/ShirtCreatorView.fxml");
             } else if ("Business".equals(selectedAccountType)) {
-                this.loadScene("/view/Business.fxml");
+                this.loadScene("/views/Business.fxml");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package model.shirt.test;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

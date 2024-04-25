@@ -1,4 +1,4 @@
-package model.server.test;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -8,13 +8,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.server.ShirtCredentialsManager;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
+import server.ShirtCredentialsManager;
 
 public class TestShirtCredentialsManager {
 	@Test

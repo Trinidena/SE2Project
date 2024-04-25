@@ -1,7 +1,6 @@
-package model.shirtcollection.test;
+package test;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -14,40 +13,29 @@ import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
 
-public class TestPut {
-
+public class TestContains {
 	@Test
-	void testValidPut() {
+	void testWhenDoesNotContain() {
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
 				Size.XL, "Cool Dude");
-
 		ShirtCollection testCollection = new ShirtCollection();
 
-		assertTrue(testCollection.put(newShirt));
+		boolean expected = testCollection.containsKey(newShirt.hashCode());
+
+		assertFalse(expected);
 
 	}
 
 	@Test
-	void testPutWhenSongIsIdentical() {
+	void testWhenContains() {
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
 				Size.XL, "Cool Dude");
-
-		Shirt newShirt2 = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO,
-				Material.BLEND, Size.XL, "Cool Dude");
 		ShirtCollection testCollection = new ShirtCollection();
-
 		testCollection.put(newShirt);
-		assertFalse(testCollection.put(newShirt2));
+
+		boolean expected = testCollection.containsKey(newShirt.hashCode());
+
+		assertTrue(expected);
 
 	}
-
-	@Test
-	void testWhenSongIsNull() {
-		Shirt newShirt = null;
-
-		ShirtCollection testCollection = new ShirtCollection();
-
-		assertThrows(IllegalArgumentException.class, () -> testCollection.put(newShirt));
-	}
-
 }
