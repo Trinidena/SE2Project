@@ -75,6 +75,16 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		String confirmation = Server.sendRequest("remove shirt," + shirtName);
 		return confirmation.equals("true");
 	}
+	
+	public boolean updateShirt(String name, String status, String business) {
+		if (name == null) {
+			throw new IllegalArgumentException(NAME_OF_SHIRT_MUST_NOT_BE_NULL);
+		}
+
+		String requestPayload = "update shirt," + name + "," + status + "," + business;
+		String response = Server.sendRequest(requestPayload);
+		return response.equals("true");
+	}
 
 	public List<TShirt> parseShirtsFromJson(String json) {
 		Gson gson = new Gson();

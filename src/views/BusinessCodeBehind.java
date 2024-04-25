@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,8 +19,10 @@ import javafx.stage.Stage;
 import model.ModelAwareController;
 import model.shirt.Shirt;
 import model.shirt.TShirt;
+import model.user.User;
 import server.ShirtCredentialsManager;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -29,6 +33,8 @@ import java.util.Optional;
 
 public class BusinessCodeBehind implements ModelAwareController {
 
+	@FXML
+	private Button statusButton;
 	@FXML
 	private ListView<TShirt> availableRequestsListView;
 	@FXML
@@ -60,6 +66,16 @@ public class BusinessCodeBehind implements ModelAwareController {
         });
     }
 
+    
+    @FXML
+    void handleStatusButton(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
     /**
      * Fetches available shirt requests from the server and populates the list.
      */
@@ -148,9 +164,8 @@ public class BusinessCodeBehind implements ModelAwareController {
         button.setOnAction(event -> {
             this.availableRequests.remove(selectedShirt);
             this.acceptedRequests.add((TShirt) selectedShirt);
+            manager.updateShirt(selectedShirt.getName(), "Accepted", this.username);
             detailStage.close();
-            
-         
         });
     }
 

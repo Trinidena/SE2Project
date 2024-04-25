@@ -1,11 +1,15 @@
 package views;
 
+import java.io.IOException;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -56,9 +60,9 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	private ShirtCreatorViewModel viewModel;
 	
 	private StringProperty creatorProperty = new SimpleStringProperty();
-	private ShirtCredentialsManager manager;
 	private StringProperty passwordProperty = new SimpleStringProperty();
 	private StringProperty roleProperty = new SimpleStringProperty();
+	private ShirtCredentialsManager manager;
 
 	/**
 	 * Constructs an instance of the ShirtCreatorCodeBehind. Initializes the view
@@ -76,17 +80,12 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	 */
 	@FXML
 	public void initialize() {
-		System.out.println("IN SHIRTCREATOR CODEBEHIND");
-		System.out.println(creatorProperty.getValue());
-		System.out.println(passwordProperty.getValue());
-		System.out.println(roleProperty.getValue());
 		this.populateComboBoxes();
 		this.addPresets();
 		this.requests = FXCollections.observableArrayList();
 		this.requestListView.setItems(this.requests);
 		this.setupSelectionHandlerForListView();
 		this.bindToViewModel();
-		//this.viewModel.addUser();
 	}
 
 	private void addPresets() {
@@ -166,9 +165,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	 */
 	@FXML
 	void onRequestButtonClick(ActionEvent event) {
-
 		Alert newAlert = new Alert(AlertType.INFORMATION);
-
 		String confirmationMessage = "Shirt design requested successfully.";
 		try {
 			newAlert.setContentText(confirmationMessage);
@@ -184,31 +181,21 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 
 		newAlert.showAndWait();
 	}
-
-	/**
-	 * Shows a dialog with the list of current design requests.
-	 *
-	 * @param event The action event triggered by the show requests button.
-	 */
+	
 	@FXML
-	void onShowRequestsButtonClick(ActionEvent event) {
-		Stage stage = new Stage();
-		stage.setTitle("List of Requests");
-		VBox layout = new VBox(10);
-		layout.getChildren().add(new ListView<>(this.requests));
-		Scene scene = new Scene(layout, 300, 250);
-		stage.setScene(scene);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.show();
+	void handleViewRequestsButton(ActionEvent event) throws IOException {
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
+	    Parent root = loader.load();
+	    Scene scene = new Scene(root);
+	    Stage stage = new Stage();
+	    stage.setScene(scene);
+	    stage.show();
 	}
 
 	/**
 	 * Binds UI components to the view model properties.
 	 */
 	private void bindToViewModel() {
-		System.out.println("Setting username: " + this.viewModel.creatorProperty().getValue());
-		System.out.println("Setting username: " + this.viewModel.passwordProperty().getValue());
-		System.out.println("Setting username: " + this.viewModel.roleProperty().getValue());
 		this.designedListView.itemsProperty().bindBidirectional(this.viewModel.listProperty());
 		this.pocketComboBox.valueProperty().bindBidirectional(this.viewModel.pocketProperty());
 		this.nameTextField.textProperty().bindBidirectional(this.viewModel.nameProperty());
@@ -220,9 +207,6 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.materialComboBox.valueProperty().bindBidirectional(this.viewModel.materialProperty());
 		this.backLengthComboBox.valueProperty().bindBidirectional(this.viewModel.backLengthProperty());
 		this.textTextField.textProperty().bindBidirectional(this.viewModel.textProperty());
-		System.out.println(creatorProperty.getValue());
-		System.out.println(passwordProperty.getValue());
-		System.out.println(roleProperty.getValue());
 	}
 
 	/**

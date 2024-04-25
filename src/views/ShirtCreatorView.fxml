@@ -166,7 +166,7 @@
 				<Font name="Jokerman" size="18.0" />
 			</font>
 		</Button>
-      <Button layoutX="348.0" layoutY="444.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="209.0" text="View Requests Status">
+      <Button fx:id="viewRequestsButton" layoutX="348.0" layoutY="444.0" mnemonicParsing="false" onAction="#handleViewRequestsButton" prefHeight="42.0" prefWidth="209.0" text="View Requests Status">
          <font>
             <Font name="Jokerman" size="18.0" />
          </font>

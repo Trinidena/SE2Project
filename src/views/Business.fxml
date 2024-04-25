@@ -98,7 +98,7 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <Button layoutX="300.0" layoutY="434.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="285.0" text="View Completion Status">
+      <Button fx:id="statusButton" layoutX="300.0" layoutY="434.0" mnemonicParsing="false" onAction="#handleStatusButton" prefHeight="50.0" prefWidth="285.0" text="View Completion Status">
          <font>
             <Font name="Jokerman" size="22.0" />
          </font>
