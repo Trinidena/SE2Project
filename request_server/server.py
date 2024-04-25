@@ -53,8 +53,8 @@ def shirts_to_json(shirts):
 def users_to_json(users):
     users_list = []
     for user in users:
-        shirt_dict = {
-            'creator': user.creator,
+        user_dict = {
+            'creatorName': user.creator,
             'password': user.password,
             'role': user.role
         }
