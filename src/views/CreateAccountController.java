@@ -14,9 +14,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.ModelAwareController;
+import model.user.User;
 import server.ShirtCredentialsManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for the Create Account screen. Handles user input for creating a new account.
@@ -41,6 +44,8 @@ public class CreateAccountController {
     private Button logInButton;
 
     private ShirtCredentialsManager manager;
+    
+    private List<User> users;
 
     /**
      * Sets the stage for this controller.
@@ -57,6 +62,11 @@ public class CreateAccountController {
     @FXML
     void initialize() {
         this.accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
+        this.manager = new ShirtCredentialsManager();
+        this.users = manager.getUsers();
+        for (User user: users) {
+        	System.out.println(user.getCreatorName() + "\n" + user.getPassword() + "\n" + user.getRole());
+        }
     }
 
     /**
@@ -104,8 +114,14 @@ public class CreateAccountController {
      * @param username The username to validate.
      * @return true if the username meets the criteria, false otherwise.
      */
-    private boolean isValidUsername(String username) {
-        return username.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$");
+    private boolean isExistingUsername(String username) {
+        boolean bool = false;
+        for (User user : users) {
+        	if(user.getCreatorName().equals(this.usernameField.getText())) {
+        		bool = true;
+        	}
+        }
+        return bool;
     }
 
     /**
@@ -114,9 +130,14 @@ public class CreateAccountController {
      * @param password The password to validate.
      * @return true if the password meets the criteria, false otherwise.
      */
-    private boolean isValidPassword(String password) {
-        return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$")
-                && password.replaceAll("[^0-9]", "").length() >= 3;
+    private boolean isExistingPassword(String password) {
+    	boolean bool = false;
+        for (User user : users) {
+        	if(user.getPassword().equals(this.passwordField.getText())) {
+        		bool = true;
+        	}
+        }
+        return bool;
     }
     
     /**
@@ -163,7 +184,7 @@ public class CreateAccountController {
      * @param username The username to validate.
      * @return true if the username meets the criteria, false otherwise.
      */
-    private boolean isExistingUsername(String username) {
+    private boolean isValidUsername(String username) {
         return username.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$");
     }
 
@@ -173,7 +194,7 @@ public class CreateAccountController {
      * @param password The password to validate.
      * @return true if the password meets the criteria, false otherwise.
      */
-    private boolean isExistingPassword(String password) {
+    private boolean isValidPassword(String password) {
         return password.matches("^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$")
                 && password.replaceAll("[^0-9]", "").length() >= 3;
     }
@@ -190,7 +211,10 @@ public class CreateAccountController {
         ModelAwareController controller = loader.getController();
         if (controller instanceof ModelAwareController) {
             controller.setModel(this.manager);
-            controller.setUsername(this.usernameField.getText());
+            this.manager.addUser(new User(this.usernameField.getText(), this.passwordField.getText(), this.accountTypeComboBox.getValue()));
+//            controller.setUsername(this.usernameField.getText());
+//            controller.setPassword(this.passwordField.getText());
+//            controller.setRole(this.accountTypeComboBox.getValue());
         }
         Scene scene = new Scene(root);
         Stage stage = (Stage) clickedButton.getScene().getWindow();
