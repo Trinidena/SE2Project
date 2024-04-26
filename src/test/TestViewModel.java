@@ -11,6 +11,7 @@ import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
+import model.user.User;
 import server.ShirtCredentialsManager;
 import viewmodel.ShirtCreatorViewModel;
 
@@ -382,6 +383,9 @@ public class TestViewModel {
 		newModel.materialProperty().set(Material.SILK);
 		newModel.backLengthProperty().set(Size.S);
 		newModel.textProperty().set("Tiny Boss");
+		newModel.creatorProperty().set("Shirt lover");
+		newModel.passwordProperty().set("12345ABCDE");
+		newModel.roleProperty().set("Accepted");
 
 		newModel.addShirt();
 
@@ -397,11 +401,32 @@ public class TestViewModel {
 		newModel.materialProperty().set(Material.SILK);
 		newModel.backLengthProperty().set(Size.S);
 		newModel.textProperty().set("Tiny Boss");
+		newModel.creatorProperty().set("Shirt lover");
+		newModel.passwordProperty().set("12345ABCDE");
+		newModel.roleProperty().set("Accepted");
 
 		assertThrows(IllegalArgumentException.class, () -> {
 			newModel.addShirt();
 		});
 
+	}
+
+	@Test
+	public void testAddUser() {
+
+		ShirtCreatorViewModel newModel = new ShirtCreatorViewModel();
+
+		User newUser = new User("Shirt lover", "12345ABCDE", "Accepted");
+
+		newModel.creatorProperty().set("Shirt lover");
+		newModel.passwordProperty().set("12345ABCDE");
+		newModel.roleProperty().set("Accepted");
+
+		User madeUser = newModel.addUser();
+
+		assertTrue(newUser.getCreatorName().equals(madeUser.getCreatorName()));
+		assertTrue(newUser.getPassword().equals(madeUser.getPassword()));
+		assertTrue(newUser.getRole().equals(madeUser.getRole()));
 	}
 
 }

@@ -19,7 +19,7 @@ public class TestPut {
 	@Test
 	void testValidPut() {
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
-				Size.XL, "Cool Dude");
+				Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 
 		ShirtCollection testCollection = new ShirtCollection();
 
@@ -30,10 +30,10 @@ public class TestPut {
 	@Test
 	void testPutWhenSongIsIdentical() {
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
-				Size.XL, "Cool Dude");
+				Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 
 		Shirt newShirt2 = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO,
-				Material.BLEND, Size.XL, "Cool Dude");
+				Material.BLEND, Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 		ShirtCollection testCollection = new ShirtCollection();
 
 		testCollection.put(newShirt);
