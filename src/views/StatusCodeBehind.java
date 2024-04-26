@@ -30,10 +30,10 @@ public class StatusCodeBehind implements ModelAwareController {
 
 	private void setTextArea() {
 		StringBuilder builder = new StringBuilder();
-		for (TShirt shirt : shirts) {
+		for (TShirt shirt : this.shirts) {
 			System.out.println(shirt);
-			String str = "Creator: " + shirt.getCreatorName() + "\nStatus: " + 
-					shirt.getStatus() + "\nBusiness: " + shirt.getBusiness() + "\n\n";
+			String str = "Creator: " + shirt.getCreatorName() + "\nStatus: " 
+					+ shirt.getStatus() + "\nBusiness: " + shirt.getBusiness() + "\n\n";
 			builder.append(str);
 			System.out.println(builder.toString());
 		}

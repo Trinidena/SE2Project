@@ -19,9 +19,7 @@ import model.shirt.Shirt;
 import model.shirt.TShirt;
 import model.user.User;
 import server.ShirtCredentialsManager;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -149,9 +147,7 @@ public class BusinessCodeBehind implements ModelAwareController {
         button.setOnAction(event -> {
             this.availableRequests.remove(selectedShirt);
             this.acceptedRequests.add((TShirt) selectedShirt);
-            System.out.println("SELECTED SHIRT: NAME: " + selectedShirt.getName() + 
-            					"USERNAME: " + this.users.get(users.size()-1));
-            manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(users.size()-1).getCreatorName());
+            this.manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(this.users.size() - 1).getCreatorName());
             detailStage.close();
         });
     }

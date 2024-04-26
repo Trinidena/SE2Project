@@ -14,7 +14,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,7 +26,6 @@ import javafx.stage.Stage;
 import model.ModelAwareController;
 import server.ShirtCredentialsManager;
 import model.shirt.Shirt;
-import model.shirt.TShirt;
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
@@ -97,7 +95,9 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
             Shirt selectedShirt = this.designedListView.getSelectionModel().getSelectedItem();
             if (selectedShirt != null && event.getClickCount() == 2) {
                 this.showShirtDetails(selectedShirt);
-            }});
+            }
+        }
+		);
 	}
 
 	private void addPresets() {
@@ -186,7 +186,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 			this.users = this.manager.getUsers();
 			this.requests.add(this.viewModel.addShirt());
 			Shirt selectedShirt = this.designedListView.getSelectionModel().getSelectedItem();
-			manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(users.size()-1).getCreatorName());
+			this.manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(this.users.size() - 1).getCreatorName());
 		} catch (NullPointerException nPE) {
 			newAlert.setContentText(nPE.getLocalizedMessage());
 

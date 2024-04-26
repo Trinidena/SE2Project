@@ -30,7 +30,7 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 		List<User> users;
 		String jsonResponse = Server.sendRequest("get users,");
 		System.out.println(jsonResponse);
-		users = parseUsersFromJson(jsonResponse);
+		users = this.parseUsersFromJson(jsonResponse);
 		return users;
 	}
 
@@ -51,7 +51,7 @@ public class ShirtCredentialsManager extends model.ShirtCredentialsManager {
 
 		String jsonResponse = Server.sendRequest("get shirts,");
 		System.out.println(jsonResponse);
-		shirts = parseShirtsFromJson(jsonResponse);
+		shirts = this.parseShirtsFromJson(jsonResponse);
 		for (TShirt shirt : shirts) {
 			System.out.println("Getting: ");
 			System.out.println(shirt.format());
