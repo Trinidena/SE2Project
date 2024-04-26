@@ -1,6 +1,7 @@
 package views;
 
 import java.io.IOException;
+import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -9,22 +10,29 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ModelAwareController;
-import model.ShirtCredentialsManager;
+import server.ShirtCredentialsManager;
 import model.shirt.Shirt;
+import model.shirt.TShirt;
 import model.shirt_attribute.Color;
 import model.shirt_attribute.Material;
 import model.shirt_attribute.NeckStyle;
 import model.shirt_attribute.Size;
+import model.user.User;
 import viewmodel.ShirtCreatorViewModel;
 
 /**
@@ -61,6 +69,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	private StringProperty passwordProperty = new SimpleStringProperty();
 	private StringProperty roleProperty = new SimpleStringProperty();
 	private ShirtCredentialsManager manager;
+	private List<User> users;
 
 	/**
 	 * Constructs an instance of the ShirtCreatorCodeBehind. Initializes the view
@@ -84,6 +93,11 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.requestListView.setItems(this.requests);
 		this.setupSelectionHandlerForListView();
 		this.bindToViewModel();
+		this.designedListView.setOnMouseClicked(event -> {
+            Shirt selectedShirt = this.designedListView.getSelectionModel().getSelectedItem();
+            if (selectedShirt != null && event.getClickCount() == 2) {
+                this.showShirtDetails(selectedShirt);
+            }});
 	}
 
 	private void addPresets() {
@@ -169,8 +183,10 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		String confirmationMessage = "Shirt design requested successfully.";
 		try {
 			newAlert.setContentText(confirmationMessage);
-
+			this.users = this.manager.getUsers();
 			this.requests.add(this.viewModel.addShirt());
+			Shirt selectedShirt = this.designedListView.getSelectionModel().getSelectedItem();
+			manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(users.size()-1).getCreatorName());
 		} catch (NullPointerException nPE) {
 			newAlert.setContentText(nPE.getLocalizedMessage());
 
@@ -186,24 +202,36 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	void handleViewRequestsButton(ActionEvent event) throws IOException {
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
 	    Parent root = loader.load();
+	    ModelAwareController controller = loader.getController();
+        controller.setModel(this.manager);
 	    Scene scene = new Scene(root);
 	    Stage stage = new Stage();
 	    stage.setScene(scene);
 	    stage.show();
 	}
 	
-	@FXML
-    void handleStatusButton(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
-        Parent root = loader.load();
-        ModelAwareController controller = loader.getController();
-        controller.setModel(this.manager);
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+	private void showShirtDetails(Shirt selectedShirt) {
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(15));
+        Label pocketLabel = new Label("Pocket: " + selectedShirt.hasPocket());
+        Label nameLabel = new Label("Name: " + selectedShirt.getName());
+        Label shoulderLabel = new Label("Shoulder: " + selectedShirt.getShoulderWidth());
+        Label sizeLabel = new Label("Size: " + selectedShirt.getSize().toString());
+        Label backLabel = new Label("Back: " + selectedShirt.getBackLength());
+        Label styleLabel = new Label("Style: " + selectedShirt.getNeckStyle());
+        Label materialLabel = new Label("Material: " + selectedShirt.getMaterial());
+        Label colorLabel = new Label("Color: " + selectedShirt.getColor().toString());
+
+        root.getChildren().addAll(pocketLabel, nameLabel, shoulderLabel, sizeLabel, backLabel, styleLabel,
+                materialLabel, colorLabel);
+
+        Scene scene = new Scene(root, 300, 300);
+        Stage detailStage = new Stage();
+        detailStage.setTitle("Shirt Details");
+        detailStage.setScene(scene);
+        detailStage.initModality(Modality.APPLICATION_MODAL);
+        detailStage.show();
     }
-	
 	/**
 	 * Binds UI components to the view model properties.
 	 */
@@ -257,8 +285,8 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	}
 
 	@Override
-	public void setModel(ShirtCredentialsManager manager) {
-		this.manager = manager;
+	public void setModel(model.ShirtCredentialsManager manager) {
+		this.manager = (ShirtCredentialsManager) manager;
 	}
 
 	public void setUsername(String username) {
@@ -285,5 +313,4 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		System.out.println("Setting role: " + this.viewModel.roleProperty().getValue());
 		System.out.println("Setting role: " + this.roleProperty.getValue());
 	}
-
 }
