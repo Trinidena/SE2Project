@@ -17,8 +17,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ModelAwareController;
 import model.ShirtCredentialsManager;
@@ -99,6 +97,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.viewModel.materialProperty().set(Material.SILK);
 		this.viewModel.backLengthProperty().set(Size.XL);
 		this.viewModel.textProperty().set("Big Boss");
+		this.viewModel.creatorProperty().set("Default");
 		this.viewModel.addShirtToListView();
 		
 		this.viewModel.nameProperty().set("Preset 1");
@@ -110,6 +109,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.viewModel.materialProperty().set(Material.PREMIUM_COTTON);
 		this.viewModel.backLengthProperty().set(Size.M);
 		this.viewModel.textProperty().set("Small Boss");
+		this.viewModel.creatorProperty().set("Default");
 
 		this.viewModel.addShirtToListView();
 	}
@@ -191,7 +191,19 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	    stage.setScene(scene);
 	    stage.show();
 	}
-
+	
+	@FXML
+    void handleStatusButton(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Status.fxml"));
+        Parent root = loader.load();
+        ModelAwareController controller = loader.getController();
+        controller.setModel(this.manager);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+	
 	/**
 	 * Binds UI components to the view model properties.
 	 */
@@ -249,7 +261,6 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 		this.manager = manager;
 	}
 
-	@Override
 	public void setUsername(String username) {
 	    System.out.println("Setting username: " + username);
 	    this.viewModel.creatorProperty().setValue(username);
@@ -259,7 +270,6 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	    System.out.println("Setting role: " + this.creatorProperty.getValue());
 	}
 
-	@Override
 	public void setPassword(String text) {
 	    System.out.println("Setting password: " + text);
 	    this.viewModel.passwordProperty().setValue(text);
@@ -268,7 +278,6 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 	    System.out.println("Setting role: " + this.passwordProperty.getValue());
 	}
 
-	@Override
 	public void setRole(String value) {
 	    System.out.println("Setting role: " + value);
 	    this.viewModel.roleProperty().setValue(value);

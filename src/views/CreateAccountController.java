@@ -18,7 +18,6 @@ import model.user.User;
 import server.ShirtCredentialsManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -166,6 +165,10 @@ public class CreateAccountController {
             if ("Creator".equals(selectedAccountType)) {
                 this.loadScene("/views/ShirtCreatorView.fxml", logInButton);
             } else if ("Business".equals(selectedAccountType)) {
+            	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Business.fxml"));
+                Parent root = loader.load();
+                BusinessCodeBehind controller = loader.getController();
+                controller.setUsername(this.usernameField.getText());
                 this.loadScene("/views/Business.fxml", logInButton);
             }
         } catch (IOException e) {
@@ -211,7 +214,6 @@ public class CreateAccountController {
         ModelAwareController controller = loader.getController();
         if (controller instanceof ModelAwareController) {
             controller.setModel(this.manager);
-            controller.setUsername(this.usernameField.getText());
             this.manager.addUser(new User(this.usernameField.getText(), this.passwordField.getText(), this.accountTypeComboBox.getValue()));
         }
         Scene scene = new Scene(root);

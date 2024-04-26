@@ -277,7 +277,6 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		this.neckStyleProperty.set(null);
 		this.materialProperty.set(null);
 		this.textProperty().set("");
-		this.creatorProperty.set("");
 	}
 
 	/**
@@ -290,21 +289,5 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	@Override
 	public void setModel(model.ShirtCredentialsManager manager) {
 		this.shirtManager = (ShirtCredentialsManager) manager;
-	}
-
-	@Override
-	public void setPassword(String text) {
-		
-	}
-
-	@Override
-	public void setRole(String value) {
-		
-	}
-
-	@Override
-	public void setUsername(String username) {
-		// TODO Auto-generated method stub
-		
 	}
 }
