@@ -51,6 +51,18 @@ public class TestShirt {
 	}
 
 	@Test
+	public void testTShirtConstructor() {
+
+		TShirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO,
+				Material.BLEND, Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
+
+		assertTrue(newShirt.getCreatorName().equals("Shirtlover"));
+		assertTrue(newShirt.getStatus().equals("Accepted"));
+		assertTrue(newShirt.getBusiness().equals("Shirt maker"));
+
+	}
+
+	@Test
 	public void testToString() {
 
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
