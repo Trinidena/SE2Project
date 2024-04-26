@@ -16,11 +16,5 @@ public interface ModelAwareController {
      * @param manager The ShirtCredentialsManager instance that acts as the model for this controller.
      */
     void setModel(ShirtCredentialsManager manager);
-    
-    void setUsername(String username);
-
-	void setPassword(String text);
-
-	void setRole(String value);
 }
 

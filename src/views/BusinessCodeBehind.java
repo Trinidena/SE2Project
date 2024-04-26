@@ -8,9 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -23,7 +21,8 @@ import model.user.User;
 import server.ShirtCredentialsManager;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller class for the Business view. Handles interactions with the UI for business users.
@@ -44,7 +43,7 @@ public class BusinessCodeBehind implements ModelAwareController {
 	private ObservableList<TShirt> acceptedRequests;
 
     private ShirtCredentialsManager manager;
-	private String username;
+    private List<User> users;
 
     /**
      * Initializes the controller. This method is called after the FXML fields have been injected.
@@ -52,6 +51,7 @@ public class BusinessCodeBehind implements ModelAwareController {
     @FXML
     void initialize() {
         this.manager = new ShirtCredentialsManager();
+        this.users = this.manager.getUsers();
         this.availableRequests = FXCollections.observableArrayList();
         this.acceptedRequests = FXCollections.observableArrayList();
         this.getShirtsFromServer();
@@ -126,8 +126,6 @@ public class BusinessCodeBehind implements ModelAwareController {
     private void showShirtDetails(Shirt selectedShirt) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(15));
-
-
         Label pocketLabel = new Label("Pocket: " + selectedShirt.hasPocket());
         Label nameLabel = new Label("Name: " + selectedShirt.getName());
         Label shoulderLabel = new Label("Shoulder: " + selectedShirt.getShoulderWidth());
@@ -151,30 +149,15 @@ public class BusinessCodeBehind implements ModelAwareController {
         button.setOnAction(event -> {
             this.availableRequests.remove(selectedShirt);
             this.acceptedRequests.add((TShirt) selectedShirt);
-            manager.updateShirt(selectedShirt.getName(), "Accepted", this.username);
+            System.out.println("SELECTED SHIRT: NAME: " + selectedShirt.getName() + 
+            					"USERNAME: " + this.users.get(users.size()-1));
+            manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(users.size()-1).getCreatorName());
             detailStage.close();
         });
     }
-
+    
     @Override
     public void setModel(model.ShirtCredentialsManager manager) {
         this.manager = (ShirtCredentialsManager) manager;
     }
-
-	@Override
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Override
-	public void setPassword(String text) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setRole(String value) {
-		// TODO Auto-generated method stub
-		
-	}
 }
