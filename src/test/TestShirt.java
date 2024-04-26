@@ -26,7 +26,7 @@ public class TestShirt {
 	public void testShirtConstructor() {
 
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
-				Size.XL, "Cool Dude");
+				Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 
 		assertEquals("Shirt 1", newShirt.getName());
 		assertTrue(newShirt.hasPocket());
@@ -39,15 +39,14 @@ public class TestShirt {
 		assertEquals(Size.XL, newShirt.getBackLength());
 		assertEquals("Cool Dude", newShirt.getShirtText());
 
-		// Test constructor with too low year
 		assertThrows(IllegalArgumentException.class, () -> {
-			new TShirt(null, true, null, null, null, null, null, null, null, "Cool Dude");
+			new TShirt(null, true, null, null, null, null, null, null, null, "Cool Dude", "Shirtlover", "Accepted",
+					"Shirt maker");
 		});
 
-		// Test constructor with too low year
 		assertThrows(IllegalArgumentException.class, () -> {
 			new TShirt("", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND, Size.XL,
-					"Cool Dude");
+					"Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 		});
 	}
 
@@ -55,7 +54,7 @@ public class TestShirt {
 	public void testToString() {
 
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
-				Size.XL, "Cool Dude");
+				Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 
 		assertEquals("Shirt 1", newShirt.toString());
 	}
@@ -64,7 +63,8 @@ public class TestShirt {
 	public void testHashCode() {
 
 		Shirt newShirt = new TShirt("Shirt 1", true, Size.XL, Size.S, Size.L, Color.RED, NeckStyle.POLO, Material.BLEND,
-				Size.XL, "Cool Dude");
+				Size.XL, "Cool Dude", "Shirtlover", "Accepted", "Shirt maker");
 		assertEquals(-568695674, newShirt.hashCode());
 	}
+
 }
