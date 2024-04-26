@@ -165,10 +165,6 @@ public class CreateAccountController {
             if ("Creator".equals(selectedAccountType)) {
                 this.loadScene("/views/ShirtCreatorView.fxml", logInButton);
             } else if ("Business".equals(selectedAccountType)) {
-            	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Business.fxml"));
-                Parent root = loader.load();
-                BusinessCodeBehind controller = loader.getController();
-                controller.setUsername(this.usernameField.getText());
                 this.loadScene("/views/Business.fxml", logInButton);
             }
         } catch (IOException e) {
