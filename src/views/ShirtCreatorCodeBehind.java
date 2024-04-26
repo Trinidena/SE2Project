@@ -186,7 +186,7 @@ public class ShirtCreatorCodeBehind implements ModelAwareController {
 			this.users = this.manager.getUsers();
 			this.requests.add(this.viewModel.addShirt());
 			Shirt selectedShirt = this.designedListView.getSelectionModel().getSelectedItem();
-			this.manager.updateShirt(selectedShirt.getName(), "Accepted", this.users.get(this.users.size() - 1).getCreatorName());
+			this.manager.updateShirt(selectedShirt.getName(), "Requested", this.users.get(this.users.size() - 1).getCreatorName());
 		} catch (NullPointerException nPE) {
 			newAlert.setContentText(nPE.getLocalizedMessage());
 
