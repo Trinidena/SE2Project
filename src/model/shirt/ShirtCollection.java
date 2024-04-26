@@ -76,7 +76,7 @@ public class ShirtCollection {
 	 * @postcondition none
 	 * 
 	 * @param id the id to search for
-	 * @return true if it can be removed, or false if not
+	 * @param newShirt the shirt to be replaced
 	 */
 	public void replaceByKey(int id, Shirt newShirt) {
 

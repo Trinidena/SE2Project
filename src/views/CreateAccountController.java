@@ -62,8 +62,8 @@ public class CreateAccountController {
     void initialize() {
         this.accountTypeComboBox.setItems(FXCollections.observableArrayList("Creator", "Business"));
         this.manager = new ShirtCredentialsManager();
-        this.users = manager.getUsers();
-        for (User user: users) {
+        this.users = this.manager.getUsers();
+        for (User user: this.users) {
         	System.out.println(user.getCreatorName() + "\n" + user.getPassword() + "\n" + user.getRole());
         }
     }
@@ -93,9 +93,9 @@ public class CreateAccountController {
 
         try {
             if ("Creator".equals(selectedAccountType)) {
-                this.loadScene("/views/ShirtCreatorView.fxml", createAccountButton);
+                this.loadScene("/views/ShirtCreatorView.fxml", this.createAccountButton);
             } else if ("Business".equals(selectedAccountType)) {
-                this.loadScene("/views/Business.fxml", createAccountButton);
+                this.loadScene("/views/Business.fxml", this.createAccountButton);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,8 +115,8 @@ public class CreateAccountController {
      */
     private boolean isExistingUsername(String username) {
         boolean bool = false;
-        for (User user : users) {
-        	if(user.getCreatorName().equals(this.usernameField.getText())) {
+        for (User user : this.users) {
+        	if (user.getCreatorName().equals(this.usernameField.getText())) {
         		bool = true;
         	}
         }
@@ -131,8 +131,8 @@ public class CreateAccountController {
      */
     private boolean isExistingPassword(String password) {
     	boolean bool = false;
-        for (User user : users) {
-        	if(user.getPassword().equals(this.passwordField.getText())) {
+        for (User user : this.users) {
+        	if (user.getPassword().equals(this.passwordField.getText())) {
         		bool = true;
         	}
         }
@@ -163,9 +163,9 @@ public class CreateAccountController {
 
         try {
             if ("Creator".equals(selectedAccountType)) {
-                this.loadScene("/views/ShirtCreatorView.fxml", logInButton);
+                this.loadScene("/views/ShirtCreatorView.fxml", this.logInButton);
             } else if ("Business".equals(selectedAccountType)) {
-                this.loadScene("/views/Business.fxml", logInButton);
+                this.loadScene("/views/Business.fxml", this.logInButton);
             }
         } catch (IOException e) {
             e.printStackTrace();

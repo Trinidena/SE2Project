@@ -13,7 +13,7 @@ public enum Size {
 	XS("Extra Small"), S("Small"), M("Medium"), L("Large"), XL("Extra Large"), XXL("Double Extra Large"),
 	XXXL("Triple Extra Large");
 
-	private final String description; // The descriptive label of the size.
+	private final String description;
 
 	/**
 	 * Constructor for the Size enum. Initializes the enum instance with the
@@ -26,7 +26,7 @@ public enum Size {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 }

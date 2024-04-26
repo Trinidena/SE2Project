@@ -35,17 +35,17 @@ public abstract class Shirt {
 	 * @param size          The overall size of the shirt.
 	 * @param sleeveLength  The length of the shirt's sleeves.
 	 * @param color         The color of the shirt.
-	 * @param neckStyle     The neck style of the shirt.
+	 * @param collar     The neck style of the shirt.
 	 * @param material      The material of the shirt.
 	 * @param backLength    The back length size of the shirt.
 	 * @param shirtText     The text printed on the shirt, if any.
 	 */
-	public Shirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color,
-			NeckStyle collar, Material material, Size backLength, String shirtText) {
-
+	public Shirt(String name, boolean hasPocket, Size shoulderWidth, Size size, 
+			Size sleeveLength, Color color, NeckStyle collar, Material material, 
+			Size backLength, String shirtText) {
+		
 		boolean isError = false;
 		String errorMessage = "The following cannot be empty:";
-
 		if (name != null) {
 			if (name.isBlank()) {
 				isError = true;
@@ -70,37 +70,30 @@ public abstract class Shirt {
 			isError = true;
 			errorMessage += " sleeve length ";
 		}
-
 		if (color == null) {
 			isError = true;
 			errorMessage += " color ";
 		}
-
 		if (collar == null) {
 			isError = true;
 			errorMessage += " collar ";
 		}
-
 		if (material == null) {
 			isError = true;
 			errorMessage += " material ";
 		}
-
 		if (backLength == null) {
 			isError = true;
 			errorMessage += " back length ";
 		}
-
 		if (isError) {
 			throw new IllegalArgumentException(errorMessage);
 		}
-
 		this.setHasPocket(hasPocket);
 		this.setName(name);
 		this.setShoulderWidth(shoulderWidth);
 		this.setSize(size);
 		this.setSleeveLength(sleeveLength);
-
 		this.setColor(color);
 		this.setNeckStyle(collar);
 		this.setMaterial(material);
@@ -119,7 +112,7 @@ public abstract class Shirt {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -143,7 +136,7 @@ public abstract class Shirt {
 	}
 
 	public Size getSize() {
-		return size;
+		return this.size;
 	}
 
 	public void setSize(Size size) {
@@ -167,7 +160,7 @@ public abstract class Shirt {
 	}
 
 	public Material getMaterial() {
-		return material;
+		return this.material;
 	}
 
 	public void setMaterial(Material material) {
@@ -175,7 +168,7 @@ public abstract class Shirt {
 	}
 
 	public Color getColor() {
-		return color;
+		return this.color;
 	}
 
 	public void setColor(Color color) {
@@ -183,7 +176,7 @@ public abstract class Shirt {
 	}
 
 	public NeckStyle getNeckStyle() {
-		return neckStyle;
+		return this.neckStyle;
 	}
 
 	public void setNeckStyle(NeckStyle neckStyle) {
@@ -191,7 +184,7 @@ public abstract class Shirt {
 	}
 
 	public boolean hasPocket() {
-		return hasPocket;
+		return this.hasPocket;
 	}
 
 	public void setHasPocket(boolean hasPocket) {

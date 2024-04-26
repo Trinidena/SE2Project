@@ -24,7 +24,7 @@ public enum Material {
 	}
 
 	public String getMaterial() {
-		return material;
+		return this.material;
 	}
 
 }
