@@ -3,14 +3,12 @@ package viewmodel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.image.Image;
 import model.ModelAwareController;
 import server.ShirtCredentialsManager;
 import model.shirt.Shirt;
@@ -279,7 +277,6 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 		this.neckStyleProperty.set(null);
 		this.materialProperty.set(null);
 		this.textProperty().set("");
-		this.creatorProperty.set("");
 	}
 
 	/**
@@ -292,21 +289,5 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	@Override
 	public void setModel(model.ShirtCredentialsManager manager) {
 		this.shirtManager = (ShirtCredentialsManager) manager;
-	}
-
-	@Override
-	public void setPassword(String text) {
-		
-	}
-
-	@Override
-	public void setRole(String value) {
-		
-	}
-
-	@Override
-	public void setUsername(String username) {
-		// TODO Auto-generated method stub
-		
 	}
 }

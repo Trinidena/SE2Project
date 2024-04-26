@@ -47,9 +47,9 @@ def shirts_to_json(shirts):
             'material': shirt.material,
             'back_length': shirt.back_length,
             'text': shirt.text,
-            'creator': shirt.creator,
+            'creatorName': shirt.creator,
             'status': shirt.status,
-            'business': shirt.business
+            'businessName': shirt.business
         }
         shirts_list.append(shirt_dict)
     return json.dumps(shirts_list)
@@ -116,6 +116,7 @@ def main(protocol, ipAddress, port):
             except json.JSONDecodeError as e:
                 response = "JSON Decode Error"
                 log(f"Failed to decode JSON: {e}")
+            
             except KeyError as e:
                 response = "missing key"
                 log(f"Missing key in JSON data: {e}")
@@ -166,6 +167,7 @@ def main(protocol, ipAddress, port):
             elif shirt_name:
                 response = "name already exists"
         if request_type == 'update shirt':
+            log(values)
             try:
                 # Directly use values from the split message data
                 if len(values) < 4:
@@ -179,7 +181,8 @@ def main(protocol, ipAddress, port):
                     for shirt in shirts:
                         if shirt.name == shirt_name:
                             shirt.status = new_status
-                            shirt.business = business_id  # Update the status
+                            shirt.business = business_id 
+                            log(shirt) # Update the status
                             response = "Update successful"
                             shirt_found = True
                             break
