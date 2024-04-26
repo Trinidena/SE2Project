@@ -12,7 +12,7 @@ package model.shirt_attribute;
 public enum Color {
 	RED("Red"), GREEN("Green"), BLUE("Blue"), YELLOW("Yellow"), BLACK("Black"), WHITE("White"), PURPLE("Purple");
 
-	private final String displayName; // The human-readable name of the color.
+	private final String displayName;
 
 	/**
 	 * Constructor for the Color enum. Initializes the enum instance with the
@@ -25,7 +25,7 @@ public enum Color {
 	}
 
 	public String getDisplayName() {
-		return displayName;
+		return this.displayName;
 	}
 
 }

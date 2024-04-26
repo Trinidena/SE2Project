@@ -13,7 +13,7 @@ public class User {
     }
 
     public String getCreatorName() {
-        return creatorName;
+        return this.creatorName;
     }
 
     public void setCreatorName(String creatorName) {
@@ -21,7 +21,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -29,7 +29,7 @@ public class User {
     }
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(String role) {

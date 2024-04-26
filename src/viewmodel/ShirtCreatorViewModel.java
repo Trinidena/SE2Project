@@ -187,16 +187,16 @@ public class ShirtCreatorViewModel implements ModelAwareController {
 	 */
 	public Shirt addShirt() {
 		Shirt newShirt = this.formShirt();
-		shirtManager.addShirt(newShirt);
-		clearTextFields();
+		this.shirtManager.addShirt(newShirt);
+		this.clearTextFields();
 
 		return newShirt;
 	}
 	
 	public User addUser() {
 		User newUser = this.formUser();
-		shirtManager.addUser(newUser);
-		clearTextFields();
+		this.shirtManager.addUser(newUser);
+		this.clearTextFields();
 
 		return newUser;
 	}
