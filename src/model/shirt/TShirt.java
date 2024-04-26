@@ -36,14 +36,15 @@ public class TShirt extends Shirt {
 	 * @param shirtText     The text printed on the T-Shirt, if any.
 	 * @param creatorName   The name of the creator of the T-Shirt.
 	 * @param status        The current status of the T-Shirt.
-	 * @param businessName	The business associated with the status change of the shirt
+	 * @param businessName  The business associated with the status change of the
+	 *                      shirt
 	 */
 	public TShirt(String name, boolean hasPocket, Size shoulderWidth, Size size, Size sleeveLength, Color color,
 			NeckStyle neckStyle, Material material, Size backLength, String shirtText, String creatorName,
 			String status, String businessName) {
 		super(name, hasPocket, shoulderWidth, size, sleeveLength, color, neckStyle, material, backLength, shirtText);
-		this.creatorName = creatorName;
-		this.status = status;
+		this.setCreatorName(creatorName);
+		this.setStatus(status);
 		this.businessName = businessName;
 	}
 
